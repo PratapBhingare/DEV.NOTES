@@ -1,0 +1,5208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="dev-prep-favicon.png">
+    <title>Node Interview Questions</title>
+
+    <style>
+        /* =========================
+           RESET
+        ========================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        /* =========================
+           THEME VARIABLES
+        ========================= */
+
+        :root {
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --surface-hover: #f1f5f9;
+
+            --text: #0f172a;
+            --muted: #64748b;
+
+            --border: #e2e8f0;
+
+            --accent: #2563eb;
+            --accent-soft: #eff6ff;
+        }
+
+
+        body.dark {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --surface-hover: #263449;
+
+            --text: #f8fafc;
+            --muted: #94a3b8;
+
+            --border: #334155;
+
+            --accent: #60a5fa;
+            --accent-soft: #172554;
+        }
+
+
+        /* =========================
+           BODY
+        ========================= */
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+
+            background: var(--bg);
+            color: var(--text);
+
+            min-height: 100vh;
+
+            transition:
+                background 0.25s ease,
+                color 0.25s ease;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            background: var(--surface);
+
+            border-bottom: 1px solid var(--border);
+        }
+
+
+        .nav-container {
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding: 14px 20px;
+
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+
+        /* LOGO */
+
+        .logo {
+            color: var(--text);
+
+            text-decoration: none;
+
+            font-size: 18px;
+            font-weight: 700;
+
+            white-space: nowrap;
+        }
+
+
+        .logo span {
+            color: var(--accent);
+        }
+
+
+        /* DESKTOP NAVIGATION */
+
+        .nav-links {
+            flex: 1;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 4px;
+        }
+
+
+        .nav-links a {
+            color: var(--muted);
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            padding: 8px 10px;
+
+            border-radius: 7px;
+
+            transition: 0.2s;
+        }
+
+
+        .nav-links a:hover {
+            background: var(--surface-hover);
+            color: var(--text);
+        }
+
+
+        .nav-links a.active {
+            background: var(--accent-soft);
+            color: var(--accent);
+        }
+
+
+        /* =========================
+           NAV ACTIONS
+        ========================= */
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+
+        /* THEME BUTTON */
+
+        .theme-btn {
+            width: 36px;
+            height: 36px;
+
+            border: 1px solid var(--border);
+            border-radius: 8px;
+
+            background: var(--surface);
+            color: var(--text);
+
+            cursor: pointer;
+
+            font-size: 16px;
+
+            transition: 0.2s;
+        }
+
+
+        .theme-btn:hover {
+            background: var(--surface-hover);
+        }
+
+
+        /* MOBILE MENU BUTTON */
+
+        .menu-btn {
+            display: none;
+
+            width: 36px;
+            height: 36px;
+
+            border: 1px solid var(--border);
+            border-radius: 8px;
+
+            background: var(--surface);
+            color: var(--text);
+
+            cursor: pointer;
+
+            font-size: 20px;
+        }
+
+
+        /* =========================
+           MOBILE DROPDOWN
+        ========================= */
+
+        .mobile-menu {
+            display: none;
+
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding: 0 15px 15px;
+        }
+
+
+        .mobile-menu.open {
+            display: block;
+        }
+
+
+        .mobile-menu a {
+            display: block;
+
+            color: var(--muted);
+
+            text-decoration: none;
+
+            padding: 12px 14px;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+
+            transition: 0.2s;
+        }
+
+
+        .mobile-menu a:hover,
+        .mobile-menu a.active {
+            background: var(--surface-hover);
+            color: var(--text);
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        main {
+            width: 100%;
+            max-width: 850px;
+
+            margin: auto;
+
+            padding: 70px 20px 100px;
+        }
+
+
+        /* =========================
+           PAGE HEADER
+        ========================= */
+
+        .page-header {
+            margin-bottom: 40px;
+        }
+
+
+        .page-header span {
+            color: var(--accent);
+
+            font-size: 13px;
+            font-weight: 600;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        .page-header h1 {
+            font-size: clamp(32px, 5vw, 48px);
+
+            line-height: 1.1;
+
+            margin: 10px 0;
+
+            letter-spacing: -1px;
+        }
+
+
+        .page-header p {
+            color: var(--muted);
+
+            line-height: 1.7;
+
+            max-width: 650px;
+
+            font-size: 15px;
+        }
+
+
+        /* =========================
+           QUESTION CARD
+        ========================= */
+
+        .question-card {
+            width: 100%;
+
+            background: var(--surface);
+
+            border: 1px solid var(--border);
+
+            border-radius: 12px;
+
+            margin-bottom: 14px;
+
+            overflow: hidden;
+
+            transition:
+                border-color 0.2s,
+                transform 0.2s;
+        }
+
+
+        .question-card:hover {
+            border-color: color-mix(in srgb,
+                    var(--accent) 40%,
+                    var(--border));
+        }
+
+
+        /* QUESTION BUTTON */
+
+        .question-btn {
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            padding: 20px;
+
+            border: none;
+
+            background: transparent;
+
+            color: var(--text);
+
+            text-align: left;
+
+            font-family: inherit;
+
+            font-size: 16px;
+            font-weight: 600;
+
+            line-height: 1.5;
+
+            cursor: pointer;
+        }
+
+
+        .question-btn:hover {
+            background: var(--surface-hover);
+        }
+
+
+        /* ARROW */
+
+        .arrow {
+            flex-shrink: 0;
+
+            color: var(--muted);
+
+            font-size: 18px;
+
+            transition: transform 0.2s;
+        }
+
+
+        /* ANSWER */
+
+        .answer {
+            display: none;
+
+            padding: 0 20px 20px;
+
+            color: var(--muted);
+
+            font-size: 15px;
+
+            line-height: 1.8;
+        }
+
+
+        .question-card.open .answer {
+            display: block;
+        }
+
+
+        .question-card.open .arrow {
+            transform: rotate(180deg);
+        }
+
+
+        /* =========================
+           TABLET
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            .nav-container {
+                padding: 13px 16px;
+            }
+
+
+            .nav-links {
+                display: none;
+            }
+
+
+            .menu-btn {
+                display: block;
+            }
+
+
+            .nav-actions {
+                margin-left: auto;
+            }
+
+
+            main {
+                padding-top: 55px;
+            }
+
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .nav-container {
+                padding: 11px 14px;
+            }
+
+
+            .logo {
+                font-size: 17px;
+            }
+
+
+            .menu-btn,
+            .theme-btn {
+                width: 34px;
+                height: 34px;
+            }
+
+
+            main {
+                padding: 45px 15px 70px;
+            }
+
+
+            .page-header {
+                margin-bottom: 30px;
+            }
+
+
+            .page-header span {
+                font-size: 11px;
+            }
+
+
+            .page-header h1 {
+                font-size: 34px;
+
+                margin-top: 8px;
+            }
+
+
+            .page-header p {
+                font-size: 14px;
+
+                line-height: 1.7;
+            }
+
+
+            .question-card {
+                border-radius: 10px;
+
+                margin-bottom: 10px;
+            }
+
+
+            .question-btn {
+                padding: 16px;
+
+                font-size: 14px;
+
+                gap: 12px;
+            }
+
+
+            .answer {
+                padding: 0 16px 17px;
+
+                font-size: 14px;
+
+                line-height: 1.7;
+            }
+
+
+            .arrow {
+                font-size: 16px;
+            }
+
+        }
+
+
+        /* =========================
+           VERY SMALL DEVICES
+        ========================= */
+
+        @media (max-width: 380px) {
+
+            .logo {
+                font-size: 16px;
+            }
+
+
+            main {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+
+
+            .page-header h1 {
+                font-size: 30px;
+            }
+
+
+            .question-btn {
+                padding: 14px;
+
+                font-size: 13px;
+            }
+
+
+            .answer {
+                padding-left: 14px;
+                padding-right: 14px;
+
+                font-size: 13px;
+            }
+
+        }
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <nav>
+
+        <div class="nav-container">
+
+
+            <!-- LOGO -->
+
+            <a href="index.html" class="logo">
+                Dev.<span>Prep</span>
+            </a>
+
+
+            <!-- DESKTOP LINKS -->
+
+            <div class="nav-links">
+
+                <a href="dn-v1-html.html">
+                    HTML
+                </a>
+
+                <a href="dn-v1-css.html">
+                    CSS
+                </a>
+
+                <a href="dn-v1-js.html">
+                    JavaScript
+                </a>
+
+                <a href="dn-v1-react.html">
+                    React
+                </a>
+
+                <a href="dn-v1-node.html" class="active">
+                    Node.js
+                </a>
+
+                <a href="dn-v1-sql.html">
+                    SQL
+                </a>
+
+                <a href="dn-v1-dsa.html">
+                    DSA
+                </a>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="nav-actions">
+
+                <button class="menu-btn" id="menuBtn" aria-label="Open navigation menu">
+                    ☰
+                </button>
+
+
+                <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
+                    ☾
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- MOBILE MENU -->
+
+        <div class="mobile-menu" id="mobileMenu">
+
+            <a href="dn-v1-html.html">
+                HTML
+            </a>
+
+            <a href="dn-v1-css.html">
+                CSS
+            </a>
+
+            <a href="dn-v1-js.html">
+                JavaScript
+            </a>
+
+            <a href="dn-v1-react.html">
+                React
+            </a>
+
+            <a href="dn-v1-node.html" class="active">
+                Node.js
+            </a>
+
+            <a href="dn-v1-sql.html">
+                SQL
+            </a>
+
+            <a href="dn-v1-dsa.html">
+                DSA
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================= -->
+
+    <main>
+
+
+        <header class="page-header">
+
+            <span>
+                INTERVIEW PREPARATION
+            </span>
+
+            <h1>
+                Node.js
+            </h1>
+
+            <p>
+                Important Node.js concepts and interview
+                questions, from fundamentals to advanced topics.
+            </p>
+
+        </header>
+
+
+        <!-- QUESTIONS -->
+
+        <section id="questions"></section>
+
+
+    </main>
+
+
+    <script>
+
+
+        /* =========================
+           QUESTIONS
+        ========================= */
+
+        const questions = [
+
+
+            {
+                question: "What is Node.js and why is it used for backend development?",
+
+                answer: `
+
+
+<p>
+    Node.js is a <strong>JavaScript runtime environment</strong> that allows JavaScript
+    to run outside the browser. It is built on Chrome's <strong>V8 JavaScript engine</strong>.
+</p>
+
+<p>
+    Node.js is commonly used for backend development because it provides
+    <strong>non-blocking, asynchronous I/O</strong>, which allows it to handle
+    many concurrent requests efficiently.
+</p>
+
+<h4>Why is Node.js used for backend development?</h4>
+
+<ul>
+    <li>Allows JavaScript to be used on both frontend and backend.</li>
+    <li>Uses non-blocking I/O for handling concurrent requests efficiently.</li>
+    <li>Has a large ecosystem of packages through npm.</li>
+    <li>Works well for REST APIs, real-time applications, and microservices.</li>
+    <li>Uses the same language across the full stack.</li>
+</ul>
+
+<p>
+    In short, Node.js is useful for building fast and scalable
+    network applications, especially I/O-heavy applications.
+</p>
+
+`
+            },
+
+
+            {
+                question: "How does Node.js work internally?",
+
+                answer: `
+
+
+<p>
+    Node.js uses the <strong>V8 JavaScript engine</strong> to execute JavaScript
+    and uses an <strong>event-driven, non-blocking architecture</strong> to handle
+    asynchronous operations.
+</p>
+
+<h4>Basic flow:</h4>
+
+<ol>
+    <li>JavaScript code runs on the main thread.</li>
+    <li>Synchronous code is executed directly.</li>
+    <li>Asynchronous operations such as file I/O, network requests, and timers
+        are handled outside the main JavaScript execution flow.</li>
+    <li>When an asynchronous operation completes, its callback or promise
+        continuation is placed into the appropriate queue.</li>
+    <li>The <strong>Event Loop</strong> processes these callbacks when the
+        call stack is available.</li>
+</ol>
+
+<p>
+    This allows Node.js to continue handling other requests instead of
+    waiting for every I/O operation to finish.
+</p>
+
+<p>
+    Node.js also uses components such as <strong>libuv</strong> to provide
+    the event loop and handle asynchronous I/O and a thread pool for certain
+    operations.
+</p>
+
+`
+            },
+
+
+            {
+                question: "What is the Node.js Event Loop?",
+
+                answer: `
+
+
+<p>
+    The <strong>Event Loop</strong> is a mechanism in Node.js that allows it
+    to handle asynchronous operations without blocking the main JavaScript
+    thread.
+</p>
+
+<p>
+    JavaScript code executes on the call stack. When Node.js encounters an
+    asynchronous operation, it can delegate the operation and continue
+    executing other code. Once the operation is completed, its callback
+    becomes eligible to run, and the Event Loop coordinates when it can
+    execute.
+</p>
+
+<h4>Example:</h4>
+
+<pre><code>
+console.log("Start");
+
+setTimeout(() =&gt; {
+    console.log("Timer");
+}, 0);
+
+console.log("End");
+</code></pre>
+
+<p>
+    The output is:
+</p>
+
+<pre><code>
+Start
+End
+Timer
+</code></pre>
+
+<p>
+    Even though the timer is set to <code>0</code> milliseconds, its callback
+    does not execute immediately. The synchronous code runs first, and the
+    Event Loop later allows the timer callback to execute.
+</p>
+
+<p>
+    The Event Loop is one of the key reasons Node.js can efficiently handle
+    many concurrent I/O operations.
+</p>
+
+`
+            },
+
+
+            {
+                question: "Is Node.js single-threaded? What does that actually mean?",
+
+                answer: `
+
+
+<p>
+    Yes, Node.js executes JavaScript code on a <strong>single main thread</strong>.
+    However, saying Node.js is completely single-threaded is an oversimplification.
+</p>
+
+<p>
+    Node.js uses the <strong>Event Loop</strong> on the main JavaScript thread
+    and can use background threads through <strong>libuv's thread pool</strong>
+    for certain operations.
+</p>
+
+<h4>What this means:</h4>
+
+<ul>
+    <li>JavaScript execution happens primarily on one main thread.</li>
+    <li>Node.js does not create a new JavaScript thread for every request.</li>
+    <li>Many I/O operations can be handled asynchronously.</li>
+    <li>Certain expensive operations can use the libuv thread pool.</li>
+    <li>CPU-heavy JavaScript code can still block the main thread.</li>
+</ul>
+
+<p>
+    So, Node.js is <strong>single-threaded for JavaScript execution</strong>,
+    but the runtime itself can use multiple threads internally.
+</p>
+
+`
+            },
+
+
+            {
+                question: "What is non-blocking I/O?",
+
+                answer: `
+
+
+<p>
+    <strong>Non-blocking I/O</strong> means Node.js does not wait for an
+    input/output operation to finish before continuing with other code.
+</p>
+
+<p>
+    For example, when Node.js reads a file or waits for a database response,
+    it can start that operation and continue handling other work. Once the
+    operation completes, Node.js processes the result asynchronously.
+</p>
+
+<h4>Example:</h4>
+
+<pre><code>
+const fs = require("fs");
+
+fs.readFile("data.txt", "utf8", (err, data) =&gt; {
+    console.log(data);
+});
+
+console.log("This runs without waiting for the file");
+</code></pre>
+
+<p>
+    Here, Node.js starts reading the file and immediately continues to the
+    next statement instead of blocking until the file is completely read.
+</p>
+
+<p>
+    This makes Node.js well suited for applications that perform many
+    I/O operations such as APIs, database requests, and network requests.
+</p>
+
+`
+            },
+
+
+            {
+                question: "What is the difference between synchronous and asynchronous operations in Node.js?",
+
+                answer: `
+
+
+<p>
+    <strong>Synchronous operations</strong> execute one after another and
+    block the execution until the current operation finishes.
+</p>
+
+<p>
+    <strong>Asynchronous operations</strong> allow Node.js to start an operation
+    and continue executing other code while waiting for that operation to finish.
+</p>
+
+<h4>Example:</h4>
+
+<pre><code>
+const fs = require("fs");
+
+const data = fs.readFileSync("data.txt", "utf8");
+
+console.log(data);
+
+console.log("Finished");
+</code></pre>
+
+<p>
+    <code>readFileSync()</code> is synchronous, so Node.js waits for the file
+    operation to complete before continuing.
+</p>
+
+<p>
+    An asynchronous version would use <code>readFile()</code>, allowing other
+    code to execute while the file is being read.
+</p>
+
+<h4>Key difference:</h4>
+
+<ul>
+    <li><strong>Synchronous:</strong> Blocks execution until the operation finishes.</li>
+    <li><strong>Asynchronous:</strong> Does not block execution while waiting for I/O.</li>
+</ul>
+
+`
+            },
+
+
+            {
+                question: "What are callbacks, Promises, and async/await in Node.js?",
+
+                answer: `
+
+
+<p>
+    Callbacks, Promises, and <code>async/await</code> are different ways of
+    handling asynchronous operations in JavaScript and Node.js.
+</p>
+
+<h4>1. Callback</h4>
+
+<p>
+    A callback is a function passed to another function that is executed
+    after an asynchronous operation completes.
+</p>
+
+<pre><code>
+fs.readFile("data.txt", "utf8", (err, data) =&gt; {
+    if (err) {
+        console.log(err);
+        return;
+    }
+
+    console.log(data);
+});
+</code></pre>
+
+<h4>2. Promise</h4>
+
+<p>
+    A Promise represents the eventual success or failure of an asynchronous
+    operation. It can be handled using <code>.then()</code> and
+    <code>.catch()</code>.
+</p>
+
+<pre><code>
+fetchData()
+    .then(data =&gt; console.log(data))
+    .catch(error =&gt; console.log(error));
+</code></pre>
+
+<h4>3. async/await</h4>
+
+<p>
+    <code>async/await</code> provides a cleaner way to work with Promises.
+    An <code>async</code> function returns a Promise, and <code>await</code>
+    pauses that function until the Promise settles.
+</p>
+
+<pre><code>
+async function getData() {
+    try {
+        const data = await fetchData();
+        console.log(data);
+    } catch (error) {
+        console.log(error);
+    }
+}
+</code></pre>
+
+<p>
+    In modern Node.js applications, <strong>Promises and async/await</strong>
+    are commonly preferred because they make asynchronous code easier to
+    read and maintain.
+</p>
+
+`
+            },
+
+
+            {
+                question: "What is the difference between Node.js and browser JavaScript?",
+
+                answer: `
+
+
+<p>
+    Both Node.js and browsers use JavaScript, but they provide different
+    runtime environments and APIs.
+</p>
+
+<h4>Major differences:</h4>
+
+<ul>
+    <li>
+        <strong>Runtime:</strong> Browser JavaScript runs inside a browser,
+        while Node.js runs outside the browser.
+    </li>
+
+
+<li>
+    <strong>Environment APIs:</strong> Browsers provide APIs such as
+    DOM, <code>window</code>, and <code>document</code>. Node.js provides
+    APIs such as <code>fs</code>, <code>path</code>, and <code>http</code>.
+</li>
+
+<li>
+    <strong>DOM:</strong> Browsers can directly manipulate the DOM.
+    Node.js does not have a browser DOM by default.
+</li>
+
+<li>
+    <strong>File system:</strong> Node.js can access the server's file
+    system through its APIs, while browser JavaScript has restricted
+    access for security reasons.
+</li>
+
+<li>
+    <strong>Modules:</strong> Node.js supports CommonJS and ES Modules,
+    while browsers primarily use ES Modules for native module loading.
+</li>
+
+
+</ul>
+
+<p>
+    In simple terms, <strong>browser JavaScript is mainly used for client-side
+    applications</strong>, while <strong>Node.js allows JavaScript to be used
+    for server-side applications</strong>.
+</p>
+
+`
+            },
+
+
+            {
+                question: "What is npm?",
+
+                answer: `
+
+
+<p>
+    <strong>npm</strong> stands for <strong>Node Package Manager</strong>.
+    It is the default package manager commonly used with Node.js.
+</p>
+
+<p>
+    npm allows developers to install, update, remove, and manage
+    JavaScript packages and their dependencies.
+</p>
+
+<h4>Example:</h4>
+
+<pre><code>
+npm install express
+</code></pre>
+
+<p>
+    This installs the <code>express</code> package into the project and
+    records it as a dependency in <code>package.json</code>.
+</p>
+
+<h4>Common npm commands:</h4>
+
+<pre><code>
+npm init
+npm install express
+npm install -D nodemon
+npm uninstall express
+npm update
+npm run dev
+</code></pre>
+
+<p>
+    npm also provides scripts, dependency management, and access to a large
+    ecosystem of reusable packages.
+</p>
+
+`
+            },
+
+
+            {
+                question: "What is package.json?",
+
+                answer: `
+
+
+<p>
+    <strong>package.json</strong> is a configuration file that contains
+    important information about a Node.js project.
+</p>
+
+<p>
+    It describes the project, its dependencies, available scripts,
+    version, and other configuration details.
+</p>
+
+<h4>Example:</h4>
+
+<pre><code>
+{
+    "name": "my-app",
+    "version": "1.0.0",
+    "scripts": {
+        "start": "node server.js",
+        "dev": "nodemon server.js"
+    },
+    "dependencies": {
+        "express": "^5.0.0"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.0"
+    }
+}
+</code></pre>
+
+<h4>Important sections:</h4>
+
+<ul>
+    <li><strong>name:</strong> Name of the project.</li>
+    <li><strong>version:</strong> Current project version.</li>
+    <li><strong>scripts:</strong> Commands that can be executed using npm.</li>
+    <li><strong>dependencies:</strong> Packages required by the application.</li>
+    <li><strong>devDependencies:</strong> Packages mainly required during development.</li>
+</ul>
+
+<p>
+    In short, <code>package.json</code> acts as the main configuration and
+    dependency-manifest file for a Node.js project.
+</p>
+
+`
+            },
+
+
+            {
+                question: "What is the difference between dependencies and devDependencies?",
+
+                answer: `
+
+
+<p>
+    Both <code>dependencies</code> and <code>devDependencies</code> contain
+    packages used by a Node.js project, but they have different purposes.
+</p>
+
+<h4>dependencies</h4>
+
+<p>
+    These are packages required for the application to <strong>run in production</strong>.
+</p>
+
+<pre><code>
+npm install express
+</code></pre>
+
+<p>
+    Example: <code>express</code>, <code>mongoose</code>, and other packages
+    that the running application needs.
+</p>
+
+<h4>devDependencies</h4>
+
+<p>
+    These are packages mainly required during <strong>development, testing,
+    linting, or building</strong>.
+</p>
+
+<pre><code>
+npm install -D nodemon
+</code></pre>
+
+<p>
+    Example: <code>nodemon</code>, testing tools, linters, and development
+    utilities.
+</p>
+
+<h4>Key difference:</h4>
+
+<ul>
+    <li>
+        <strong>dependencies:</strong> Required for the application to run.
+    </li>
+    <li>
+        <strong>devDependencies:</strong> Mainly required while developing
+        or building the application.
+    </li>
+</ul>
+
+`
+            },
+
+
+            {
+                question: "What is package-lock.json and why is it important?",
+
+                answer: `
+
+
+<p>
+    <strong>package-lock.json</strong> is a file automatically generated by npm
+    that records the exact versions of the project's installed dependencies
+    and their dependency tree.
+</p>
+
+<p>
+    While <code>package.json</code> can contain version ranges such as
+    <code>^1.2.3</code>, <code>package-lock.json</code> records the specific
+    versions that were resolved and installed.
+</p>
+
+<h4>Why is it important?</h4>
+
+<ul>
+    <li>
+        Ensures developers install consistent dependency versions.
+    </li>
+    <li>
+        Makes installations more predictable across different environments.
+    </li>
+    <li>
+        Helps prevent unexpected changes caused by dependency updates.
+    </li>
+    <li>
+        Records the complete dependency tree, including transitive dependencies.
+    </li>
+</ul>
+
+<p>
+    Therefore, <code>package.json</code> describes the project's dependency
+    requirements, while <code>package-lock.json</code> locks the resolved
+    dependency versions used by the project.
+</p>
+
+`
+            },
+            {
+                question: "What is the difference between dependencies and devDependencies?",
+
+                answer: `
+
+
+<p>
+    <code>dependencies</code> are packages required by the application
+    when it runs in production, while <code>devDependencies</code> are
+    packages mainly required during development.
+</p>
+
+<h4>dependencies:</h4>
+
+<p>
+    These packages are required for the application to work in production.
+</p>
+
+<pre><code>
+npm install express
+</code></pre>
+
+<p>
+    This adds <code>express</code> to <code>dependencies</code>.
+</p>
+
+<h4>devDependencies:</h4>
+
+<p>
+    These packages are mainly used for development, testing, linting,
+    or development tooling.
+</p>
+
+<pre><code>
+npm install -D nodemon
+</code></pre>
+
+<p>
+    This adds <code>nodemon</code> to <code>devDependencies</code>.
+</p>
+
+<p>
+    <strong>In short:</strong> dependencies are needed to run the application,
+    while devDependencies are mainly needed to develop and maintain it.
+</p>
+
+`
+            },
+
+
+            {
+                question: "What is package-lock.json and why is it important?",
+
+                answer: `
+
+
+<p>
+    <code>package-lock.json</code> is automatically generated by npm and
+    records the exact versions of the packages installed in a project,
+    including their dependency tree.
+</p>
+
+<p>
+    It helps ensure that the same dependency versions are installed across
+    different machines and environments.
+</p>
+
+<h4>Why is it important?</h4>
+
+<ul>
+    <li>Locks the exact resolved package versions.</li>
+    <li>Provides consistent installations across environments.</li>
+    <li>Records transitive dependencies.</li>
+    <li>Helps make deployments more predictable.</li>
+</ul>
+
+<p>
+    <strong>package.json</strong> defines the project's dependency requirements,
+    while <strong>package-lock.json</strong> records the exact dependency
+    versions that npm resolved and installed.
+</p>
+
+`
+            },
+
+
+            {
+                question: "What is CommonJS vs ES Modules?",
+
+                answer: `
+
+
+<p>
+    <strong>CommonJS</strong> and <strong>ES Modules (ESM)</strong> are two
+    module systems used in Node.js to organize and share code between files.
+</p>
+
+<h4>CommonJS:</h4>
+
+<p>
+    CommonJS uses <code>require()</code> to import modules and
+    <code>module.exports</code> to export them.
+</p>
+
+<pre><code>
+// math.js
+const add = (a, b) =&gt; a + b;
+
+module.exports = add;
+
+
+// app.js
+const add = require("./math");
+
+console.log(add(2, 3));
+</code></pre>
+
+<h4>ES Modules:</h4>
+
+<p>
+    ES Modules use <code>import</code> and <code>export</code>.
+</p>
+
+<pre><code>
+// math.js
+export const add = (a, b) =&gt; a + b;
+
+
+// app.js
+import { add } from "./math.js";
+
+console.log(add(2, 3));
+</code></pre>
+
+<h4>Key difference:</h4>
+
+<ul>
+    <li><strong>CommonJS:</strong> <code>require()</code> and <code>module.exports</code></li>
+    <li><strong>ES Modules:</strong> <code>import</code> and <code>export</code></li>
+</ul>
+
+<p>
+    Modern Node.js supports both module systems. ES Modules are the
+    standardized JavaScript module system, while CommonJS is widely used
+    in existing Node.js projects.
+</p>
+
+`
+            },
+
+
+            {
+                question: "What is require() vs import?",
+
+                answer: `
+
+
+<p>
+    Both <code>require()</code> and <code>import</code> are used to load
+    modules, but they belong to different module systems.
+</p>
+
+<h4>require()</h4>
+
+<p>
+    <code>require()</code> is the CommonJS way of importing modules.
+</p>
+
+<pre><code>
+const express = require("express");
+const userController = require("./controllers/userController");
+</code></pre>
+
+<h4>import</h4>
+
+<p>
+    <code>import</code> is used with the ES Modules system.
+</p>
+
+<pre><code>
+import express from "express";
+import userController from "./controllers/userController.js";
+</code></pre>
+
+<h4>Main difference:</h4>
+
+<ul>
+    <li><code>require()</code> belongs to CommonJS.</li>
+    <li><code>import</code> belongs to ES Modules.</li>
+    <li>ES Modules use <code>export</code> and <code>import</code>.</li>
+    <li>CommonJS uses <code>module.exports</code> and <code>require()</code>.</li>
+</ul>
+
+<p>
+    The important interview point is that they are different module systems,
+    not simply two different syntaxes for exactly the same system.
+</p>
+
+`
+            },
+
+
+            {
+                question: "What are environment variables and why do we use .env files?",
+
+                answer: `
+
+
+<p>
+    <strong>Environment variables</strong> are configuration values provided
+    to an application through its environment instead of hardcoding them
+    directly into the source code.
+</p>
+
+<p>
+    They are commonly used for values such as database URLs, API keys,
+    JWT secrets, ports, and other environment-specific configuration.
+</p>
+
+<h4>Example .env:</h4>
+
+<pre><code>
+PORT=5000
+MONGO_URI=mongodb://localhost:27017/mydb
+JWT_SECRET=my-secret-key
+</code></pre>
+
+<p>
+    In Node.js, these values can be accessed through
+    <code>process.env</code>.
+</p>
+
+<pre><code>
+console.log(process.env.PORT);
+console.log(process.env.MONGO_URI);
+</code></pre>
+
+<h4>Why use environment variables?</h4>
+
+<ul>
+    <li>Keep sensitive configuration outside the source code.</li>
+    <li>Use different configuration for development, testing, and production.</li>
+    <li>Avoid hardcoding secrets and credentials.</li>
+</ul>
+
+<p>
+    The <code>.env</code> file should generally not be committed to Git
+    when it contains secrets. It should be added to <code>.gitignore</code>.
+</p>
+
+`
+            },
+
+
+            {
+                question: "What is Express.js and why is it used with Node.js?",
+
+                answer: `
+
+
+<p>
+    <strong>Express.js</strong> is a lightweight web framework built on top
+    of Node.js that makes it easier to build web servers and REST APIs.
+</p>
+
+<p>
+    Node.js provides the runtime and low-level networking capabilities,
+    while Express provides a convenient structure and APIs for handling
+    HTTP requests and responses.
+</p>
+
+<h4>Why use Express?</h4>
+
+<ul>
+    <li>Easy routing.</li>
+    <li>Middleware support.</li>
+    <li>Easy request and response handling.</li>
+    <li>Centralized error handling.</li>
+    <li>Easy REST API development.</li>
+    <li>Large ecosystem and community.</li>
+</ul>
+
+<p>
+    For example, Express makes it simple to create endpoints such as
+    <code>GET /users</code> or <code>POST /users</code> without manually
+    implementing all the HTTP server logic.
+</p>
+
+`
+            },
+
+
+            {
+                question: "How do you create a basic Express server?",
+
+                answer: `
+
+
+<p>
+    A basic Express server can be created by installing Express, creating
+    an application instance, defining routes, and starting the server
+    with <code>app.listen()</code>.
+</p>
+
+<h4>Example:</h4>
+
+<pre><code>
+const express = require("express");
+
+const app = express();
+
+app.get("/", (req, res) =&gt; {
+    res.send("Hello World");
+});
+
+app.listen(5000, () =&gt; {
+    console.log("Server running on port 5000");
+});
+</code></pre>
+
+<p>
+    Here, <code>express()</code> creates the Express application,
+    <code>app.get()</code> defines a GET route, and
+    <code>app.listen()</code> starts the HTTP server.
+</p>
+
+`
+            },
+
+
+            {
+                question: "What is middleware in Express?",
+
+                answer: `
+
+
+<p>
+    <strong>Middleware</strong> is a function that runs during the request-
+    response cycle. It has access to the request object, response object,
+    and the <code>next()</code> function.
+</p>
+
+<p>
+    Middleware can perform tasks such as authentication, logging,
+    validation, parsing request bodies, and error handling.
+</p>
+
+<h4>Example:</h4>
+
+<pre><code>
+const logger = (req, res, next) =&gt; {
+    console.log(req.method, req.url);
+    next();
+};
+
+app.use(logger);
+</code></pre>
+
+<p>
+    Here, the middleware logs information about the request and then calls
+    <code>next()</code> so that Express can continue processing the request.
+</p>
+
+<h4>Common uses of middleware:</h4>
+
+<ul>
+    <li>Authentication and authorization.</li>
+    <li>Request logging.</li>
+    <li>Input validation.</li>
+    <li>Parsing JSON request bodies.</li>
+    <li>Error handling.</li>
+    <li>Adding or modifying request data.</li>
+</ul>
+
+<p>
+    Middleware is one of the most important concepts in Express because
+    multiple middleware functions can be chained together to process a request.
+</p>
+
+`
+            },
+
+
+            {
+                question: "What are the different types of middleware?",
+
+                answer: `
+
+
+<p>
+    Express provides several types of middleware based on where and how
+    the middleware is used.
+</p>
+
+<h4>1. Application-level middleware</h4>
+
+<p>
+    Applied to the entire Express application using <code>app.use()</code>
+    or specific HTTP methods.
+</p>
+
+<pre><code>
+app.use((req, res, next) =&gt; {
+    console.log("Request received");
+    next();
+});
+</code></pre>
+
+<h4>2. Router-level middleware</h4>
+
+<p>
+    Applied to a specific Express router instead of the entire application.
+</p>
+
+<pre><code>
+router.use(authMiddleware);
+</code></pre>
+
+<h4>3. Built-in middleware</h4>
+
+<p>
+    Middleware provided by Express itself.
+</p>
+
+<pre><code>
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+</code></pre>
+
+<h4>4. Third-party middleware</h4>
+
+<p>
+    Middleware provided by external npm packages.
+</p>
+
+<pre><code>
+const cors = require("cors");
+
+app.use(cors());
+</code></pre>
+
+<h4>5. Error-handling middleware</h4>
+
+<p>
+    Used to handle errors centrally. It has four parameters:
+    <code>err</code>, <code>req</code>, <code>res</code>, and <code>next</code>.
+</p>
+
+<pre><code>
+app.use((err, req, res, next) =&gt; {
+    res.status(500).json({
+        message: "Something went wrong"
+    });
+});
+</code></pre>
+
+`
+            },
+
+
+            {
+                question: "How does middleware execution work?",
+
+                answer: `
+
+
+<p>
+    Express executes middleware functions in the order in which they are
+    registered.
+</p>
+
+<p>
+    A middleware function can either:
+</p>
+
+<ul>
+    <li>Send a response and end the request.</li>
+    <li>Modify the request or response and call <code>next()</code>.</li>
+    <li>Pass an error to the error-handling middleware.</li>
+</ul>
+
+<h4>Example:</h4>
+
+<pre><code>
+app.use((req, res, next) =&gt; {
+    console.log("Middleware 1");
+    next();
+});
+
+app.use((req, res, next) =&gt; {
+    console.log("Middleware 2");
+    next();
+});
+
+app.get("/", (req, res) =&gt; {
+    res.send("Response");
+});
+</code></pre>
+
+<p>
+    When a request reaches <code>/</code>, the execution order is:
+</p>
+
+<pre><code>
+Middleware 1
+Middleware 2
+Route handler
+Response
+</code></pre>
+
+<p>
+    If a middleware does not send a response and also does not call
+    <code>next()</code>, the request will normally remain pending.
+</p>
+
+<p>
+    Therefore, middleware execution depends heavily on
+    <strong>registration order</strong> and whether each middleware
+    continues the request using <code>next()</code>.
+</p>
+
+`
+            },
+            {
+                question: "What is the purpose of next() in Express?",
+
+                answer: `
+
+
+<p>
+    <code>next()</code> is a function provided by Express middleware that
+    passes control to the <strong>next middleware function or route handler</strong>
+    in the request-response cycle.
+</p>
+
+<p>
+    It is mainly used when the current middleware has finished its work
+    and wants Express to continue processing the request.
+</p>
+
+<h4>Example:</h4>
+
+<pre><code>
+app.use((req, res, next) =&gt; {
+    console.log("Middleware executed");
+
+    next();
+});
+
+app.get("/", (req, res) =&gt; {
+    res.send("Hello World");
+});
+</code></pre>
+
+<p>
+    Here, <code>next()</code> allows Express to move from the middleware
+    to the route handler.
+</p>
+
+<p>
+    <strong>Important:</strong> If middleware neither sends a response nor
+    calls <code>next()</code>, the request can remain pending.
+</p>
+
+`
+            },
+
+
+            {
+                question: "What happens if you don't call next()?",
+
+                answer: `
+
+
+<p>
+    If middleware does not send a response and does not call
+    <code>next()</code>, Express cannot continue to the next middleware
+    or route handler.
+</p>
+
+<h4>Example:</h4>
+
+<pre><code>
+app.use((req, res, next) =&gt; {
+    console.log("Middleware executed");
+
+    // next() is missing
+});
+
+app.get("/", (req, res) =&gt; {
+    res.send("Hello World");
+});
+</code></pre>
+
+<p>
+    In this case, the request will usually remain <strong>pending</strong>
+    because the middleware neither ended the response nor passed control
+    to the next handler.
+</p>
+
+<p>
+    A middleware should generally do one of three things:
+</p>
+
+<ul>
+    <li>Send a response.</li>
+    <li>Call <code>next()</code> to continue.</li>
+    <li>Pass an error using <code>next(error)</code>.</li>
+</ul>
+
+`
+            },
+
+
+            {
+                question: "What is route middleware?",
+
+                answer: `
+
+
+<p>
+    <strong>Route middleware</strong> is middleware that runs for a specific
+    route or group of routes instead of necessarily running for every
+    request in the application.
+</p>
+
+<p>
+    It is commonly used for authentication, authorization, validation,
+    and other route-specific logic.
+</p>
+
+<h4>Example:</h4>
+
+<pre><code>
+const authMiddleware = (req, res, next) =&gt; {
+    const token = req.headers.authorization;
+
+    if (!token) {
+        return res.status(401).json({
+            message: "Unauthorized"
+        });
+    }
+
+    next();
+};
+
+app.get("/profile", authMiddleware, (req, res) =&gt; {
+    res.json({
+        message: "Profile data"
+    });
+});
+</code></pre>
+
+<p>
+    Here, <code>authMiddleware</code> runs only when the
+    <code>/profile</code> route is accessed.
+</p>
+
+<p>
+    Route middleware is useful when certain routes require additional
+    processing, such as authentication or validation.
+</p>
+
+`
+            },
+
+
+            {
+                question: "What is error-handling middleware?",
+
+                answer: `
+
+
+<p>
+    <strong>Error-handling middleware</strong> is special Express middleware
+    used to handle errors in a centralized way.
+</p>
+
+<p>
+    Unlike normal middleware, error-handling middleware has
+    <strong>four parameters</strong>:
+</p>
+
+<pre><code>
+(err, req, res, next)
+</code></pre>
+
+<h4>Example:</h4>
+
+<pre><code>
+app.use((err, req, res, next) =&gt; {
+    console.error(err);
+
+    res.status(500).json({
+        message: "Internal Server Error"
+    });
+});
+</code></pre>
+
+<p>
+    An error can be passed to it using <code>next(error)</code>.
+</p>
+
+<pre><code>
+app.get("/users", (req, res, next) =&gt; {
+    try {
+        // Some operation
+        throw new Error("Database failed");
+    } catch (error) {
+        next(error);
+    }
+});
+</code></pre>
+
+<p>
+    Centralized error handling prevents every route from having to
+    implement its own response format for errors.
+</p>
+
+`
+            },
+
+
+            {
+                question: "How do you create a centralized error handler?",
+
+                answer: `
+
+
+<p>
+    A centralized error handler is created by defining an Express
+    error-handling middleware at the end of the middleware and route
+    definitions.
+</p>
+
+<h4>Example:</h4>
+
+<pre><code>
+const express = require("express");
+
+const app = express();
+
+app.get("/users", (req, res, next) =&gt; {
+    try {
+        throw new Error("Something went wrong");
+    } catch (error) {
+        next(error);
+    }
+});
+
+app.use((err, req, res, next) =&gt; {
+    console.error(err);
+
+    res.status(500).json({
+        success: false,
+        message: err.message || "Internal Server Error"
+    });
+});
+
+app.listen(5000);
+</code></pre>
+
+<p>
+    The important point is that the error handler should be registered
+    <strong>after the routes and other middleware</strong>, so errors can
+    flow down to it.
+</p>
+
+<p>
+    In a production application, you would typically also avoid exposing
+    sensitive internal error details to the client.
+</p>
+
+`
+            },
+
+
+            {
+                question: "What is the difference between app.use() and app.get() / app.post()?",
+
+                answer: `
+
+
+<p>
+    <code>app.use()</code> is primarily used to register middleware,
+    while <code>app.get()</code>, <code>app.post()</code>, and other HTTP
+    method functions are used to define routes for specific HTTP methods.
+</p>
+
+<h4>app.use()</h4>
+
+<p>
+    It can apply middleware to all requests or to requests under a
+    specific path.
+</p>
+
+<pre><code>
+app.use(express.json());
+
+app.use("/api/users", userRouter);
+</code></pre>
+
+<h4>app.get()</h4>
+
+<p>
+    Defines a route that handles GET requests.
+</p>
+
+<pre><code>
+app.get("/users", (req, res) =&gt; {
+    res.json([]);
+});
+</code></pre>
+
+<h4>app.post()</h4>
+
+<p>
+    Defines a route that handles POST requests.
+</p>
+
+<pre><code>
+app.post("/users", (req, res) =&gt; {
+    res.json({
+        message: "User created"
+    });
+});
+</code></pre>
+
+<p>
+    <strong>In short:</strong>
+    <code>app.use()</code> is mainly for middleware and mounting routers,
+    while <code>app.get()</code> and <code>app.post()</code> define
+    handlers for specific HTTP methods.
+</p>
+
+`
+            },
+
+
+            {
+                question: "What is the difference between route parameters, query parameters, and request body?",
+
+                answer: `
+
+
+<p>
+    Route parameters, query parameters, and request body are three common
+    ways to send data to an API.
+</p>
+
+<h4>1. Route Parameters</h4>
+
+<p>
+    Route parameters are part of the URL path and are commonly used to
+    identify a specific resource.
+</p>
+
+<pre><code>
+GET /users/123
+</code></pre>
+
+<pre><code>
+app.get("/users/:id", (req, res) =&gt; {
+    console.log(req.params.id);
+});
+</code></pre>
+
+<p>
+    Access them using <code>req.params</code>.
+</p>
+
+<h4>2. Query Parameters</h4>
+
+<p>
+    Query parameters are added after <code>?</code> in the URL and are
+    commonly used for filtering, searching, sorting, and pagination.
+</p>
+
+<pre><code>
+GET /users?page=2&amp;limit=10
+</code></pre>
+
+<pre><code>
+console.log(req.query.page);
+console.log(req.query.limit);
+</code></pre>
+
+<p>
+    Access them using <code>req.query</code>.
+</p>
+
+<h4>3. Request Body</h4>
+
+<p>
+    The request body contains data sent with the request, commonly used
+    when creating or updating resources.
+</p>
+
+<pre><code>
+POST /users
+
+{
+    "name": "John",
+    "email": "john@example.com"
+}
+</code></pre>
+
+<pre><code>
+console.log(req.body.name);
+console.log(req.body.email);
+</code></pre>
+
+<p>
+    Access it using <code>req.body</code>, after enabling the appropriate
+    body-parsing middleware.
+</p>
+
+<h4>Quick difference:</h4>
+
+<ul>
+    <li><strong>req.params:</strong> Identifies a resource in the URL.</li>
+    <li><strong>req.query:</strong> Optional URL parameters for filtering, searching, pagination, etc.</li>
+    <li><strong>req.body:</strong> Data sent inside the HTTP request body.</li>
+</ul>
+
+`
+            },
+
+
+            {
+                question: "How do you handle JSON request bodies in Express?",
+
+                answer: `
+
+
+<p>
+    Express provides the built-in <code>express.json()</code> middleware
+    to parse incoming JSON request bodies.
+</p>
+
+<h4>Example:</h4>
+
+<pre><code>
+const express = require("express");
+
+const app = express();
+
+app.use(express.json());
+
+app.post("/users", (req, res) =&gt; {
+    console.log(req.body);
+
+    res.json({
+        message: "User received",
+        user: req.body
+    });
+});
+</code></pre>
+
+<p>
+    Without <code>express.json()</code>, Express will not automatically
+    parse a JSON request body into <code>req.body</code>.
+</p>
+
+<p>
+    Therefore, for APIs that accept JSON data, it is common to register
+    <code>express.json()</code> before the routes that need it.
+</p>
+
+`
+            },
+
+
+            {
+                question: "What is CORS and why is it required?",
+
+                answer: `
+
+
+<p>
+    <strong>CORS</strong> stands for <strong>Cross-Origin Resource Sharing</strong>.
+    It is a browser security mechanism that controls whether a web page
+    from one origin is allowed to make requests to a different origin.
+</p>
+
+<p>
+    An origin is determined by the combination of
+    <strong>protocol, hostname, and port</strong>.
+</p>
+
+<h4>Example:</h4>
+
+<p>
+    Suppose your React frontend runs on:
+</p>
+
+<pre><code>
+http://localhost:5173
+</code></pre>
+
+<p>
+    and your Node.js API runs on:
+</p>
+
+<pre><code>
+http://localhost:5000
+</code></pre>
+
+<p>
+    These are different origins because their ports are different.
+    The browser may block the frontend request unless the backend
+    allows that origin through CORS.
+</p>
+
+<p>
+    CORS allows the server to specify which origins, methods, headers,
+    and credentials are permitted.
+</p>
+
+<p>
+    <strong>Important:</strong> CORS is primarily enforced by browsers.
+    It is not an authentication or authorization mechanism.
+</p>
+
+`
+            },
+
+
+            {
+                question: "How do you configure CORS in Express?",
+
+                answer: `
+
+
+<p>
+    CORS can be configured in Express using the <code>cors</code> npm package.
+</p>
+
+<h4>Install:</h4>
+
+<pre><code>
+npm install cors
+</code></pre>
+
+<h4>Basic configuration:</h4>
+
+<pre><code>
+const express = require("express");
+const cors = require("cors");
+
+const app = express();
+
+app.use(cors());
+
+app.listen(5000);
+</code></pre>
+
+<p>
+    This allows cross-origin requests according to the middleware's
+    default configuration.
+</p>
+
+<h4>Allow a specific frontend:</h4>
+
+<pre><code>
+app.use(cors({
+    origin: "http://localhost:5173"
+}));
+</code></pre>
+
+<p>
+    You can also configure credentials when using cookies, such as
+    HttpOnly refresh-token cookies.
+</p>
+
+<pre><code>
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true
+}));
+</code></pre>
+
+<p>
+    When credentials are enabled, the server should use an explicit
+    allowed origin rather than a wildcard origin for credentialed
+    browser requests.
+</p>
+
+`
+            },
+            {
+                question: "What is a REST API?",
+
+                answer: `
+
+
+<p>
+    A <strong>REST API</strong> is an API that follows the principles of
+    <strong>REST (Representational State Transfer)</strong> for allowing
+    clients and servers to communicate over HTTP.
+</p>
+
+<p>
+    In a REST API, resources such as users, products, and orders are
+    represented using URLs, and HTTP methods are used to perform operations
+    on those resources.
+</p>
+
+<h4>Example:</h4>
+
+<pre><code>
+GET    /api/users
+GET    /api/users/123
+POST   /api/users
+PATCH  /api/users/123
+DELETE /api/users/123
+</code></pre>
+
+<p>
+    A REST API is generally <strong>stateless</strong>, meaning each request
+    should contain the information necessary for the server to process it.
+</p>
+
+<p>
+    In simple terms, REST provides a structured way for frontend applications,
+    mobile apps, and other clients to communicate with backend services.
+</p>
+
+`
+            },
+
+
+            {
+                question: "What are the main HTTP methods and when do you use them?",
+
+                answer: `
+
+
+<p>
+    HTTP methods describe the operation that a client wants to perform
+    on a resource.
+</p>
+
+<h4>GET</h4>
+
+<p>
+    Used to retrieve data from the server.
+</p>
+
+<pre><code>
+GET /api/users
+GET /api/users/123
+</code></pre>
+
+<h4>POST</h4>
+
+<p>
+    Used to create a new resource or trigger an operation that creates
+    something on the server.
+</p>
+
+<pre><code>
+POST /api/users
+</code></pre>
+
+<h4>PUT</h4>
+
+<p>
+    Used to replace the representation of an existing resource.
+</p>
+
+<pre><code>
+PUT /api/users/123
+</code></pre>
+
+<h4>PATCH</h4>
+
+<p>
+    Used to partially update an existing resource.
+</p>
+
+<pre><code>
+PATCH /api/users/123
+</code></pre>
+
+<h4>DELETE</h4>
+
+<p>
+    Used to delete a resource.
+</p>
+
+<pre><code>
+DELETE /api/users/123
+</code></pre>
+
+<h4>Quick revision:</h4>
+
+<ul>
+    <li><strong>GET:</strong> Read</li>
+    <li><strong>POST:</strong> Create</li>
+    <li><strong>PUT:</strong> Replace</li>
+    <li><strong>PATCH:</strong> Partially update</li>
+    <li><strong>DELETE:</strong> Delete</li>
+</ul>
+
+`
+            },
+
+
+            {
+                question: "What is the difference between PUT and PATCH?",
+
+                answer: `
+
+
+<p>
+    Both <code>PUT</code> and <code>PATCH</code> are used to update resources,
+    but they generally have different semantics.
+</p>
+
+<h4>PUT</h4>
+
+<p>
+    <code>PUT</code> is generally used to <strong>replace the complete
+    representation</strong> of a resource.
+</p>
+
+<pre><code>
+PUT /api/users/123
+
+{
+    "name": "John",
+    "email": "john@example.com",
+    "age": 25
+}
+</code></pre>
+
+<p>
+    The request represents the new complete state of the resource.
+</p>
+
+<h4>PATCH</h4>
+
+<p>
+    <code>PATCH</code> is generally used to make a <strong>partial update</strong>.
+</p>
+
+<pre><code>
+PATCH /api/users/123
+
+{
+    "age": 26
+}
+</code></pre>
+
+<p>
+    Only the specified field needs to be changed.
+</p>
+
+<h4>Interview answer:</h4>
+
+<p>
+    <strong>PUT is generally used to replace a resource, while PATCH is used
+    to partially update a resource.</strong>
+</p>
+
+`
+            },
+
+
+            {
+                question: "What are HTTP status codes?",
+
+                answer: `
+
+
+<p>
+    <strong>HTTP status codes</strong> are three-digit codes returned by a
+    server to indicate the result of an HTTP request.
+</p>
+
+<h4>Main categories:</h4>
+
+<ul>
+    <li>
+        <strong>1xx — Informational:</strong>
+        Request is being processed or information is being provided.
+    </li>
+
+
+<li>
+    <strong>2xx — Success:</strong>
+    The request was successfully processed.
+</li>
+
+<li>
+    <strong>3xx — Redirection:</strong>
+    Additional action or redirection is required.
+</li>
+
+<li>
+    <strong>4xx — Client Error:</strong>
+    The request is invalid or cannot be fulfilled due to the client request.
+</li>
+
+<li>
+    <strong>5xx — Server Error:</strong>
+    The server failed while processing a valid request.
+</li>
+
+
+</ul>
+
+<h4>Common examples:</h4>
+
+<pre><code>
+200 OK
+201 Created
+204 No Content
+
+400 Bad Request
+401 Unauthorized
+403 Forbidden
+404 Not Found
+409 Conflict
+
+500 Internal Server Error
+</code></pre>
+
+`
+            },
+
+
+            {
+                question: "What is the difference between 200, 201, 204, 400, 401, 403, 404, 409, and 500?",
+
+                answer: `
+
+
+<ul>
+    <li>
+        <strong>200 OK:</strong>
+        The request was successfully processed and a response body may be returned.
+    </li>
+
+
+<li>
+    <strong>201 Created:</strong>
+    A new resource was successfully created.
+    Commonly returned after a successful POST request.
+</li>
+
+<li>
+    <strong>204 No Content:</strong>
+    The request was successfully processed, but there is no response
+    content to return.
+</li>
+
+<li>
+    <strong>400 Bad Request:</strong>
+    The server cannot process the request because the request data
+    is invalid or malformed.
+</li>
+
+<li>
+    <strong>401 Unauthorized:</strong>
+    The request lacks valid authentication credentials.
+</li>
+
+<li>
+    <strong>403 Forbidden:</strong>
+    The server understands the request but refuses to allow the action.
+</li>
+
+<li>
+    <strong>404 Not Found:</strong>
+    The requested resource or endpoint could not be found.
+</li>
+
+<li>
+    <strong>409 Conflict:</strong>
+    The request conflicts with the current state of the resource.
+    For example, attempting to create a user with an email that must be unique.
+</li>
+
+<li>
+    <strong>500 Internal Server Error:</strong>
+    An unexpected error occurred on the server.
+</li>
+
+
+</ul>
+
+<h4>Quick revision:</h4>
+
+<pre><code>
+200 → Success
+201 → Created
+204 → Success, no content
+
+400 → Bad request
+401 → Authentication required/invalid
+403 → Access denied
+404 → Resource not found
+409 → Resource/state conflict
+
+500 → Server-side error
+</code></pre>
+
+`
+            },
+
+
+            {
+                question: "What is the difference between 401 Unauthorized and 403 Forbidden?",
+
+                answer: `
+
+
+<p>
+    The main difference is related to <strong>authentication</strong> and
+    <strong>permission</strong>.
+</p>
+
+<h4>401 Unauthorized</h4>
+
+<p>
+    A <code>401</code> response means the client does not have valid
+    authentication credentials for the requested resource.
+</p>
+
+<p>
+    Examples include a missing, expired, or invalid access token.
+</p>
+
+<pre><code>
+{
+    "message": "Authentication required"
+}
+</code></pre>
+
+<h4>403 Forbidden</h4>
+
+<p>
+    A <code>403</code> response means the server knows who the client is
+    or has enough authentication context, but the client does not have
+    permission to perform the requested action.
+</p>
+
+<p>
+    For example, a normal user trying to access an admin-only endpoint.
+</p>
+
+<pre><code>
+{
+    "message": "You do not have permission"
+}
+</code></pre>
+
+<h4>Interview shortcut:</h4>
+
+<ul>
+    <li><strong>401:</strong> "You are not properly authenticated."</li>
+    <li><strong>403:</strong> "You are authenticated, but you are not allowed to do this."</li>
+</ul>
+
+`
+            },
+
+
+            {
+                question: "How should you structure REST API endpoints?",
+
+                answer: `
+
+
+<p>
+    REST API endpoints should represent <strong>resources</strong> rather
+    than actions. HTTP methods should describe what operation is being
+    performed on the resource.
+</p>
+
+<h4>Example:</h4>
+
+<pre><code>
+GET    /api/users
+GET    /api/users/123
+POST   /api/users
+PATCH  /api/users/123
+DELETE /api/users/123
+</code></pre>
+
+<p>
+    Here, <code>/users</code> represents the user resource, while the HTTP
+    method determines the operation.
+</p>
+
+<h4>Common conventions:</h4>
+
+<ul>
+    <li>Use nouns for resources.</li>
+    <li>Use plural resource names such as <code>/users</code> and <code>/products</code>.</li>
+    <li>Use route parameters for specific resources, such as <code>/users/:id</code>.</li>
+    <li>Use query parameters for filtering, sorting, searching, and pagination.</li>
+    <li>Use appropriate HTTP methods and status codes.</li>
+    <li>Keep endpoint naming consistent throughout the API.</li>
+</ul>
+
+<p>
+    Avoid action-oriented endpoints when the operation can naturally be
+    represented using an HTTP method.
+</p>
+
+<pre><code>
+GET /api/getUsers        // Less REST-like
+
+GET /api/users           // Preferred
+</code></pre>
+
+`
+            },
+
+
+            {
+                question: "What makes an API RESTful?",
+
+                answer: `
+
+
+<p>
+    An API is considered RESTful when it follows the main principles and
+    constraints of REST.
+</p>
+
+<h4>Important REST principles:</h4>
+
+<ul>
+    <li>
+        <strong>Client-Server:</strong>
+        The client and server have separate responsibilities.
+    </li>
+
+
+<li>
+    <strong>Stateless:</strong>
+    Each request contains the information required to process it.
+    The server should not depend on stored client session state between requests.
+</li>
+
+<li>
+    <strong>Uniform Interface:</strong>
+    Resources and operations follow consistent conventions.
+</li>
+
+<li>
+    <strong>Cacheable:</strong>
+    Responses should indicate whether they can be cached.
+</li>
+
+<li>
+    <strong>Layered System:</strong>
+    The client does not necessarily know whether it is communicating
+    directly with the origin server or an intermediary.
+</li>
+
+<li>
+    <strong>Code on Demand:</strong>
+    An optional constraint where a server can provide executable code
+    to the client.
+</li>
+
+
+</ul>
+
+<p>
+    In practical backend interviews, the most important REST concepts to
+    remember are <strong>resources, HTTP methods, statelessness, consistent
+    URLs, and proper HTTP status codes</strong>.
+</p>
+
+`
+            },
+
+
+            {
+                question: "What is idempotency in HTTP APIs?",
+
+                answer: `
+
+
+<p>
+    <strong>Idempotency</strong> means that making the same request multiple
+    times has the same intended effect on the server's resource state as
+    making it once.
+</p>
+
+<h4>Example:</h4>
+
+<p>
+    Suppose you send:
+</p>
+
+<pre><code>
+PUT /api/users/123
+
+{
+    "name": "John"
+}
+</code></pre>
+
+<p>
+    Sending this request multiple times should leave the user with the
+    same name. The final resource state is the same as if the request
+    had been sent once.
+</p>
+
+<h4>Common HTTP methods:</h4>
+
+<ul>
+    <li><strong>GET:</strong> Idempotent.</li>
+    <li><strong>PUT:</strong> Idempotent.</li>
+    <li><strong>DELETE:</strong> Idempotent in its intended effect.</li>
+    <li><strong>POST:</strong> Generally not idempotent.</li>
+    <li><strong>PATCH:</strong> Depends on how the operation is designed.</li>
+</ul>
+
+<p>
+    Idempotency is important because clients or network infrastructure may
+    retry requests. An idempotent operation can be safely repeated without
+    repeatedly changing the intended final state.
+</p>
+
+`
+            },
+
+
+            {
+                question: "How do you validate incoming API data?",
+
+                answer: `
+
+
+<p>
+    <strong>Input validation</strong> means checking incoming data to ensure
+    that it has the expected type, format, and values before processing it
+    or storing it in a database.
+</p>
+
+<h4>Example:</h4>
+
+<p>
+    Suppose an API expects a user with a name and valid email:
+</p>
+
+<pre><code>
+{
+    "name": "John",
+    "email": "john@example.com"
+}
+</code></pre>
+
+<p>
+    The API can validate that:
+</p>
+
+<ul>
+    <li><code>name</code> is present and is a string.</li>
+    <li><code>email</code> is present and has a valid format.</li>
+    <li>Required fields are not missing.</li>
+    <li>Values meet required length or range restrictions.</li>
+</ul>
+
+<h4>Using a validation library:</h4>
+
+<p>
+    Node.js applications commonly use libraries such as
+    <code>Zod</code>, <code>Joi</code>, or <code>express-validator</code>
+    to define validation rules.
+</p>
+
+<pre><code>
+const schema = z.object({
+    name: z.string().min(2),
+    email: z.string().email()
+});
+</code></pre>
+
+<p>
+    Validation should happen before business logic or database operations.
+    Invalid input should normally result in an appropriate client-error
+    response such as <code>400</code>.
+</p>
+
+`
+            },
+            {
+                question: "How should API errors be structured?",
+
+                answer: `
+
+
+<p>
+    API errors should have a <strong>consistent and predictable structure</strong>
+    so that frontend applications can easily understand and handle them.
+</p>
+
+<h4>Example:</h4>
+
+<pre><code>
+{
+    "success": false,
+    "message": "Validation failed",
+    "errors": [
+        {
+            "field": "email",
+            "message": "Invalid email address"
+        }
+    ]
+}
+</code></pre>
+
+<h4>A good error response can contain:</h4>
+
+<ul>
+    <li><strong>success:</strong> Indicates whether the request succeeded.</li>
+    <li><strong>message:</strong> Human-readable description of the error.</li>
+    <li><strong>errors:</strong> Optional detailed validation or field-level errors.</li>
+    <li><strong>statusCode:</strong> Optional application-level representation of the HTTP status.</li>
+</ul>
+
+<p>
+    The API should also return an appropriate HTTP status code, such as
+    <code>400</code> for invalid input, <code>401</code> for authentication
+    failures, <code>404</code> when a resource is not found, and
+    <code>500</code> for unexpected server errors.
+</p>
+
+<p>
+    The exact response format can vary between projects, but the important
+    point is to keep the structure <strong>consistent across the API</strong>.
+</p>
+
+`
+            },
+
+
+            {
+                question: "How do you handle pagination in a REST API?",
+
+                answer: `
+
+
+<p>
+    <strong>Pagination</strong> means returning a large dataset in smaller
+    portions instead of sending all records in a single response.
+</p>
+
+<p>
+    A common approach is to use <code>page</code> and <code>limit</code>
+    query parameters.
+</p>
+
+<h4>Example request:</h4>
+
+<pre><code>
+GET /api/products?page=2&amp;limit=10
+</code></pre>
+
+<p>
+    Here, the client is requesting the second page with 10 products per page.
+</p>
+
+<h4>Basic calculation:</h4>
+
+<pre><code>
+skip = (page - 1) * limit
+</code></pre>
+
+<h4>Example with MongoDB:</h4>
+
+<pre><code>
+const page = Number(req.query.page) || 1;
+const limit = Number(req.query.limit) || 10;
+
+const skip = (page - 1) * limit;
+
+const products = await Product
+    .find()
+    .skip(skip)
+    .limit(limit);
+</code></pre>
+
+<p>
+    A useful paginated response can also include metadata such as the
+    current page, page size, total records, and total pages.
+</p>
+
+<pre><code>
+{
+    "data": [],
+    "pagination": {
+        "page": 2,
+        "limit": 10,
+        "total": 100,
+        "totalPages": 10
+    }
+}
+</code></pre>
+
+`
+            },
+
+
+            {
+                question: "How do you implement filtering, sorting, and searching in an API?",
+
+                answer: `
+
+
+<p>
+    Filtering, sorting, and searching are commonly implemented using
+    <strong>query parameters</strong>.
+</p>
+
+<h4>Example request:</h4>
+
+<pre><code>
+GET /api/products?category=shoes&amp;sort=price&amp;order=asc&amp;search=nike
+</code></pre>
+
+<h4>Filtering</h4>
+
+<p>
+    Filtering returns only resources that match specific conditions.
+</p>
+
+<pre><code>
+GET /api/products?category=shoes
+</code></pre>
+
+<h4>Sorting</h4>
+
+<p>
+    Sorting controls the order in which results are returned.
+</p>
+
+<pre><code>
+GET /api/products?sort=price&amp;order=asc
+</code></pre>
+
+<h4>Searching</h4>
+
+<p>
+    Searching finds resources that match a search term.
+</p>
+
+<pre><code>
+GET /api/products?search=nike
+</code></pre>
+
+<p>
+    These query parameters are processed by the backend and translated
+    into the appropriate database query.
+</p>
+
+<p>
+    In a production API, user-provided values should be validated and
+    constrained before being used in database queries.
+</p>
+
+`
+            },
+
+
+            {
+                question: "What is API versioning and why is it useful?",
+
+                answer: `
+
+
+<p>
+    <strong>API versioning</strong> allows a backend to maintain different
+    versions of an API so that changes to the API do not unexpectedly break
+    existing clients.
+</p>
+
+<h4>Example:</h4>
+
+<pre><code>
+/api/v1/users
+/api/v2/users
+</code></pre>
+
+<p>
+    Suppose version 1 returns a user like this:
+</p>
+
+<pre><code>
+{
+    "name": "John",
+    "email": "john@example.com"
+}
+</code></pre>
+
+<p>
+    Later, version 2 might introduce a different response structure or
+    additional behavior. Existing clients can continue using
+    <code>v1</code> while newer clients use <code>v2</code>.
+</p>
+
+<h4>Why is versioning useful?</h4>
+
+<ul>
+    <li>Prevents breaking existing clients.</li>
+    <li>Allows APIs to evolve over time.</li>
+    <li>Makes backward compatibility easier to manage.</li>
+    <li>Allows gradual migration to a newer API version.</li>
+</ul>
+
+<p>
+    A common approach is URL-based versioning such as
+    <code>/api/v1/users</code>, although headers or other strategies can
+    also be used.
+</p>
+
+`
+            },
+
+
+            {
+                question: "What is authentication vs authorization?",
+
+                answer: `
+
+
+<p>
+    <strong>Authentication</strong> and <strong>authorization</strong> are
+    different security concepts.
+</p>
+
+<h4>Authentication</h4>
+
+<p>
+    Authentication verifies <strong>who the user is</strong>.
+</p>
+
+<p>
+    For example, a user logs in using an email and password. If the
+    credentials are valid, the server authenticates the user and may issue
+    an access token.
+</p>
+
+<h4>Authorization</h4>
+
+<p>
+    Authorization determines <strong>what an authenticated user is allowed
+    to do</strong>.
+</p>
+
+<p>
+    For example, both an admin and a normal user may be authenticated,
+    but only the admin may be allowed to delete users.
+</p>
+
+<h4>Interview shortcut:</h4>
+
+<pre><code>
+Authentication → Who are you?
+Authorization  → What are you allowed to do?
+</code></pre>
+
+`
+            },
+
+
+            {
+                question: "How does JWT authentication work?",
+
+                answer: `
+
+
+<p>
+    <strong>JWT (JSON Web Token)</strong> is a token format commonly used
+    for authentication between a client and a server.
+</p>
+
+<h4>Typical flow:</h4>
+
+<ol>
+    <li>User sends login credentials to the server.</li>
+    <li>Server verifies the credentials.</li>
+    <li>Server creates a signed JWT containing relevant claims.</li>
+    <li>Client stores the token according to the application's security design.</li>
+    <li>Client sends the token with requests to protected endpoints.</li>
+    <li>Server verifies the token before allowing access.</li>
+</ol>
+
+<h4>Example request:</h4>
+
+<pre><code>
+Authorization: Bearer &lt;access-token&gt;
+</code></pre>
+
+<p>
+    A JWT commonly consists of three parts:
+</p>
+
+<pre><code>
+Header.Payload.Signature
+</code></pre>
+
+<ul>
+    <li><strong>Header:</strong> Contains token metadata such as the signing algorithm.</li>
+    <li><strong>Payload:</strong> Contains claims such as a user ID and expiration time.</li>
+    <li><strong>Signature:</strong> Helps the server verify that the token was not modified.</li>
+</ul>
+
+<p>
+    The server should verify the JWT's signature and relevant claims such as
+    expiration before trusting the token.
+</p>
+
+`
+            },
+
+
+            {
+                question: "What are access tokens and refresh tokens?",
+
+                answer: `
+
+
+<p>
+    <strong>Access tokens</strong> and <strong>refresh tokens</strong> are
+    commonly used together to manage authenticated sessions.
+</p>
+
+<h4>Access Token</h4>
+
+<p>
+    An access token is a short-lived credential used to access protected
+    API endpoints.
+</p>
+
+<pre><code>
+Authorization: Bearer &lt;access-token&gt;
+</code></pre>
+
+<p>
+    Access tokens are usually short-lived so that the impact of token
+    exposure is limited.
+</p>
+
+<h4>Refresh Token</h4>
+
+<p>
+    A refresh token is a longer-lived credential used to obtain a new
+    access token when the current access token expires.
+</p>
+
+<p>
+    It is generally not sent with every API request.
+</p>
+
+<h4>Typical flow:</h4>
+
+<pre><code>
+Login
+  ↓
+Access Token + Refresh Token
+  ↓
+Access Token expires
+  ↓
+Send Refresh Token
+  ↓
+Server validates Refresh Token
+  ↓
+New Access Token
+</code></pre>
+
+<p>
+    This approach allows short-lived access tokens while avoiding the need
+    for the user to log in again every time an access token expires.
+</p>
+
+`
+            },
+
+
+            {
+                question: "Why use both access and refresh tokens?",
+
+                answer: `
+
+
+<p>
+    Using both tokens provides a balance between <strong>security and user
+    experience</strong>.
+</p>
+
+<h4>Access Token</h4>
+
+<p>
+    The access token is short-lived and used for normal API requests.
+    If it is exposed, its useful lifetime is limited.
+</p>
+
+<h4>Refresh Token</h4>
+
+<p>
+    The refresh token has a longer lifetime and is used only to obtain
+    new access tokens.
+</p>
+
+<h4>Why not use one long-lived access token?</h4>
+
+<p>
+    A long-lived access token increases the period during which a stolen
+    token could potentially be used.
+</p>
+
+<h4>Typical architecture:</h4>
+
+<pre><code>
+Short-lived Access Token
+        +
+Long-lived Refresh Token
+        ↓
+Better session usability
+with reduced access-token lifetime
+</code></pre>
+
+<p>
+    Refresh tokens should be protected carefully because possession of a
+    valid refresh token can allow new access tokens to be issued.
+</p>
+
+`
+            },
+
+
+            {
+                question: "Where should access tokens be stored?",
+
+                answer: `
+
+
+<p>
+    There is no single storage mechanism that is ideal for every application.
+    The decision depends on the application's architecture and threat model.
+</p>
+
+<p>
+    In browser-based applications, a common security consideration is
+    avoiding long-lived authentication tokens in JavaScript-accessible
+    storage such as <code>localStorage</code>, because an XSS vulnerability
+    can expose values stored there.
+</p>
+
+<p>
+    A common architecture is to keep a short-lived access token in
+    application memory and use a protected refresh-token mechanism for
+    obtaining new access tokens.
+</p>
+
+<p>
+    If a token is stored in a cookie, security attributes such as
+    <code>HttpOnly</code>, <code>Secure</code>, and an appropriate
+    <code>SameSite</code> policy should be considered.
+</p>
+
+<h4>Interview answer:</h4>
+
+<p>
+    For browser applications, token storage should be chosen based on the
+    security requirements. A common pattern is a short-lived access token
+    kept in memory and a refresh token stored in a secure, HttpOnly cookie.
+</p>
+
+`
+            },
+
+
+            {
+                question: "What is an HttpOnly cookie?",
+
+                answer: `
+
+
+<p>
+    An <strong>HttpOnly cookie</strong> is a cookie that cannot be accessed
+    by JavaScript running in the browser through APIs such as
+    <code>document.cookie</code>.
+</p>
+
+<p>
+    The browser can still automatically send the cookie with requests
+    when the cookie's rules allow it.
+</p>
+
+<h4>Example:</h4>
+
+<pre><code>
+res.cookie("refreshToken", token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict"
+});
+</code></pre>
+
+<h4>Why is HttpOnly useful?</h4>
+
+<p>
+    It helps reduce the risk of JavaScript directly reading a sensitive
+    cookie if an XSS vulnerability exists.
+</p>
+
+<p>
+    However, <code>HttpOnly</code> does not make an application completely
+    immune to attacks. Cookie settings such as <code>Secure</code> and
+    <code>SameSite</code>, along with appropriate CSRF protections and
+    general input/output security, are also important.
+</p>
+
+<p>
+    A common authentication pattern is to store a refresh token in an
+    <strong>HttpOnly, Secure cookie</strong> and use short-lived access
+    tokens for API authorization.
+</p>
+
+`
+            },
+            {
+                question: "Why are refresh tokens commonly stored in HttpOnly cookies?",
+                answer: ` <p>Refresh tokens are commonly stored in <strong>HttpOnly cookies</strong> because JavaScript cannot directly access them, which reduces the risk of an attacker stealing the token through <strong>XSS</strong>.</p>
+
+
+    <p>The browser automatically sends the cookie with requests to the appropriate domain.</p>
+
+    <h4>Important security attributes:</h4>
+    <ul>
+       <li><strong>HttpOnly:</strong> Prevents JavaScript from reading the cookie.</li>
+       <li><strong>Secure:</strong> Sends the cookie only over HTTPS.</li>
+       <li><strong>SameSite:</strong> Helps protect against CSRF attacks.</li>
+    </ul>
+
+    <p>A common architecture is to keep the short-lived access token in application memory and the long-lived refresh token in an HttpOnly cookie.</p>
+  `
+
+
+            },
+
+            {
+                question: "How do you protect a route using JWT authentication middleware?",
+                answer: ` <p>You create middleware that extracts the JWT from the request, verifies it using the secret key, and attaches the authenticated user's information to the request.</p>
+
+
+    <h4>Example:</h4>
+    <pre><code>
+
+
+const authMiddleware = (req, res, next) => {
+const token = req.headers.authorization?.split(" ")[1];
+
+if (!token) {
+return res.status(401).json({
+message: "Authentication required"
+});
+}
+
+try {
+const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+
+  req.user = decoded;
+
+  next();
+
+
+} catch (error) {
+return res.status(401).json({
+message: "Invalid or expired token"
+});
+}
+};
+
+app.get("/profile", authMiddleware, getProfile); </code></pre>
+
+
+    <p>Only requests with a valid token are allowed to reach the protected controller.</p>
+  `
+
+
+            },
+
+            {
+                question: "How do you verify a JWT token in Node.js?",
+                answer: ` <p>In Node.js, you can use <strong>jsonwebtoken</strong> and its <code>jwt.verify()</code> method.</p>
+
+
+    <h4>Example:</h4>
+    <pre><code>
+
+
+const decoded = jwt.verify(
+token,
+process.env.JWT_SECRET
+); </code></pre>
+
+
+    <p>If the token is valid, it returns the decoded payload. If the token is invalid, modified, or expired, it throws an error.</p>
+
+    <p><strong>Important:</strong> Never simply decode a JWT and assume it is valid. Decoding only reads the payload; verification checks the token's signature and validity.</p>
+  `
+
+
+            },
+
+            {
+                question: "What happens when an access token expires?",
+                answer: ` <p>When an access token expires, the server should reject requests made with that token, usually with a <strong>401 Unauthorized</strong> response.</p>
+
+
+    <p>If the application uses refresh tokens, the client can send the refresh token to a refresh endpoint. The server verifies it and issues a new access token.</p>
+
+    <h4>Typical flow:</h4>
+    <ol>
+       <li>Access token expires.</li>
+       <li>API request returns <strong>401 Unauthorized</strong>.</li>
+       <li>Client calls the refresh endpoint.</li>
+       <li>Server validates the refresh token.</li>
+       <li>Server generates a new access token.</li>
+       <li>Client retries the original request.</li>
+    </ol>
+  `
+
+
+            },
+
+            {
+                question: "How does the refresh-token flow work?",
+                answer: ` <p>A refresh-token flow allows users to obtain a new access token without logging in again after the short-lived access token expires.</p>
+
+
+    <h4>Flow:</h4>
+    <ol>
+       <li>User logs in with email and password.</li>
+       <li>Server generates an access token and refresh token.</li>
+       <li>Access token is used for API requests.</li>
+       <li>Refresh token is stored securely, commonly in an HttpOnly cookie.</li>
+       <li>Access token eventually expires.</li>
+       <li>Client sends the refresh token to the refresh endpoint.</li>
+       <li>Server verifies the refresh token.</li>
+       <li>Server generates a new access token.</li>
+    </ol>
+
+    <h4>Example:</h4>
+    <pre><code>
+
+
+POST /api/auth/refresh
+
+Cookie:
+refreshToken=... </code></pre>
+
+
+    <p>This provides a balance between security and user experience: access tokens can remain short-lived while users don't need to repeatedly log in.</p>
+  `
+
+
+            },
+
+            {
+                question: "How should passwords be securely stored in a database?",
+                answer: ` <p>Passwords should <strong>never be stored as plain text</strong>. They should be passed through a strong password-hashing algorithm such as <strong>bcrypt, Argon2, or scrypt</strong> before being stored.</p>
+
+
+    <h4>Example with bcrypt:</h4>
+    <pre><code>
+
+
+const hashedPassword = await bcrypt.hash(password, 10);
+
+user.password = hashedPassword; </code></pre>
+
+
+    <p>During login, the entered password is compared with the stored hash:</p>
+
+    <pre><code>
+
+
+const isValid = await bcrypt.compare(
+password,
+user.password
+); </code></pre>
+
+
+    <p>The original password is never stored in the database.</p>
+  `
+
+
+            },
+
+            {
+                question: "What is the difference between hashing and encryption?",
+                answer: ` <p><strong>Hashing</strong> and <strong>encryption</strong> are different concepts.</p>
+
+
+    <ul>
+       <li><strong>Hashing:</strong> One-way transformation. The original value is not meant to be recovered.</li>
+       <li><strong>Encryption:</strong> Reversible transformation. The original data can be recovered using the appropriate key.</li>
+    </ul>
+
+    <h4>Common use cases:</h4>
+    <ul>
+       <li>Password storage → <strong>Hashing</strong></li>
+       <li>Protecting data that must later be read → <strong>Encryption</strong></li>
+    </ul>
+
+    <p>For example, passwords should be hashed rather than encrypted because the application does not need to recover the original password.</p>
+  `
+
+
+            },
+
+            {
+                question: "What is bcrypt and why is it used?",
+                answer: ` <p><strong>bcrypt</strong> is a password-hashing algorithm designed specifically for securely hashing passwords.</p>
+
+
+    <p>It is intentionally computationally expensive, which makes brute-force password attacks more difficult.</p>
+
+    <h4>Example:</h4>
+    <pre><code>
+
+
+const hash = await bcrypt.hash(password, 10);
+
+const match = await bcrypt.compare(
+password,
+hash
+); </code></pre>
+
+
+    <p>The second argument, commonly called the <strong>salt rounds</strong> or cost factor, controls how expensive the hashing operation is.</p>
+
+    <p><strong>Interview point:</strong> bcrypt hashes passwords; it does not encrypt them.</p>
+  `
+
+
+            },
+
+            {
+                question: "What is the difference between authentication and role-based authorization?",
+                answer: ` <p><strong>Authentication</strong> determines who the user is, while <strong>authorization</strong> determines what that user is allowed to do.</p>
+
+
+    <h4>Example:</h4>
+    <ul>
+       <li>Authentication → "This request belongs to user 123."</li>
+       <li>Authorization → "User 123 is an admin and can delete users."</li>
+    </ul>
+
+    <p>In a backend application, authentication usually happens first. After identifying the user, authorization rules determine whether that user has permission to perform the requested operation.</p>
+  `
+
+
+            },
+
+            {
+                question: "How do you implement admin and user roles in a Node.js application?",
+                answer: ` <p>A common approach is to store a <strong>role</strong> field for each user, such as <code>user</code> or <code>admin</code>, and then use authorization middleware to restrict specific routes.</p>
+
+
+    <h4>Example user:</h4>
+    <pre><code>
+
+
+{
+"_id": "123",
+"email": "[user@example.com](mailto:user@example.com)",
+"role": "admin"
+} </code></pre>
+
+
+    <h4>Role-checking middleware:</h4>
+    <pre><code>
+
+
+const requireAdmin = (req, res, next) => {
+if (req.user.role !== "admin") {
+return res.status(403).json({
+message: "Access denied"
+});
+}
+
+next();
+};
+
+app.delete(
+"/users/:id",
+authMiddleware,
+requireAdmin,
+deleteUser
+); </code></pre>
+
+
+    <p>Here, <code>authMiddleware</code> verifies the user's identity, while <code>requireAdmin</code> checks whether the authenticated user has the required role.</p>
+  `
+
+
+            },
+            {
+                question: "How do you connect a Node.js application to a database?",
+                answer: ` <p>A Node.js application connects to a database using a database driver or an ORM/ODM.</p>
+
+
+    <p>For example:</p>
+    <ul>
+       <li><strong>MongoDB:</strong> MongoDB driver or Mongoose</li>
+       <li><strong>PostgreSQL:</strong> pg, Prisma, Sequelize, etc.</li>
+       <li><strong>MySQL:</strong> mysql2, Sequelize, etc.</li>
+    </ul>
+
+    <h4>Example using Mongoose:</h4>
+    <pre><code>
+
+
+import mongoose from "mongoose";
+
+await mongoose.connect(process.env.MONGO_URI);
+
+console.log("Database connected"); </code></pre>
+
+
+    <p>The database URL is usually stored in an environment variable rather than hard-coded in the source code.</p>
+  `
+
+
+            },
+
+            {
+                question: "What is Mongoose and why is it used with MongoDB?",
+                answer: ` <p><strong>Mongoose</strong> is an ODM (Object Data Modeling) library for MongoDB and Node.js.</p>
+
+
+    <p>It provides features such as:</p>
+    <ul>
+       <li>Schema definitions</li>
+       <li>Data validation</li>
+       <li>Models</li>
+       <li>Middleware/hooks</li>
+       <li>Query helpers</li>
+       <li>Population of related documents</li>
+    </ul>
+
+    <h4>Example:</h4>
+    <pre><code>
+
+
+const userSchema = new mongoose.Schema({
+name: String,
+email: {
+type: String,
+required: true,
+unique: true
+}
+});
+
+const User = mongoose.model("User", userSchema); </code></pre>
+
+
+    <p>It makes working with MongoDB more structured and convenient in Node.js applications.</p>
+  `
+
+
+            },
+
+            {
+                question: "What is the difference between SQL and NoSQL databases?",
+                answer: ` <p><strong>SQL databases</strong> are relational databases that organize data into tables with predefined relationships. <strong>NoSQL databases</strong> use flexible data models such as documents, key-value pairs, graphs, or wide-column structures.</p>
+
+
+    <h4>SQL:</h4>
+    <ul>
+       <li>Structured tables and rows</li>
+       <li>Strong relationships between data</li>
+       <li>Uses SQL queries</li>
+       <li>Usually uses a predefined schema</li>
+    </ul>
+
+    <h4>NoSQL:</h4>
+    <ul>
+       <li>Flexible data structures</li>
+       <li>Often easier to scale horizontally</li>
+       <li>Commonly uses document-based or key-value models</li>
+       <li>Schema can be more flexible</li>
+    </ul>
+
+    <p>For example, PostgreSQL is a relational SQL database, while MongoDB is a document-oriented NoSQL database.</p>
+  `
+
+
+            },
+
+            {
+                question: "What is an ORM and how is it different from an ODM?",
+                answer: ` <p><strong>ORM</strong> stands for Object-Relational Mapping. It allows developers to work with relational databases using programming-language objects instead of writing every SQL query manually.</p>
+
+
+    <p><strong>ODM</strong> stands for Object-Document Mapping and is commonly used with document databases such as MongoDB.</p>
+
+    <h4>Examples:</h4>
+    <ul>
+       <li><strong>ORM:</strong> Prisma, Sequelize, TypeORM</li>
+       <li><strong>ODM:</strong> Mongoose</li>
+    </ul>
+
+    <p>For example, Prisma can map application models to PostgreSQL tables, while Mongoose maps JavaScript objects and schemas to MongoDB documents.</p>
+  `
+
+
+            },
+
+            {
+                question: "What is database connection pooling?",
+                answer: ` <p><strong>Connection pooling</strong> means maintaining a pool of reusable database connections instead of creating a new database connection for every request.</p>
+
+
+    <p>When a request needs the database, it obtains an available connection from the pool. After the operation finishes, the connection is returned to the pool.</p>
+
+    <h4>Benefits:</h4>
+    <ul>
+       <li>Reduces connection creation overhead</li>
+       <li>Improves application performance</li>
+       <li>Handles multiple requests efficiently</li>
+       <li>Prevents creating an excessive number of database connections</li>
+    </ul>
+
+    <p>This is especially important in production applications where many requests may access the database simultaneously.</p>
+  `
+
+
+            },
+
+            {
+                question: "What are database indexes and why are they important?",
+                answer: ` <p>A <strong>database index</strong> is a data structure that helps the database find records faster without scanning every record in the collection or table.</p>
+
+
+    <p>For example, if users are frequently searched by email, creating an index on the email field can make those queries much faster.</p>
+
+    <h4>Example in MongoDB:</h4>
+    <pre><code>
+
+
+db.users.createIndex({ email: 1 }); </code></pre>
+
+
+    <p>The trade-off is that indexes consume additional storage and can make insert, update, and delete operations slightly more expensive because the index must also be maintained.</p>
+  `
+
+
+            },
+
+            {
+                question: "What is the difference between findOne(), find(), and findById() in MongoDB/Mongoose?",
+                answer: ` <p>These methods retrieve documents, but they are used for different purposes.</p>
+
+
+    <ul>
+       <li><strong>findOne():</strong> Returns the first document matching a condition.</li>
+       <li><strong>find():</strong> Returns all documents matching a condition.</li>
+       <li><strong>findById():</strong> Finds a document using its MongoDB _id.</li>
+    </ul>
+
+    <h4>Example:</h4>
+    <pre><code>
+
+
+User.findOne({ email: "[user@example.com](mailto:user@example.com)" });
+
+User.find({ role: "admin" });
+
+User.findById(userId); </code></pre>
+
+
+    <p><strong>Interview tip:</strong> <code>find()</code> returns a collection of matching documents, while <code>findOne()</code> and <code>findById()</code> return a single document or null.</p>
+  `
+
+
+            },
+
+            {
+                question: "What is a database transaction and why is it useful?",
+                answer: ` <p>A <strong>database transaction</strong> is a group of database operations that should be treated as a single unit of work.</p>
+
+
+    <p>The goal is to ensure that either all required operations succeed or the changes are rolled back if something fails.</p>
+
+    <h4>Example:</h4>
+    <p>Consider transferring ₹1,000 from Account A to Account B:</p>
+
+    <ol>
+       <li>Subtract ₹1,000 from Account A.</li>
+       <li>Add ₹1,000 to Account B.</li>
+    </ol>
+
+    <p>If the first operation succeeds but the second fails, the transaction can roll back the first operation.</p>
+
+    <p>Transactions are especially useful for operations where multiple database changes must remain consistent.</p>
+  `
+
+
+            },
+
+            {
+                question: "What is database normalization?",
+                answer: ` <p><strong>Database normalization</strong> is the process of organizing relational database data to reduce unnecessary duplication and improve data consistency.</p>
+
+
+    <p>Instead of storing the same information repeatedly, related data can be separated into appropriate tables and connected using relationships.</p>
+
+    <h4>Example:</h4>
+    <p>Instead of storing customer information repeatedly in every order row, you can have:</p>
+
+    <ul>
+       <li><strong>users</strong> table → user information</li>
+       <li><strong>orders</strong> table → order information</li>
+    </ul>
+
+    <p>The orders table can reference the user using a foreign key.</p>
+
+    <p><strong>Interview point:</strong> Normalization mainly reduces data redundancy and update anomalies in relational databases.</p>
+  `
+
+
+            },
+
+            {
+                question: "What is the difference between embedding and referencing in MongoDB?",
+                answer: ` <p>MongoDB provides two common ways to represent relationships: <strong>embedding</strong> and <strong>referencing</strong>.</p>
+
+
+    <h4>Embedding:</h4>
+    <p>Related data is stored inside the same document.</p>
+
+    <pre><code>
+
+
+{
+"name": "John",
+"address": {
+"city": "Pune",
+"country": "India"
+}
+} </code></pre>
+
+
+    <h4>Referencing:</h4>
+    <p>The document stores the ID of another document.</p>
+
+    <pre><code>
+
+
+{
+"name": "John",
+"addressId": "65abc123..."
+} </code></pre>
+
+
+    <p><strong>Embedding</strong> is useful when related data is small and usually accessed together. <strong>Referencing</strong> is useful when related data is large, shared across documents, or needs to be managed independently.</p>
+  `
+
+
+            },
+            {
+                question: "How do you handle asynchronous errors in Node.js?",
+                answer: ` <p>Asynchronous errors should be handled using <strong>try/catch</strong> with <code>async/await</code>, or by properly handling rejected Promises.</p>
+
+
+    <h4>Example:</h4>
+    <pre><code>
+
+
+const getUser = async (req, res, next) => {
+try {
+const user = await User.findById(req.params.id);
+
+
+  res.json(user);
+
+
+} catch (error) {
+next(error);
+}
+}; </code></pre>
+
+
+    <p>Passing the error to <code>next(error)</code> allows Express to forward it to the centralized error-handling middleware.</p>
+  `
+
+
+            },
+
+            {
+                question: "What is the difference between operational errors and programmer errors?",
+                answer: ` <p><strong>Operational errors</strong> are expected problems that can occur during normal application operation, while <strong>programmer errors</strong> are usually caused by bugs in the code.</p>
+
+
+    <h4>Operational errors:</h4>
+    <ul>
+       <li>Database connection failure</li>
+       <li>Invalid user input</li>
+       <li>File not found</li>
+       <li>External API unavailable</li>
+       <li>Request timeout</li>
+    </ul>
+
+    <h4>Programmer errors:</h4>
+    <ul>
+       <li>Accessing an undefined variable</li>
+       <li>Incorrect function logic</li>
+       <li>Calling a function incorrectly</li>
+       <li>Unexpected programming bugs</li>
+    </ul>
+
+    <p>Operational errors can usually be handled gracefully. Programmer errors should be fixed in the code rather than simply hidden.</p>
+  `
+
+
+            },
+
+            {
+                question: "How do you create centralized error handling in Express?",
+                answer: ` <p>Express supports centralized error handling using middleware with four parameters: <code>err</code>, <code>req</code>, <code>res</code>, and <code>next</code>.</p>
+
+
+    <h4>Example:</h4>
+    <pre><code>
+
+
+const errorHandler = (err, req, res, next) => {
+console.error(err);
+
+res.status(err.statusCode || 500).json({
+success: false,
+message: err.message || "Internal Server Error"
+});
+};
+
+app.use(errorHandler); </code></pre>
+
+
+    <p>Controllers and other middleware can pass errors to this handler using <code>next(error)</code>.</p>
+
+    <p>This keeps error-response logic consistent throughout the application.</p>
+  `
+
+
+            },
+
+            {
+                question: "What is the purpose of try/catch with async/await?",
+                answer: ` <p><code>try/catch</code> allows you to handle errors from asynchronous operations when using <code>async/await</code>.</p>
+
+
+    <h4>Example:</h4>
+    <pre><code>
+
+
+try {
+const user = await User.findById(id);
+} catch (error) {
+console.error(error);
+} </code></pre>
+
+
+    <p>Without proper error handling, a rejected Promise may result in an unhandled rejection or prevent your application from returning a proper response.</p>
+
+    <p>In Express applications, caught errors are commonly passed to centralized error middleware using <code>next(error)</code>.</p>
+  `
+
+
+            },
+
+            {
+                question: "What is the difference between throw and next(error) in Express?",
+                answer: ` <p><strong>throw</strong> creates or propagates an exception, while <strong>next(error)</strong> explicitly tells Express to move to its error-handling middleware.</p>
+
+
+    <h4>Example:</h4>
+    <pre><code>
+
+
+throw new Error("Something went wrong"); </code></pre>
+
+
+    <p>In Express middleware, you commonly use:</p>
+
+    <pre><code>
+
+
+next(new Error("Something went wrong")); </code></pre>
+
+
+    <p>Express receives the error through <code>next(error)</code> and passes it to the registered error-handling middleware.</p>
+  `
+
+
+            },
+
+            {
+                question: "What is input validation and why is it important?",
+                answer: ` <p><strong>Input validation</strong> means checking whether data received from a client satisfies the application's expected rules before processing or storing it.</p>
+
+
+    <p>For example, you may validate:</p>
+
+    <ul>
+       <li>Required fields</li>
+       <li>Email format</li>
+       <li>Password length</li>
+       <li>Data types</li>
+       <li>Allowed values</li>
+       <li>String length</li>
+    </ul>
+
+    <p>Validation helps prevent invalid data, application errors, and certain security vulnerabilities.</p>
+
+    <h4>Example:</h4>
+    <pre><code>
+
+
+{
+"email": "invalid-email",
+"password": ""
+} </code></pre>
+
+
+    <p>The API should validate this input and return an appropriate <strong>400 Bad Request</strong> response instead of processing invalid data.</p>
+  `
+
+
+            },
+
+            {
+                question: "What is SQL injection and how can you prevent it?",
+                answer: ` <p><strong>SQL injection</strong> is an attack where malicious SQL is inserted into application input and unintentionally becomes part of a database query.</p>
+
+
+    <p>A common defense is to use <strong>parameterized queries</strong> or trusted ORM query APIs instead of constructing SQL using string concatenation.</p>
+
+    <h4>Unsafe:</h4>
+    <pre><code>
+
+
+const query = "SELECT * FROM users WHERE email = '" + email + "'"; </code></pre>
+
+
+    <h4>Safer:</h4>
+    <pre><code>
+
+
+const result = await db.query(
+"SELECT * FROM users WHERE email = $1",
+[email]
+); </code></pre>
+
+
+    <p>Input validation, least-privilege database accounts, and parameterized queries should be used together as part of a secure application design.</p>
+  `
+
+
+            },
+
+            {
+                question: "What is XSS and how can you prevent it?",
+                answer: ` <p><strong>XSS (Cross-Site Scripting)</strong> occurs when an attacker is able to inject malicious JavaScript or HTML that gets executed in another user's browser.</p>
+
+
+    <p>For example, an application that renders untrusted user input as HTML without proper escaping can create an XSS vulnerability.</p>
+
+    <h4>Common prevention techniques:</h4>
+    <ul>
+       <li>Escape untrusted output</li>
+       <li>Validate and sanitize input where appropriate</li>
+       <li>Avoid rendering untrusted HTML directly</li>
+       <li>Use a strong Content Security Policy (CSP)</li>
+       <li>Use security-focused frameworks and libraries correctly</li>
+    </ul>
+
+    <p>For authentication, storing sensitive tokens in <strong>HttpOnly cookies</strong> can also reduce the ability of injected JavaScript to directly steal those cookies.</p>
+  `
+
+
+            },
+
+            {
+                question: "What is CSRF and how can you prevent it?",
+                answer: ` <p><strong>CSRF (Cross-Site Request Forgery)</strong> is an attack where a malicious website causes a user's browser to send an unwanted authenticated request to another website where the user is already logged in.</p>
+
+
+    <p>CSRF is especially relevant when authentication relies on cookies because browsers automatically attach applicable cookies to requests.</p>
+
+    <h4>Common defenses:</h4>
+    <ul>
+       <li><strong>SameSite cookies</strong></li>
+       <li><strong>CSRF tokens</strong></li>
+       <li>Checking request origin or Referer where appropriate</li>
+       <li>Using appropriate authentication architecture</li>
+    </ul>
+
+    <p><strong>Important interview point:</strong> HttpOnly protects cookies from JavaScript access, but it does not by itself prevent CSRF.</p>
+  `
+
+
+            },
+
+            {
+                question: "What is CORS and how is it related to backend security?",
+                answer: ` <p><strong>CORS (Cross-Origin Resource Sharing)</strong> is a browser security mechanism that controls which origins are allowed to access resources from another origin.</p>
+
+
+    <p>An origin consists of the <strong>scheme, host, and port</strong>.</p>
+
+    <h4>Example:</h4>
+    <pre><code>
+
+
+Frontend:
+http://localhost:5173
+
+Backend:
+http://localhost:5000 </code></pre>
+
+
+    <p>These are different origins because their ports are different.</p>
+
+    <p>Express can configure which origins are allowed:</p>
+
+    <pre><code>
+
+
+app.use(cors({
+origin: "http://localhost:5173",
+credentials: true
+})); </code></pre>
+
+
+    <p><strong>Important:</strong> CORS is primarily a browser-enforced access-control mechanism. It is not a replacement for authentication or authorization.</p>
+  `
+
+
+            },
+            {
+                question: "What is rate limiting and why is it useful?",
+                answer: ` <p><strong>Rate limiting</strong> restricts how many requests a client can make to an API within a specific period.</p>
+
+
+    <p>For example, an API might allow only <strong>100 requests per 15 minutes</strong> from a particular IP address.</p>
+
+    <h4>Why is it useful?</h4>
+    <ul>
+       <li>Protects APIs from abuse</li>
+       <li>Helps prevent brute-force attacks</li>
+       <li>Reduces excessive server load</li>
+       <li>Protects authentication endpoints</li>
+       <li>Helps mitigate certain denial-of-service patterns</li>
+    </ul>
+
+    <h4>Example using express-rate-limit:</h4>
+    <pre><code>
+
+
+import rateLimit from "express-rate-limit";
+
+const limiter = rateLimit({
+windowMs: 15 * 60 * 1000,
+max: 100
+});
+
+app.use("/api", limiter); </code></pre>
+
+
+    <p>For sensitive endpoints such as login, password reset, and OTP verification, stricter limits are usually appropriate.</p>
+  `
+
+
+            },
+
+            {
+                question: "What is Helmet in Express?",
+                answer: ` <p><strong>Helmet</strong> is an Express middleware package that helps improve application security by setting various HTTP security headers.</p>
+
+
+    <h4>Example:</h4>
+    <pre><code>
+
+
+import helmet from "helmet";
+
+app.use(helmet()); </code></pre>
+
+
+    <p>Depending on the configuration and application, Helmet can help configure headers related to protections such as:</p>
+
+    <ul>
+       <li>Content Security Policy (CSP)</li>
+       <li>Clickjacking protection</li>
+       <li>MIME-type sniffing protection</li>
+       <li>Referrer policy</li>
+    </ul>
+
+    <p><strong>Interview point:</strong> Helmet does not make an application completely secure. It is one layer of a broader security strategy.</p>
+  `
+
+
+            },
+
+            {
+                question: "How do you securely handle environment variables?",
+                answer: ` <p>Environment variables are used to store configuration and sensitive values outside the source code.</p>
+
+
+    <p>Examples include:</p>
+    <ul>
+       <li>Database URLs</li>
+       <li>JWT secrets</li>
+       <li>API keys</li>
+       <li>Cloudinary credentials</li>
+       <li>Application configuration</li>
+    </ul>
+
+    <h4>Example .env file:</h4>
+    <pre><code>
+
+
+DATABASE_URL=mongodb://localhost:27017/myapp
+JWT_SECRET=your-secret </code></pre>
+
+
+    <p>In Node.js, these values can be accessed through <code>process.env</code>.</p>
+
+    <pre><code>
+
+
+const secret = process.env.JWT_SECRET; </code></pre>
+
+
+    <p>In production, secrets are commonly provided through the hosting platform's secret/environment-variable management system rather than committing a <code>.env</code> file.</p>
+  `
+
+
+            },
+
+            {
+                question: "Why should sensitive information never be committed to Git?",
+                answer: ` <p>Sensitive information such as passwords, API keys, database credentials, and JWT secrets should never be committed to Git because repositories can be copied, shared, exposed, or accessed by unauthorized people.</p>
+
+
+    <p>Even deleting a secret from the latest commit may not be enough because it can remain in the repository's Git history.</p>
+
+    <h4>Examples of sensitive information:</h4>
+    <ul>
+       <li>API keys</li>
+       <li>Database passwords</li>
+       <li>JWT secrets</li>
+       <li>Cloud provider credentials</li>
+       <li>Private access tokens</li>
+    </ul>
+
+    <p>Use environment variables or a dedicated secrets manager instead.</p>
+
+    <h4>Typical .gitignore entry:</h4>
+    <pre><code>
+
+
+.env </code></pre>
+
+
+    <p><strong>Important:</strong> If a secret has already been exposed, simply deleting it from the file is not enough. The secret should be revoked or rotated immediately.</p>
+  `
+
+
+            },
+
+            {
+                question: "How do you validate and sanitize user input?",
+                answer: ` <p><strong>Validation</strong> checks whether input follows the expected rules, while <strong>sanitization</strong> transforms or removes unwanted content when appropriate.</p>
+
+
+    <h4>Examples of validation:</h4>
+    <ul>
+       <li>Checking whether an email is valid</li>
+       <li>Checking password length</li>
+       <li>Ensuring age is a number</li>
+       <li>Checking required fields</li>
+       <li>Allowing only specific values</li>
+    </ul>
+
+    <h4>Example using express-validator:</h4>
+    <pre><code>
+
+
+body("email")
+.isEmail()
+.withMessage("Invalid email"),
+
+body("password")
+.isLength({ min: 8 })
+.withMessage("Password must be at least 8 characters") </code></pre>
+
+
+    <p>Validation should happen at the API boundary before the data reaches business logic or the database.</p>
+
+    <p><strong>Important:</strong> Validation and sanitization are not substitutes for parameterized database queries, output encoding, or other security controls.</p>
+  `
+
+
+            },
+
+            {
+                question: "How do you prevent brute-force login attacks?",
+                answer: ` <p>A brute-force attack repeatedly tries different passwords or credentials until the attacker finds valid ones.</p>
+
+
+    <p>Common protections include:</p>
+
+    <ul>
+       <li><strong>Rate limiting:</strong> Limit login attempts.</li>
+       <li><strong>Account lockout or temporary delays:</strong> Slow repeated attempts.</li>
+       <li><strong>Strong password hashing:</strong> Use bcrypt, Argon2, or similar algorithms.</li>
+       <li><strong>MFA:</strong> Add another authentication factor.</li>
+       <li><strong>Monitoring:</strong> Detect suspicious login patterns.</li>
+       <li><strong>Generic error messages:</strong> Avoid revealing whether an email exists.</li>
+    </ul>
+
+    <h4>Example:</h4>
+    <pre><code>
+
+
+POST /api/auth/login
+
+Too many attempts </code></pre>
+
+
+    <p>The server can respond with <strong>429 Too Many Requests</strong> when the configured limit is exceeded.</p>
+  `
+
+
+            },
+
+            {
+                question: "How do you upload files in Node.js?",
+                answer: ` <p>File uploads are commonly handled using <strong>multipart/form-data</strong>. In Node.js and Express, middleware such as <strong>Multer</strong> can parse incoming multipart form data.</p>
+
+
+    <h4>Typical flow:</h4>
+    <ol>
+       <li>Client selects a file.</li>
+       <li>Client sends the file using <code>multipart/form-data</code>.</li>
+       <li>Multer processes the incoming file.</li>
+       <li>Server validates the file.</li>
+       <li>File is stored locally or uploaded to object storage.</li>
+       <li>Server stores the resulting file URL or identifier.</li>
+    </ol>
+
+    <h4>Example:</h4>
+    <pre><code>
+
+
+app.post(
+"/upload",
+upload.single("image"),
+(req, res) => {
+console.log(req.file);
+
+
+  res.json({
+     message: "File uploaded"
+  });
+
+
+}
+); </code></pre>
+`
+            },
+
+            {
+                question: "What is Multer?",
+                answer: ` <p><strong>Multer</strong> is Node.js middleware for handling <strong>multipart/form-data</strong>, which is commonly used for file uploads.</p>
+
+
+    <p>It integrates with Express and makes uploaded files available through <code>req.file</code> or <code>req.files</code>.</p>
+
+    <h4>Single file example:</h4>
+    <pre><code>
+
+
+import multer from "multer";
+
+const upload = multer({
+dest: "uploads/"
+});
+
+app.post(
+"/upload",
+upload.single("image"),
+(req, res) => {
+console.log(req.file);
+
+
+  res.json({
+     message: "Uploaded successfully"
+  });
+
+
+}
+); </code></pre>
+
+
+    <p><strong>Common methods:</strong></p>
+    <ul>
+       <li><code>upload.single()</code> → one file</li>
+       <li><code>upload.array()</code> → multiple files for the same field</li>
+       <li><code>upload.fields()</code> → multiple named file fields</li>
+    </ul>
+
+    <p>Multer handles receiving/parsing the upload; it does not by itself provide cloud storage such as Cloudinary or S3.</p>
+  `
+
+
+            },
+
+            {
+                question: "How would you upload images to Cloudinary or another object-storage service?",
+                answer: ` <p>A common architecture is to receive the file on the backend, validate it, and then upload it to a cloud storage provider such as <strong>Cloudinary</strong> or Amazon S3.</p>
+
+
+    <h4>Typical flow:</h4>
+    <ol>
+       <li>Client sends an image using <code>multipart/form-data</code>.</li>
+       <li>Multer receives the file.</li>
+       <li>Backend validates file type and size.</li>
+       <li>Backend uploads the file to Cloudinary or object storage.</li>
+       <li>Cloud service returns a URL or asset identifier.</li>
+       <li>Backend stores that URL/identifier in the database.</li>
+    </ol>
+
+    <h4>Example concept:</h4>
+    <pre><code>
+
+
+const result = await cloudinary.uploader.upload(
+req.file.path
+);
+
+await User.findByIdAndUpdate(userId, {
+profileImage: result.secure_url
+}); </code></pre>
+
+
+    <p>For production applications, you should also consider access control, file-size limits, allowed MIME types/extensions, unique filenames, and cleanup of temporary files.</p>
+  `
+
+
+            },
+
+            {
+                question: "How do you serve static files with Express?",
+                answer: ` <p>Express provides the <code>express.static()</code> middleware for serving static files such as images, CSS, JavaScript, and other publicly accessible assets.</p>
+
+
+    <h4>Example:</h4>
+    <pre><code>
+
+
+app.use(
+"/uploads",
+express.static("uploads")
+); </code></pre>
+
+
+    <p>If the server contains:</p>
+
+    <pre><code>
+
+
+uploads/profile.jpg </code></pre>
+
+
+    <p>the file can be accessed through:</p>
+
+    <pre><code>
+
+
+/uploads/profile.jpg </code></pre>
+
+
+    <p>You can also serve a public directory directly:</p>
+
+    <pre><code>
+
+
+app.use(express.static("public")); </code></pre>
+
+
+    <p><strong>Interview point:</strong> <code>express.static()</code> is middleware that maps URL paths to files on the server's filesystem.</p>
+  `
+
+
+            },
+            {
+                question: "What is streaming in Node.js?",
+                answer: ` <p><strong>Streaming</strong> is the process of processing data gradually as it becomes available instead of loading the entire data into memory at once.</p>
+
+
+    <p>Streams are useful when working with large amounts of data such as files, videos, network responses, or large datasets.</p>
+
+    <h4>Example:</h4>
+    <pre><code>
+
+
+const fs = require("fs");
+
+const stream = fs.createReadStream("large-video.mp4");
+
+stream.on("data", (chunk) => {
+console.log("Received chunk:", chunk.length);
+}); </code></pre>
+
+
+    <p>Instead of loading the entire file into memory, Node.js processes it in smaller chunks.</p>
+  `
+
+
+            },
+
+            {
+                question: "What are Node.js streams and why are they useful?",
+                answer: ` <p><strong>Streams</strong> are objects that allow Node.js to read or write data continuously in smaller chunks.</p>
+
+
+    <p>Node.js provides four main types of streams:</p>
+
+    <ul>
+       <li><strong>Readable:</strong> Used to read data.</li>
+       <li><strong>Writable:</strong> Used to write data.</li>
+       <li><strong>Duplex:</strong> Can both read and write data.</li>
+       <li><strong>Transform:</strong> Can read data, modify it, and then output the modified data.</li>
+    </ul>
+
+    <h4>Why are streams useful?</h4>
+    <ul>
+       <li>Reduce memory usage</li>
+       <li>Process large files efficiently</li>
+       <li>Improve responsiveness</li>
+       <li>Allow data processing before the complete data is available</li>
+    </ul>
+
+    <p>For example, a large video can be streamed to a client instead of loading the entire video into memory first.</p>
+  `
+
+
+            },
+
+            {
+                question: "What is a Buffer in Node.js?",
+                answer: ` <p>A <strong>Buffer</strong> is a Node.js object used to work with raw binary data.</p>
+
+
+    <p>Buffers are useful when working with data such as:</p>
+
+    <ul>
+       <li>Files</li>
+       <li>Images</li>
+       <li>Videos</li>
+       <li>Network packets</li>
+       <li>Binary data</li>
+    </ul>
+
+    <h4>Example:</h4>
+    <pre><code>
+
+
+const buffer = Buffer.from("Hello");
+
+console.log(buffer);
+console.log(buffer.toString()); </code></pre>
+
+
+    <p>Node.js uses Buffers extensively when handling streams and low-level I/O operations.</p>
+  `
+
+
+            },
+
+            {
+                question: "What is a WebSocket and when would you use it?",
+                answer: ` <p><strong>WebSocket</strong> is a communication protocol that provides a persistent, two-way connection between a client and server.</p>
+
+
+    <p>Unlike normal HTTP request-response communication, both the client and server can send messages whenever needed after the connection is established.</p>
+
+    <h4>Common use cases:</h4>
+    <ul>
+       <li>Real-time chat applications</li>
+       <li>Live notifications</li>
+       <li>Online multiplayer games</li>
+       <li>Live dashboards</li>
+       <li>Real-time collaboration</li>
+       <li>Live tracking</li>
+    </ul>
+
+    <p>For example, a chat server can immediately send a new message to connected users without requiring the client to repeatedly poll the server.</p>
+  `
+
+
+            },
+
+            {
+                question: "What is the difference between a REST API and WebSocket?",
+                answer: ` <p><strong>REST</strong> and <strong>WebSocket</strong> solve different communication requirements.</p>
+
+
+    <ul>
+       <li><strong>REST:</strong> Usually follows a request-response model over HTTP.</li>
+       <li><strong>WebSocket:</strong> Provides a persistent, bidirectional connection.</li>
+    </ul>
+
+    <h4>REST is commonly used for:</h4>
+    <ul>
+       <li>CRUD operations</li>
+       <li>Fetching resources</li>
+       <li>Creating and updating data</li>
+       <li>Standard application APIs</li>
+    </ul>
+
+    <h4>WebSocket is commonly used for:</h4>
+    <ul>
+       <li>Chat</li>
+       <li>Live notifications</li>
+       <li>Real-time updates</li>
+       <li>Collaborative applications</li>
+    </ul>
+
+    <p><strong>Interview answer:</strong> REST is generally suitable for standard request-response APIs, while WebSockets are useful when the server and client need continuous, real-time, bidirectional communication.</p>
+  `
+
+
+            },
+
+            {
+                question: "What is a health-check endpoint?",
+                answer: ` <p>A <strong>health-check endpoint</strong> is an API endpoint used to determine whether an application or its critical dependencies are functioning properly.</p>
+
+
+    <h4>Example:</h4>
+    <pre><code>
+
+
+app.get("/health", (req, res) => {
+res.status(200).json({
+status: "ok"
+});
+}); </code></pre>
+
+
+    <p>A more complete health check might verify dependencies such as the database or external services.</p>
+
+    <p>For example:</p>
+
+    <ul>
+       <li>Application is running</li>
+       <li>Database connection is available</li>
+       <li>Required dependencies are responding</li>
+    </ul>
+
+    <p>Load balancers, container orchestration systems, and monitoring tools can use health checks to determine whether an application instance is healthy.</p>
+  `
+
+
+            },
+
+            {
+                question: "How do you log requests and errors in a Node.js application?",
+                answer: ` <p>Logging can be implemented using middleware for HTTP requests and a structured logging library for application errors and events.</p>
+
+
+    <p>Popular Node.js logging libraries include <strong>Pino</strong> and <strong>Winston</strong>.</p>
+
+    <h4>Simple request logging:</h4>
+    <pre><code>
+
+
+app.use((req, res, next) => {
+console.log(
+req.method,
+req.originalUrl
+);
+
+next();
+}); </code></pre>
+
+
+    <p>In production, structured logs should generally include information such as:</p>
+
+    <ul>
+       <li>Timestamp</li>
+       <li>HTTP method</li>
+       <li>Request path</li>
+       <li>Status code</li>
+       <li>Response time</li>
+       <li>Error information</li>
+       <li>Request or correlation ID where appropriate</li>
+    </ul>
+
+    <p><strong>Important:</strong> Never log sensitive information such as passwords, access tokens, refresh tokens, or secret keys.</p>
+  `
+
+
+            },
+
+            {
+                question: "How would you structure a production Node.js project?",
+                answer: ` <p>A production Node.js application is usually organized by responsibility so that routing, business logic, database access, and configuration remain separated.</p>
+
+
+    <h4>Example structure:</h4>
+    <pre><code>
+
+
+src/
+├── controllers/
+├── routes/
+├── services/
+├── models/
+├── middleware/
+├── validators/
+├── utils/
+├── config/
+├── db/
+├── app.js
+└── server.js
+
+.env
+package.json </code></pre>
+
+
+    <h4>Typical responsibilities:</h4>
+    <ul>
+       <li><strong>routes:</strong> Define API endpoints.</li>
+       <li><strong>controllers:</strong> Handle HTTP requests and responses.</li>
+       <li><strong>services:</strong> Contain business logic.</li>
+       <li><strong>models:</strong> Define database models or data access.</li>
+       <li><strong>middleware:</strong> Authentication, validation, logging, etc.</li>
+       <li><strong>validators:</strong> Validate incoming data.</li>
+       <li><strong>config:</strong> Application configuration.</li>
+       <li><strong>db:</strong> Database connection and setup.</li>
+       <li><strong>utils:</strong> Reusable helper functions.</li>
+    </ul>
+  `
+
+
+            },
+
+            {
+                question: "Why should controllers, routes, services, and database logic be separated?",
+                answer: ` <p>Separating responsibilities makes the application easier to <strong>understand, test, maintain, and scale</strong>.</p>
+
+
+    <h4>For example:</h4>
+    <ul>
+       <li><strong>Route:</strong> Defines <code>POST /users</code>.</li>
+       <li><strong>Controller:</strong> Reads the request and sends the response.</li>
+       <li><strong>Service:</strong> Handles business logic such as creating the user.</li>
+       <li><strong>Database layer:</strong> Handles database operations.</li>
+    </ul>
+
+    <p>Without separation, controllers can become large files containing routing, business logic, validation, and database queries all together.</p>
+
+    <p>Separating these responsibilities follows the principle of <strong>separation of concerns</strong>.</p>
+
+    <p>It also makes individual parts easier to test and replace.</p>
+  `
+
+
+            },
+
+            {
+                question: "What is the purpose of a service layer?",
+                answer: ` <p>The <strong>service layer</strong> contains the application's business logic and sits between controllers and lower-level data-access code.</p>
+
+
+    <h4>Example flow:</h4>
+    <pre><code>
+
+
+Request
+↓
+Route
+↓
+Controller
+↓
+Service
+↓
+Database </code></pre>
+
+
+    <p>For example, when creating an order:</p>
+
+    <ul>
+       <li>Controller receives the HTTP request.</li>
+       <li>Service validates business rules and calculates the order total.</li>
+       <li>Service calls the database layer to save the order.</li>
+       <li>Controller sends the result back to the client.</li>
+    </ul>
+
+    <p>The main benefit is that business logic is not tightly coupled to HTTP-specific code, making it easier to reuse and test.</p>
+
+    <h4>Interview point:</h4>
+    <p>The controller should mainly coordinate the HTTP request/response, while the service layer should contain reusable business logic.</p>
+  `
+
+
+            }
+        ];
+
+
+
+        /* =========================
+           RENDER QUESTIONS
+        ========================= */
+
+        const container =
+            document.getElementById("questions");
+
+
+        questions.forEach((item, index) => {
+
+            const card =
+                document.createElement("div");
+
+
+            card.className =
+                "question-card";
+
+
+            card.innerHTML = `
+
+                <button
+                    class="question-btn"
+                    type="button"
+                >
+
+                    <span>
+                        ${index + 1}. ${item.question}
+                    </span>
+
+                    <span class="arrow">
+                        ⌄
+                    </span>
+
+                </button>
+
+
+                <div class="answer">
+
+                    ${item.answer}
+
+                </div>
+
+            `;
+
+
+            const button =
+                card.querySelector(".question-btn");
+
+
+            button.addEventListener("click", () => {
+
+                card.classList.toggle("open");
+
+            });
+
+
+            container.appendChild(card);
+
+        });
+
+
+        /* =========================
+           MOBILE MENU
+        ========================= */
+
+        const menuBtn =
+            document.getElementById("menuBtn");
+
+
+        const mobileMenu =
+            document.getElementById("mobileMenu");
+
+
+        menuBtn.addEventListener("click", () => {
+
+            mobileMenu.classList.toggle("open");
+
+
+            if (mobileMenu.classList.contains("open")) {
+
+                menuBtn.textContent = "✕";
+
+            } else {
+
+                menuBtn.textContent = "☰";
+
+            }
+
+        });
+
+
+        /* CLOSE MENU AFTER CLICKING LINK */
+
+        const mobileLinks =
+            mobileMenu.querySelectorAll("a");
+
+
+        mobileLinks.forEach(link => {
+
+            link.addEventListener("click", () => {
+
+                mobileMenu.classList.remove("open");
+
+                menuBtn.textContent = "☰";
+
+            });
+
+        });
+
+
+        /* =========================
+           THEME
+        ========================= */
+
+        const themeBtn =
+            document.getElementById("themeBtn");
+
+
+        const savedTheme =
+            localStorage.getItem("theme");
+
+
+        if (savedTheme === "dark") {
+
+            document.body.classList.add("dark");
+
+            themeBtn.textContent = "☀";
+
+        }
+
+
+        themeBtn.addEventListener("click", () => {
+
+            document.body.classList.toggle("dark");
+
+
+            const isDark =
+                document.body.classList.contains("dark");
+
+
+            localStorage.setItem(
+                "theme",
+                isDark ? "dark" : "light"
+            );
+
+
+            themeBtn.textContent =
+                isDark ? "☀" : "☾";
+
+        });
+
+    </script>
+
+
+</body>
+
+</html>

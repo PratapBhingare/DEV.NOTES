@@ -1,0 +1,2287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="dev-prep-favicon.png">
+    <title>Html Interview Questions</title>
+
+    <style>
+        /* =========================
+           RESET
+        ========================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        /* =========================
+           THEME VARIABLES
+        ========================= */
+
+        :root {
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --surface-hover: #f1f5f9;
+
+            --text: #0f172a;
+            --muted: #64748b;
+
+            --border: #e2e8f0;
+
+            --accent: #2563eb;
+            --accent-soft: #eff6ff;
+        }
+
+
+        body.dark {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --surface-hover: #263449;
+
+            --text: #f8fafc;
+            --muted: #94a3b8;
+
+            --border: #334155;
+
+            --accent: #60a5fa;
+            --accent-soft: #172554;
+        }
+
+
+        /* =========================
+           BODY
+        ========================= */
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+
+            background: var(--bg);
+            color: var(--text);
+
+            min-height: 100vh;
+
+            transition:
+                background 0.25s ease,
+                color 0.25s ease;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            background: var(--surface);
+
+            border-bottom: 1px solid var(--border);
+        }
+
+
+        .nav-container {
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding: 14px 20px;
+
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+
+        /* LOGO */
+
+        .logo {
+            color: var(--text);
+
+            text-decoration: none;
+
+            font-size: 18px;
+            font-weight: 700;
+
+            white-space: nowrap;
+        }
+
+
+        .logo span {
+            color: var(--accent);
+        }
+
+
+        /* DESKTOP NAVIGATION */
+
+        .nav-links {
+            flex: 1;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 4px;
+        }
+
+
+        .nav-links a {
+            color: var(--muted);
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            padding: 8px 10px;
+
+            border-radius: 7px;
+
+            transition: 0.2s;
+        }
+
+
+        .nav-links a:hover {
+            background: var(--surface-hover);
+            color: var(--text);
+        }
+
+
+        .nav-links a.active {
+            background: var(--accent-soft);
+            color: var(--accent);
+        }
+
+
+        /* =========================
+           NAV ACTIONS
+        ========================= */
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+
+        /* THEME BUTTON */
+
+        .theme-btn {
+            width: 36px;
+            height: 36px;
+
+            border: 1px solid var(--border);
+            border-radius: 8px;
+
+            background: var(--surface);
+            color: var(--text);
+
+            cursor: pointer;
+
+            font-size: 16px;
+
+            transition: 0.2s;
+        }
+
+
+        .theme-btn:hover {
+            background: var(--surface-hover);
+        }
+
+
+        /* MOBILE MENU BUTTON */
+
+        .menu-btn {
+            display: none;
+
+            width: 36px;
+            height: 36px;
+
+            border: 1px solid var(--border);
+            border-radius: 8px;
+
+            background: var(--surface);
+            color: var(--text);
+
+            cursor: pointer;
+
+            font-size: 20px;
+        }
+
+
+        /* =========================
+           MOBILE DROPDOWN
+        ========================= */
+
+        .mobile-menu {
+            display: none;
+
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding: 0 15px 15px;
+        }
+
+
+        .mobile-menu.open {
+            display: block;
+        }
+
+
+        .mobile-menu a {
+            display: block;
+
+            color: var(--muted);
+
+            text-decoration: none;
+
+            padding: 12px 14px;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+
+            transition: 0.2s;
+        }
+
+
+        .mobile-menu a:hover,
+        .mobile-menu a.active {
+            background: var(--surface-hover);
+            color: var(--text);
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        main {
+            width: 100%;
+            max-width: 850px;
+
+            margin: auto;
+
+            padding: 70px 20px 100px;
+        }
+
+
+        /* =========================
+           PAGE HEADER
+        ========================= */
+
+        .page-header {
+            margin-bottom: 40px;
+        }
+
+
+        .page-header span {
+            color: var(--accent);
+
+            font-size: 13px;
+            font-weight: 600;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        .page-header h1 {
+            font-size: clamp(32px, 5vw, 48px);
+
+            line-height: 1.1;
+
+            margin: 10px 0;
+
+            letter-spacing: -1px;
+        }
+
+
+        .page-header p {
+            color: var(--muted);
+
+            line-height: 1.7;
+
+            max-width: 650px;
+
+            font-size: 15px;
+        }
+
+
+        /* =========================
+           QUESTION CARD
+        ========================= */
+
+        .question-card {
+            width: 100%;
+
+            background: var(--surface);
+
+            border: 1px solid var(--border);
+
+            border-radius: 12px;
+
+            margin-bottom: 14px;
+
+            overflow: hidden;
+
+            transition:
+                border-color 0.2s,
+                transform 0.2s;
+        }
+
+
+        .question-card:hover {
+            border-color: color-mix(in srgb,
+                    var(--accent) 40%,
+                    var(--border));
+        }
+
+
+        /* QUESTION BUTTON */
+
+        .question-btn {
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            padding: 20px;
+
+            border: none;
+
+            background: transparent;
+
+            color: var(--text);
+
+            text-align: left;
+
+            font-family: inherit;
+
+            font-size: 16px;
+            font-weight: 600;
+
+            line-height: 1.5;
+
+            cursor: pointer;
+        }
+
+
+        .question-btn:hover {
+            background: var(--surface-hover);
+        }
+
+
+        /* ARROW */
+
+        .arrow {
+            flex-shrink: 0;
+
+            color: var(--muted);
+
+            font-size: 18px;
+
+            transition: transform 0.2s;
+        }
+
+
+        /* ANSWER */
+
+        .answer {
+            display: none;
+
+            padding: 0 20px 20px;
+
+            color: var(--muted);
+
+            font-size: 15px;
+
+            line-height: 1.8;
+        }
+
+
+        .question-card.open .answer {
+            display: block;
+        }
+
+
+        .question-card.open .arrow {
+            transform: rotate(180deg);
+        }
+
+
+        /* =========================
+           TABLET
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            .nav-container {
+                padding: 13px 16px;
+            }
+
+
+            .nav-links {
+                display: none;
+            }
+
+
+            .menu-btn {
+                display: block;
+            }
+
+
+            .nav-actions {
+                margin-left: auto;
+            }
+
+
+            main {
+                padding-top: 55px;
+            }
+
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .nav-container {
+                padding: 11px 14px;
+            }
+
+
+            .logo {
+                font-size: 17px;
+            }
+
+
+            .menu-btn,
+            .theme-btn {
+                width: 34px;
+                height: 34px;
+            }
+
+
+            main {
+                padding: 45px 15px 70px;
+            }
+
+
+            .page-header {
+                margin-bottom: 30px;
+            }
+
+
+            .page-header span {
+                font-size: 11px;
+            }
+
+
+            .page-header h1 {
+                font-size: 34px;
+
+                margin-top: 8px;
+            }
+
+
+            .page-header p {
+                font-size: 14px;
+
+                line-height: 1.7;
+            }
+
+
+            .question-card {
+                border-radius: 10px;
+
+                margin-bottom: 10px;
+            }
+
+
+            .question-btn {
+                padding: 16px;
+
+                font-size: 14px;
+
+                gap: 12px;
+            }
+
+
+            .answer {
+                padding: 0 16px 17px;
+
+                font-size: 14px;
+
+                line-height: 1.7;
+            }
+
+
+            .arrow {
+                font-size: 16px;
+            }
+
+        }
+
+
+        /* =========================
+           VERY SMALL DEVICES
+        ========================= */
+
+        @media (max-width: 380px) {
+
+            .logo {
+                font-size: 16px;
+            }
+
+
+            main {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+
+
+            .page-header h1 {
+                font-size: 30px;
+            }
+
+
+            .question-btn {
+                padding: 14px;
+
+                font-size: 13px;
+            }
+
+
+            .answer {
+                padding-left: 14px;
+                padding-right: 14px;
+
+                font-size: 13px;
+            }
+
+        }
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <nav>
+
+        <div class="nav-container">
+
+
+            <!-- LOGO -->
+
+            <a href="index.html" class="logo">
+                Dev.<span>Prep</span>
+            </a>
+
+
+            <!-- DESKTOP LINKS -->
+
+            <div class="nav-links">
+
+                <a href="dn-v1-html.html" class="active">
+                    HTML
+                </a>
+
+                <a href="dn-v1-css.html">
+                    CSS
+                </a>
+
+                <a href="dn-v1-js.html">
+                    JavaScript
+                </a>
+
+                <a href="dn-v1-react.html">
+                    React
+                </a>
+
+                <a href="dn-v1-node.html">
+                    Node.js
+                </a>
+
+                <a href="dn-v1-sql.html">
+                    SQL
+                </a>
+
+                <a href="dn-v1-dsa.html">
+                    DSA
+                </a>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="nav-actions">
+
+                <button class="menu-btn" id="menuBtn" aria-label="Open navigation menu">
+                    ☰
+                </button>
+
+
+                <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
+                    ☾
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- MOBILE MENU -->
+
+        <div class="mobile-menu" id="mobileMenu">
+
+            <a href="dn-v1-html.html" class="active">
+                HTML
+            </a>
+
+            <a href="dn-v1-css.html">
+                CSS
+            </a>
+
+            <a href="dn-v1-js.html">
+                JavaScript
+            </a>
+
+            <a href="dn-v1-react.html">
+                React
+            </a>
+
+            <a href="dn-v1-node.html">
+                Node.js
+            </a>
+
+            <a href="dn-v1-sql.html">
+                SQL
+            </a>
+
+            <a href="dn-v1-dsa.html">
+                DSA
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================= -->
+
+    <main>
+
+
+        <header class="page-header">
+
+            <span>
+                INTERVIEW PREPARATION
+            </span>
+
+            <h1>
+                HTML
+            </h1>
+
+            <p>
+                Important HTML concepts and interview
+                questions, from fundamentals to advanced topics.
+            </p>
+
+        </header>
+
+
+        <!-- QUESTIONS -->
+
+        <section id="questions"></section>
+
+
+    </main>
+
+
+    <script>
+
+
+        /* =========================
+           QUESTIONS
+        ========================= */
+
+       const questions = [
+
+    {
+        question: "What is HTML and what is HTML5?",
+        answer: `
+            <p>
+                HTML stands for <strong>HyperText Markup Language</strong>.
+                It is the standard markup language used to structure the
+                content of web pages, such as headings, paragraphs, images,
+                links, forms, and tables.
+            </p>
+
+            <p>
+                HTML5 is the modern version of HTML that introduced new
+                semantic elements, multimedia support, better form controls,
+                and browser APIs.
+            </p>
+
+            <h4>Examples of HTML5 features:</h4>
+
+            <ul>
+                <li>Semantic elements like <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;section&gt;</code>, and <code>&lt;article&gt;</code></li>
+                <li>Native audio and video using <code>&lt;audio&gt;</code> and <code>&lt;video&gt;</code></li>
+                <li>New form input types such as <code>email</code>, <code>date</code>, and <code>number</code></li>
+                <li>APIs such as Geolocation, Web Storage, and Canvas</li>
+            </ul>
+
+            <p>
+                In short, HTML provides the structure of a webpage, while
+                HTML5 is the modern standard that provides improved
+                structure, multimedia, forms, and browser capabilities.
+            </p>
+        `
+    },
+
+    {
+        question: "What is <!DOCTYPE html> and why is it used?",
+        answer: `
+            <p>
+                <code>&lt;!DOCTYPE html&gt;</code> is a declaration that tells
+                the browser that the document uses the modern HTML standard.
+            </p>
+
+            <p>
+                It is placed at the very beginning of an HTML document and
+                tells the browser to render the page in <strong>standards mode</strong>
+                instead of quirks mode.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;My Page&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1&gt;Hello World&lt;/h1&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+            <p>
+                The important point is that <code>&lt;!DOCTYPE html&gt;</code>
+                is not an HTML element. It is a document type declaration.
+            </p>
+        `
+    },
+
+    {
+        question: "What is the basic structure of an HTML document?",
+        answer: `
+            <p>
+                A basic HTML document contains the
+                <code>&lt;!DOCTYPE html&gt;</code> declaration,
+                followed by the <code>&lt;html&gt;</code>,
+                <code>&lt;head&gt;</code>, and <code>&lt;body&gt;</code>
+                sections.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;My Website&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;h1&gt;Hello World&lt;/h1&gt;
+    &lt;p&gt;Welcome to my website.&lt;/p&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;</code></pre>
+
+            <p>
+                The <code>&lt;head&gt;</code> contains metadata, the page title,
+                stylesheets, and other resources, while the
+                <code>&lt;body&gt;</code> contains the visible content of the page.
+            </p>
+        `
+    },
+
+    {
+        question: "What is the difference between block-level and inline elements?",
+        answer: `
+            <p>
+                The main difference is how the elements are laid out on the page.
+            </p>
+
+            <p>
+                <strong>Block-level elements</strong> normally start on a new line
+                and take up the available width of their containing block.
+            </p>
+
+            <p>
+                Examples include <code>&lt;div&gt;</code>,
+                <code>&lt;p&gt;</code>, <code>&lt;h1&gt;</code>, and
+                <code>&lt;section&gt;</code>.
+            </p>
+
+            <p>
+                <strong>Inline elements</strong> normally stay within the same
+                line and take up only as much width as their content requires.
+            </p>
+
+            <p>
+                Examples include <code>&lt;span&gt;</code>,
+                <code>&lt;a&gt;</code>, <code>&lt;strong&gt;</code>, and
+                <code>&lt;em&gt;</code>.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>&lt;div&gt;Block 1&lt;/div&gt;
+&lt;div&gt;Block 2&lt;/div&gt;
+
+&lt;span&gt;Inline 1&lt;/span&gt;
+&lt;span&gt;Inline 2&lt;/span&gt;</code></pre>
+
+            <p>
+                So, by default, block elements create a new line, while inline
+                elements flow within the same line.
+            </p>
+        `
+    },
+
+    {
+        question: "What is the difference between &lt;div&gt; and &lt;span&gt;",
+        answer: `
+            <p>
+                Both <code>&lt;div&gt;</code> and <code>&lt;span&gt;</code> are
+                generic, non-semantic elements, but they are mainly used for
+                different types of content grouping.
+            </p>
+
+            <p>
+                <code>&lt;div&gt;</code> is a block-level element by default
+                and is commonly used to group larger sections or containers.
+            </p>
+
+            <p>
+                <code>&lt;span&gt;</code> is an inline element by default and
+                is commonly used to group or style a small part of text or
+                inline content.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>&lt;div class="card"&gt;
+    &lt;h2&gt;Product&lt;/h2&gt;
+    &lt;p&gt;This is a product card.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;p&gt;
+    This is &lt;span class="highlight"&gt;important&lt;/span&gt; text.
+&lt;/p&gt;</code></pre>
+
+            <p>
+                In short, use <code>&lt;div&gt;</code> for grouping larger
+                block-level content and <code>&lt;span&gt;</code> for small
+                inline portions of content.
+            </p>
+        `
+    },
+
+    {
+        question: "What are semantic HTML elements and why are they important?",
+        answer: `
+            <p>
+                Semantic HTML elements are elements whose names clearly
+                describe the meaning and purpose of their content.
+            </p>
+
+            <p>
+                Examples include <code>&lt;header&gt;</code>,
+                <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>,
+                <code>&lt;section&gt;</code>, <code>&lt;article&gt;</code>,
+                and <code>&lt;footer&gt;</code>.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>&lt;header&gt;
+    &lt;h1&gt;My Website&lt;/h1&gt;
+&lt;/header&gt;
+
+&lt;nav&gt;
+    &lt;a href="/"&gt;Home&lt;/a&gt;
+    &lt;a href="/about"&gt;About&lt;/a&gt;
+&lt;/nav&gt;
+
+&lt;main&gt;
+    &lt;article&gt;
+        &lt;h2&gt;My Article&lt;/h2&gt;
+        &lt;p&gt;Article content...&lt;/p&gt;
+    &lt;/article&gt;
+&lt;/main&gt;
+
+&lt;footer&gt;
+    &lt;p&gt;Copyright 2026&lt;/p&gt;
+&lt;/footer&gt;</code></pre>
+
+            <p>
+                Semantic HTML is important because it improves
+                <strong>accessibility, SEO, code readability, and maintainability</strong>.
+                Screen readers and search engines can better understand the
+                structure and purpose of the page.
+            </p>
+        `
+    },
+
+    {
+        question: "What is the difference between &lt;section&gt;, &lt;article&gt;, and &lt;div&gt;?",
+        answer: `
+            <p>
+                All three can be used to group content, but they communicate
+                different meanings.
+            </p>
+
+            <p>
+                <code>&lt;section&gt;</code> represents a thematic grouping
+                of related content, usually with its own heading.
+            </p>
+
+            <p>
+                <code>&lt;article&gt;</code> represents a self-contained piece
+                of content that could potentially be distributed or reused
+                independently, such as a blog post, news article, or forum post.
+            </p>
+
+            <p>
+                <code>&lt;div&gt;</code> has no semantic meaning. It is a
+                generic container used mainly when no more meaningful
+                semantic element is appropriate.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>&lt;section&gt;
+    &lt;h2&gt;Latest Posts&lt;/h2&gt;
+
+    &lt;article&gt;
+        &lt;h3&gt;Understanding JavaScript Closures&lt;/h3&gt;
+        &lt;p&gt;Article content...&lt;/p&gt;
+    &lt;/article&gt;
+&lt;/section&gt;
+
+&lt;div class="container"&gt;
+    &lt;!-- Generic layout container --&gt;
+&lt;/div&gt;</code></pre>
+
+            <p>
+                A simple way to remember it is:
+                <strong>section = related topic, article = independent content,
+                div = generic container.</strong>
+            </p>
+        `
+    },
+
+    {
+        question: "What is the difference between &lt;strong&gt; and &lt;b&gt;, and &lt;em&gt; and &lt;i&gt;?",
+        answer: `
+            <p>
+                <code>&lt;strong&gt;</code> and <code>&lt;em&gt;</code> are
+                semantic elements, while <code>&lt;b&gt;</code> and
+                <code>&lt;i&gt;</code> are mainly used for presentational purposes.
+            </p>
+
+            <p>
+                <code>&lt;strong&gt;</code> indicates that the content has
+                strong importance, while <code>&lt;b&gt;</code> simply draws
+                attention to the text without indicating extra importance.
+            </p>
+
+            <p>
+                <code>&lt;em&gt;</code> indicates emphasis, while
+                <code>&lt;i&gt;</code> is generally used for text that is
+                set apart from the surrounding content, such as technical
+                terms, foreign words, or titles.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>&lt;p&gt;
+    &lt;strong&gt;Warning:&lt;/strong&gt; Save your work.
+&lt;/p&gt;
+
+&lt;p&gt;
+    This is &lt;b&gt;bold&lt;/b&gt; text for visual emphasis.
+&lt;/p&gt;
+
+&lt;p&gt;
+    You &lt;em&gt;must&lt;/em&gt; complete this step.
+&lt;/p&gt;
+
+&lt;p&gt;
+    The term &lt;i&gt;callback&lt;/i&gt; is commonly used in JavaScript.
+&lt;/p&gt;</code></pre>
+
+            <p>
+                The key difference is that <code>&lt;strong&gt;</code> and
+                <code>&lt;em&gt;</code> communicate meaning, while
+                <code>&lt;b&gt;</code> and <code>&lt;i&gt;</code> do not
+                necessarily add semantic importance or emphasis.
+            </p>
+        `
+    },
+
+    {
+        question: "What are void elements in HTML? Give examples.",
+        answer: `
+            <p>
+                Void elements are HTML elements that cannot contain child
+                elements and therefore do not have a closing tag.
+            </p>
+
+            <p>
+                Common examples include:
+                <code>&lt;img&gt;</code>,
+                <code>&lt;input&gt;</code>,
+                <code>&lt;br&gt;</code>,
+                <code>&lt;hr&gt;</code>,
+                <code>&lt;meta&gt;</code>, and
+                <code>&lt;link&gt;</code>.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>&lt;img src="profile.jpg" alt="Profile"&gt;
+
+&lt;input type="text" name="username"&gt;
+
+&lt;br&gt;
+
+&lt;hr&gt;
+
+&lt;meta charset="UTF-8"&gt;</code></pre>
+
+            <p>
+                A void element should not be written with a separate closing
+                tag such as <code>&lt;/img&gt;</code> or
+                <code>&lt;/input&gt;</code>.
+            </p>
+        `
+    },
+
+    {
+        question: "What is the difference between GET and POST in an HTML form?",
+        answer: `
+            <p>
+                <code>GET</code> and <code>POST</code> are HTTP methods that
+                can be used when submitting an HTML form.
+            </p>
+
+            <p>
+                With <strong>GET</strong>, form data is generally appended to
+                the URL as query parameters. It is commonly used when
+                retrieving or searching for data.
+            </p>
+
+            <p>
+                With <strong>POST</strong>, form data is sent in the HTTP
+                request body. It is commonly used when submitting data that
+                creates or changes something on the server.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>&lt;form action="/search" method="GET"&gt;
+    &lt;input type="text" name="query"&gt;
+    &lt;button type="submit"&gt;Search&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;form action="/users" method="POST"&gt;
+    &lt;input type="text" name="username"&gt;
+    &lt;button type="submit"&gt;Create User&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+
+            <p>
+                For example, a GET request might produce a URL like
+                <code>/search?query=javascript</code>, while POST data is
+                sent in the request body.
+            </p>
+
+            <p>
+                GET requests are suitable for data retrieval and can be
+                bookmarked or cached. POST is generally used when sending
+                data to the server, especially when the operation causes a
+                server-side change.
+            </p>
+
+            <p>
+                Also, <strong>POST should not be considered automatically
+                secure</strong>. If sensitive data is being transmitted,
+                HTTPS is required.
+            </p>
+        `
+    },
+    {
+        question: "What is the difference between id, class, and name attributes?",
+        answer: `
+            <p>
+                <code>id</code>, <code>class</code>, and <code>name</code> are
+                HTML attributes, but they serve different purposes.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>id:</strong> Identifies a specific element uniquely
+                    within a page. It is commonly used with CSS, JavaScript,
+                    and labels.
+                </li>
+                <li>
+                    <strong>class:</strong> Groups multiple elements so they
+                    can share CSS styles or be selected using JavaScript.
+                </li>
+                <li>
+                    <strong>name:</strong> Identifies form controls when their
+                    values are submitted to the server.
+                </li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>&lt;input
+    id="email"
+    class="form-input"
+    name="email"
+    type="email"
+&gt;</code></pre>
+
+            <p>
+                Here, <code>id="email"</code> uniquely identifies the input,
+                <code>class="form-input"</code> can be shared by other inputs,
+                and <code>name="email"</code> determines the key used when
+                the form data is submitted.
+            </p>
+        `
+    },
+
+    {
+        question: "Why is the name attribute important in forms?",
+        answer: `
+            <p>
+                The <code>name</code> attribute is important because it
+                identifies the form control's value when the form is submitted
+                to the server.
+            </p>
+
+            <p>
+                Without a <code>name</code> attribute, a normal form submission
+                generally does not include that control's value in the
+                submitted form data.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>&lt;form action="/login" method="POST"&gt;
+
+    &lt;input
+        type="email"
+        name="email"
+    &gt;
+
+    &lt;input
+        type="password"
+        name="password"
+    &gt;
+
+    &lt;button type="submit"&gt;
+        Login
+    &lt;/button&gt;
+
+&lt;/form&gt;</code></pre>
+
+            <p>
+                If the user enters
+                <code>user@example.com</code> and a password, the submitted
+                data will conceptually contain key-value pairs such as:
+            </p>
+
+            <pre><code>email=user@example.com
+password=123456</code></pre>
+
+            <p>
+                So, <code>name</code> is especially important when working with
+                traditional HTML form submissions and server-side form handling.
+            </p>
+        `
+    },
+
+    {
+        question: "What is the difference between disabled, readonly, and required?",
+        answer: `
+            <p>
+                These attributes control different aspects of form controls.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>disabled:</strong> The user cannot interact with
+                    the control, and its value is generally not included in
+                    normal form submission.
+                </li>
+                <li>
+                    <strong>readonly:</strong> The user cannot edit the value,
+                    but the control can still be focused and its value can be
+                    submitted.
+                </li>
+                <li>
+                    <strong>required:</strong> The user must provide a value
+                    before the form can be successfully submitted.
+                </li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>&lt;input
+    type="text"
+    value="User ID"
+    disabled
+&gt;
+
+&lt;input
+    type="text"
+    value="John"
+    readonly
+&gt;
+
+&lt;input
+    type="email"
+    name="email"
+    required
+&gt;</code></pre>
+
+            <p>
+                The key difference is that <code>disabled</code> prevents
+                interaction and normal submission, <code>readonly</code>
+                prevents editing but keeps the value usable, and
+                <code>required</code> enforces that a value must be provided.
+            </p>
+        `
+    },
+
+    {
+        question: "What is the difference between radio buttons and checkboxes?",
+        answer: `
+            <p>
+                Radio buttons are used when the user should select
+                <strong>one option from a group</strong>, while checkboxes
+                are used when the user can select <strong>zero, one, or
+                multiple options</strong>.
+            </p>
+
+            <h4>Radio button example:</h4>
+
+            <pre><code>&lt;input
+    type="radio"
+    name="gender"
+    value="male"
+&gt;
+
+&lt;input
+    type="radio"
+    name="gender"
+    value="female"
+&gt;</code></pre>
+
+            <p>
+                Because both radio buttons have the same
+                <code>name</code>, the user can select only one of them.
+            </p>
+
+            <h4>Checkbox example:</h4>
+
+            <pre><code>&lt;input
+    type="checkbox"
+    name="skills"
+    value="javascript"
+&gt;
+
+&lt;input
+    type="checkbox"
+    name="skills"
+    value="react"
+&gt;
+
+&lt;input
+    type="checkbox"
+    name="skills"
+    value="node"
+&gt;</code></pre>
+
+            <p>
+                Here, the user can select multiple skills.
+            </p>
+
+            <p>
+                So the simple rule is:
+                <strong>radio = one choice, checkbox = multiple choices.</strong>
+            </p>
+        `
+    },
+
+    {
+        question: "What built-in HTML form validation features are available?",
+        answer: `
+            <p>
+                HTML provides built-in form validation through attributes
+                and input types, allowing browsers to validate user input
+                without requiring JavaScript for basic validation.
+            </p>
+
+            <h4>Common validation features:</h4>
+
+            <ul>
+                <li><code>required</code> - ensures that a value is provided.</li>
+                <li><code>type="email"</code> - validates the general email format.</li>
+                <li><code>minlength</code> - specifies the minimum number of characters.</li>
+                <li><code>maxlength</code> - specifies the maximum number of characters.</li>
+                <li><code>min</code> and <code>max</code> - define numeric or date limits.</li>
+                <li><code>pattern</code> - validates a value against a regular expression.</li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>&lt;form&gt;
+
+    &lt;input
+        type="email"
+        name="email"
+        required
+    &gt;
+
+    &lt;input
+        type="password"
+        name="password"
+        minlength="8"
+        required
+    &gt;
+
+    &lt;input
+        type="number"
+        name="age"
+        min="18"
+        max="100"
+    &gt;
+
+    &lt;button type="submit"&gt;
+        Submit
+    &lt;/button&gt;
+
+&lt;/form&gt;</code></pre>
+
+            <p>
+                The browser checks these constraints when the form is
+                submitted and can prevent submission if the input is invalid.
+            </p>
+        `
+    },
+
+    {
+        question: "What is the purpose of the &lt;label&gt; element and how do you associate it with an input?",
+        answer: `
+            <p>
+                The <code>&lt;label&gt;</code> element provides a text label
+                for a form control. It improves usability and accessibility
+                because users can click the label to focus or activate the
+                associated input.
+            </p>
+
+            <p>
+                The most common way to associate a label with an input is to
+                give the input an <code>id</code> and use the same value in
+                the label's <code>for</code> attribute.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>&lt;label for="email"&gt;
+    Email
+&lt;/label&gt;
+
+&lt;input
+    type="email"
+    id="email"
+    name="email"
+&gt;</code></pre>
+
+            <p>
+                Here, <code>for="email"</code> connects the label to
+                <code>id="email"</code>.
+            </p>
+
+            <p>
+                Another option is to wrap the input inside the label:
+            </p>
+
+            <pre><code>&lt;label&gt;
+    Email
+    &lt;input type="email" name="email"&gt;
+&lt;/label&gt;</code></pre>
+
+            <p>
+                Using labels is important for both <strong>accessibility</strong>
+                and better user experience.
+            </p>
+        `
+    },
+
+    {
+        question: "What is the DOM?",
+        answer: `
+            <p>
+                DOM stands for <strong>Document Object Model</strong>.
+                It is a programming interface that represents an HTML document
+                as a tree of objects called nodes.
+            </p>
+
+            <p>
+                The browser creates the DOM when it parses the HTML document.
+                JavaScript can then use the DOM to read, modify, add, or remove
+                elements and their content.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>&lt;h1 id="title"&gt;Hello&lt;/h1&gt;</code></pre>
+
+            <p>
+                JavaScript can access this element through the DOM:
+            </p>
+
+            <pre><code>const title = document.getElementById("title");
+
+title.textContent = "Hello World";</code></pre>
+
+            <p>
+                After this code runs, the heading displayed in the browser
+                changes from <code>Hello</code> to
+                <code>Hello World</code>.
+            </p>
+
+            <p>
+                In simple terms, the DOM acts as a bridge between the HTML
+                document and JavaScript.
+            </p>
+        `
+    },
+
+    {
+        question: "How does the browser convert HTML into the DOM?",
+        answer: `
+            <p>
+                When the browser receives an HTML document, it parses the HTML
+                and converts it into a tree-like structure called the
+                <strong>DOM</strong>.
+            </p>
+
+            <p>
+                The browser reads the HTML from top to bottom, identifies
+                elements and their relationships, and creates corresponding
+                DOM nodes.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>&lt;body&gt;
+    &lt;h1&gt;Hello&lt;/h1&gt;
+    &lt;p&gt;Welcome&lt;/p&gt;
+&lt;/body&gt;</code></pre>
+
+            <p>
+                The browser creates a DOM structure conceptually similar to:
+            </p>
+
+            <pre><code>Document
+└── html
+    └── body
+        ├── h1
+        │   └── "Hello"
+        └── p
+            └── "Welcome"</code></pre>
+
+            <p>
+                JavaScript can then interact with these nodes through APIs
+                such as <code>document.querySelector()</code>,
+                <code>getElementById()</code>, and
+                <code>createElement()</code>.
+            </p>
+
+            <p>
+                The important point is that the DOM is the browser's
+                object-based representation of the parsed HTML document.
+            </p>
+        `
+    },
+
+    {
+        question: "What is the difference between HTML source code and the DOM?",
+        answer: `
+            <p>
+                The <strong>HTML source code</strong> is the original markup
+                sent to or written for the browser, while the
+                <strong>DOM</strong> is the live object representation created
+                by the browser after parsing that HTML.
+            </p>
+
+            <p>
+                The DOM can change during the lifetime of the page when
+                JavaScript modifies elements, attributes, text, or structure.
+                The original HTML source does not automatically change when
+                the DOM is modified.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>&lt;h1 id="title"&gt;Hello&lt;/h1&gt;</code></pre>
+
+            <p>
+                JavaScript can modify the DOM:
+            </p>
+
+            <pre><code>document.getElementById("title").textContent =
+    "Hello World";</code></pre>
+
+            <p>
+                The browser will now display
+                <code>Hello World</code>, but the original HTML source still
+                contains <code>Hello</code>.
+            </p>
+
+            <p>
+                So, the key difference is:
+                <strong>source HTML is the original document markup, while
+                the DOM is the browser's live representation of the document.</strong>
+            </p>
+        `
+    },
+
+    {
+        question: "What happens when you enter a URL in the browser and press Enter?",
+        answer: `
+            <p>
+                Several steps happen when you enter a URL and press Enter.
+                A simplified flow is:
+            </p>
+
+            <ol>
+                <li>
+                    <strong>URL parsing:</strong> The browser determines the
+                    protocol, domain, port, path, and other parts of the URL.
+                </li>
+
+                <li>
+                    <strong>DNS lookup:</strong> The browser resolves the
+                    domain name to an IP address, usually using DNS.
+                </li>
+
+                <li>
+                    <strong>Connection:</strong> The browser establishes a
+                    network connection with the server. For HTTPS, this also
+                    involves a TLS handshake.
+                </li>
+
+                <li>
+                    <strong>HTTP request:</strong> The browser sends an HTTP
+                    request to the server.
+                </li>
+
+                <li>
+                    <strong>Server response:</strong> The server sends back
+                    a response containing HTML and potentially other resources.
+                </li>
+
+                <li>
+                    <strong>HTML parsing:</strong> The browser parses the HTML
+                    and creates the DOM.
+                </li>
+
+                <li>
+                    <strong>Resource loading:</strong> The browser discovers
+                    and loads CSS, JavaScript, images, fonts, and other
+                    required resources.
+                </li>
+
+                <li>
+                    <strong>Rendering:</strong> The browser uses the DOM and
+                    CSS information to calculate layout and paint the page
+                    on the screen.
+                </li>
+            </ol>
+
+            <p>
+                A simplified flow is:
+            </p>
+
+            <pre><code>URL
+ ↓
+DNS
+ ↓
+Server Connection
+ ↓
+HTTP Request
+ ↓
+HTTP Response
+ ↓
+HTML Parsing
+ ↓
+DOM + CSSOM
+ ↓
+Layout
+ ↓
+Paint
+ ↓
+Page displayed</code></pre>
+
+            <p>
+                This is a simplified explanation; modern browsers perform many
+                of these operations concurrently and optimize the process heavily.
+            </p>
+        `
+    },
+    {
+        question: "Why is JavaScript often placed at the bottom of the &lt;body&gt;?",
+        answer: `
+            <p>
+                JavaScript is traditionally placed near the bottom of the
+                <code>&lt;body&gt;</code> so that the browser can parse and
+                render most of the HTML content before executing the script.
+            </p>
+
+            <p>
+                If a normal script is placed in the <code>&lt;head&gt;</code>,
+                the browser may pause HTML parsing while downloading and
+                executing the JavaScript. This can delay the rendering of
+                visible content.
+            </p>
+
+            <h4>Traditional approach:</h4>
+
+            <pre><code>&lt;body&gt;
+
+    &lt;h1&gt;My Website&lt;/h1&gt;
+
+    &lt;script src="app.js"&gt;&lt;/script&gt;
+&lt;/body&gt;</code></pre>
+
+            <p>
+                However, placing scripts at the bottom is not the only solution.
+                Modern HTML provides <code>defer</code> and <code>async</code>,
+                which allow scripts to be placed in the
+                <code>&lt;head&gt;</code> without unnecessarily blocking HTML
+                parsing.
+            </p>
+
+            <p>
+                So in an interview, I would say that putting scripts at the
+                bottom was a traditional way to avoid blocking page parsing,
+                while <code>defer</code> is often preferred for external scripts
+                that need to execute after HTML parsing.
+            </p>
+        `
+    },
+
+    {
+        question: "What is the difference between async and defer?",
+        answer: `
+            <p>
+                Both <code>async</code> and <code>defer</code> allow external
+                JavaScript files to download without blocking HTML parsing,
+                but they differ in when the script executes.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>async:</strong> The script downloads in parallel
+                    with HTML parsing and executes as soon as it finishes
+                    downloading. Its execution can interrupt HTML parsing.
+                </li>
+
+                <li>
+                    <strong>defer:</strong> The script also downloads in
+                    parallel with HTML parsing, but execution happens after
+                    the HTML has been completely parsed. Deferred scripts
+                    maintain their order.
+                </li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>&lt;script src="analytics.js" async&gt;&lt;/script&gt;
+
+&lt;script src="app.js" defer&gt;&lt;/script&gt;</code></pre>
+
+            <h4>Simple comparison:</h4>
+
+            <pre><code>async:
+HTML parsing ────────────────
+        ↓ download
+        ↓
+      execute
+
+defer:
+HTML parsing ────────────────
+        ↓ download
+        ↓
+HTML parsing complete
+        ↓
+      execute</code></pre>
+
+            <p>
+                I would generally use <code>defer</code> when the script
+                depends on the HTML being parsed and when execution order
+                matters.
+            </p>
+
+            <p>
+                <code>async</code> is useful for independent scripts where
+                execution order is not important, such as some analytics
+                scripts.
+            </p>
+        `
+    },
+
+    {
+        question: "What is lazy loading and how does loading=&quot;lazy&quot; work?",
+        answer: `
+            <p>
+                Lazy loading means delaying the loading of a resource until
+                it is likely to be needed. It is commonly used for images
+                and iframes that are below the initial viewport.
+            </p>
+
+            <p>
+                HTML provides the <code>loading="lazy"</code> attribute for
+                supported elements such as <code>&lt;img&gt;</code> and
+                <code>&lt;iframe&gt;</code>.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>&lt;img
+    src="large-image.jpg"
+    alt="Product"
+    loading="lazy"
+&gt;</code></pre>
+
+            <p>
+                With lazy loading, the browser can delay fetching the image
+                until it is sufficiently close to the user's viewport.
+            </p>
+
+            <p>
+                This can reduce the amount of data loaded initially and improve
+                page loading performance, especially on pages containing many
+                large images.
+            </p>
+
+            <p>
+                For important above-the-fold images, lazy loading may not be
+                appropriate because those resources are needed immediately.
+            </p>
+        `
+    },
+
+    {
+        question: "What is the purpose of the &lt;meta name=&quot;viewport&quot;&gt; tag?",
+        answer: `
+            <p>
+                The viewport meta tag tells mobile browsers how to control
+                the size and scaling of the webpage's viewport.
+            </p>
+
+            <h4>Common example:</h4>
+
+            <pre><code>&lt;meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+&gt;</code></pre>
+
+            <p>
+                <code>width=device-width</code> makes the viewport width match
+                the device's screen width.
+            </p>
+
+            <p>
+                <code>initial-scale=1.0</code> sets the initial zoom level
+                to 100%.
+            </p>
+
+            <p>
+                Without an appropriate viewport setting, a webpage may appear
+                zoomed out or have an incorrect layout on mobile devices.
+            </p>
+
+            <p>
+                It is therefore an important part of building responsive
+                websites.
+            </p>
+        `
+    },
+
+    {
+        question: "What is web accessibility and why is it important?",
+        answer: `
+            <p>
+                Web accessibility means designing and developing websites
+                so that people with different abilities can use and interact
+                with them effectively.
+            </p>
+
+            <p>
+                This includes people who may have visual, auditory, motor,
+                or cognitive disabilities.
+            </p>
+
+            <h4>Examples of accessible HTML:</h4>
+
+            <ul>
+                <li>Using semantic HTML elements.</li>
+                <li>Providing meaningful <code>alt</code> text for images.</li>
+                <li>Using <code>&lt;label&gt;</code> elements for form controls.</li>
+                <li>Ensuring interactive elements can be operated using a keyboard.</li>
+                <li>Providing sufficient color contrast.</li>
+                <li>Using ARIA when native HTML semantics are not sufficient.</li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>&lt;label for="email"&gt;
+    Email address
+&lt;/label&gt;
+
+&lt;input
+    id="email"
+    type="email"
+    name="email"
+&gt;</code></pre>
+
+            <p>
+                Accessibility is important because it makes websites usable
+                by a wider range of people and improves the overall usability
+                and structure of the application.
+            </p>
+        `
+    },
+
+    {
+        question: "What is ARIA and when should you use it?",
+        answer: `
+            <p>
+                ARIA stands for <strong>Accessible Rich Internet Applications</strong>.
+                It is a set of attributes that provides additional information
+                about UI elements to assistive technologies such as screen readers.
+            </p>
+
+            <p>
+                ARIA can be useful when creating custom interactive components
+                where native HTML elements do not provide enough semantic
+                information.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>&lt;button
+    aria-label="Close menu"
+&gt;
+    X
+&lt;/button&gt;</code></pre>
+
+            <p>
+                Here, <code>aria-label</code> gives a screen reader a meaningful
+                description of the button even though the visible content is
+                only <code>X</code>.
+            </p>
+
+            <p>
+                However, ARIA should not replace native HTML semantics when a
+                suitable HTML element already exists.
+            </p>
+
+            <p>
+                For example, if something behaves like a button, it is usually
+                better to use the native
+                <code>&lt;button&gt;</code> element rather than creating a
+                <code>&lt;div role="button"&gt;</code>.
+            </p>
+
+            <p>
+                A good rule is:
+                <strong>use semantic HTML first, and use ARIA when additional
+                accessibility information is actually needed.</strong>
+            </p>
+        `
+    },
+
+    {
+        question: "Why is &lt;button&gt; better than using a clickable &lt;div&gt;?",
+        answer: `
+            <p>
+                A native <code>&lt;button&gt;</code> is generally better because
+                it already provides built-in semantics, keyboard support,
+                focus behavior, and accessibility support.
+            </p>
+
+            <p>
+                A clickable <code>&lt;div&gt;</code> is only a generic container.
+                If we make it clickable with JavaScript, we may need to manually
+                implement keyboard interaction, focus behavior, and accessibility
+                semantics.
+            </p>
+
+            <h4>Preferred approach:</h4>
+
+            <pre><code>&lt;button type="button" id="submitBtn"&gt;
+    Submit
+&lt;/button&gt;</code></pre>
+
+            <p>
+                Instead of:
+            </p>
+
+            <pre><code>&lt;div id="submitBtn"&gt;
+    Submit
+&lt;/div&gt;</code></pre>
+
+            <p>
+                A button can naturally be focused using the keyboard and
+                activated using standard keyboard interactions.
+            </p>
+
+            <p>
+                Therefore, when an element performs a button-like action,
+                using the native <code>&lt;button&gt;</code> element is usually
+                the correct approach.
+            </p>
+        `
+    },
+
+    {
+        question: "What is the purpose of the alt attribute on images?",
+        answer: `
+            <p>
+                The <code>alt</code> attribute provides alternative text for
+                an image. It is primarily important for accessibility and is
+                also useful when an image cannot be loaded.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>&lt;img
+    src="profile.jpg"
+    alt="Profile photo of John"
+&gt;</code></pre>
+
+            <p>
+                Screen readers can read the alternative text to users who
+                cannot see the image.
+            </p>
+
+            <p>
+                If an image is purely decorative and provides no useful
+                information, an empty <code>alt</code> attribute can be used:
+            </p>
+
+            <pre><code>&lt;img
+    src="decorative-line.png"
+    alt=""
+&gt;</code></pre>
+
+            <p>
+                The <code>alt</code> text should describe the purpose or
+                meaningful content of the image rather than simply describing
+                that it is an image.
+            </p>
+        `
+    },
+
+    {
+        question: "How does semantic HTML help SEO?",
+        answer: `
+            <p>
+                Semantic HTML helps search engines better understand the
+                structure and meaning of webpage content.
+            </p>
+
+            <p>
+                Elements such as <code>&lt;main&gt;</code>,
+                <code>&lt;nav&gt;</code>, <code>&lt;article&gt;</code>,
+                <code>&lt;section&gt;</code>, and
+                <code>&lt;header&gt;</code> provide meaningful information
+                about the purpose of different parts of a page.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>&lt;main&gt;
+
+    &lt;article&gt;
+        &lt;h1&gt;How to Learn JavaScript&lt;/h1&gt;
+
+        &lt;p&gt;
+            JavaScript is a programming language used
+            to build interactive web applications.
+        &lt;/p&gt;
+    &lt;/article&gt;
+
+&lt;/main&gt;</code></pre>
+
+            <p>
+                Semantic HTML can make content easier for search engines to
+                interpret and can also improve accessibility and document
+                structure.
+            </p>
+
+            <p>
+                However, semantic HTML alone does not guarantee higher search
+                rankings. SEO also depends on factors such as content quality,
+                performance, mobile usability, links, and other technical
+                aspects.
+            </p>
+        `
+    },
+
+    {
+        question: "What are data-* attributes and when would you use them?",
+        answer: `
+            <p>
+                <code>data-*</code> attributes are custom HTML attributes
+                that allow developers to store additional custom information
+                on HTML elements.
+            </p>
+
+            <p>
+                The attribute name must start with <code>data-</code>.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>&lt;button
+    data-product-id="101"
+    data-category="laptop"
+&gt;
+    Add to Cart
+&lt;/button&gt;</code></pre>
+
+            <p>
+                JavaScript can access these values through the element's
+                <code>dataset</code> property:
+            </p>
+
+            <pre><code>const button = document.querySelector("button");
+
+console.log(button.dataset.productId);
+// "101"
+
+console.log(button.dataset.category);
+// "laptop"</code></pre>
+
+            <p>
+                They are useful when you need to associate custom data with
+                an element, for example a product ID, user ID, category, or
+                other small pieces of UI-related information.
+            </p>
+
+            <p>
+                However, sensitive information such as passwords, API keys,
+                or authentication tokens should not be stored in
+                <code>data-*</code> attributes because they are visible in
+                the HTML and can be accessed by client-side code.
+            </p>
+        `
+    }
+
+
+];
+
+
+        /* =========================
+        RENDER QUESTIONS
+        ========================= */
+
+        const container =
+            document.getElementById("questions");
+
+
+        questions.forEach((item, index) => {
+
+            const card =
+                document.createElement("div");
+
+
+            card.className =
+                "question-card";
+
+
+
+
+            card.innerHTML = `
+
+                <button
+                    class="question-btn"
+                    type="button"
+                >
+
+                    <span>
+                        ${index + 1}. ${item.question}
+                    </span>
+
+                    <span class="arrow">
+                        ⌄
+                    </span>
+
+                </button>
+
+
+                <div class="answer">
+
+                    ${item.answer}
+
+                </div>
+
+            `;
+
+            const button =
+                card.querySelector(".question-btn");
+
+
+            button.addEventListener("click", () => {
+
+                card.classList.toggle("open");
+
+            });
+
+
+            container.appendChild(card);
+
+        });
+
+
+        /* =========================
+        MOBILE MENU
+        ========================= */
+
+        const menuBtn =
+            document.getElementById("menuBtn");
+
+
+        const mobileMenu =
+            document.getElementById("mobileMenu");
+
+
+        menuBtn.addEventListener("click", () => {
+
+            mobileMenu.classList.toggle("open");
+
+
+            if (mobileMenu.classList.contains("open")) {
+
+                menuBtn.textContent = "✕";
+
+            } else {
+
+                menuBtn.textContent = "☰";
+
+            }
+
+        });
+
+
+        /* CLOSE MENU AFTER CLICKING LINK */
+
+        const mobileLinks =
+            mobileMenu.querySelectorAll("a");
+
+
+        mobileLinks.forEach(link => {
+
+            link.addEventListener("click", () => {
+
+                mobileMenu.classList.remove("open");
+
+                menuBtn.textContent = "☰";
+
+            });
+
+        });
+
+
+        /* =========================
+        THEME
+        ========================= */
+
+        const themeBtn =
+            document.getElementById("themeBtn");
+
+
+        const savedTheme =
+            localStorage.getItem("theme");
+
+
+        if (savedTheme === "dark") {
+
+            document.body.classList.add("dark");
+
+            themeBtn.textContent = "☀";
+
+        }
+
+
+        themeBtn.addEventListener("click", () => {
+
+            document.body.classList.toggle("dark");
+
+
+            const isDark =
+                document.body.classList.contains("dark");
+
+
+            localStorage.setItem(
+                "theme",
+                isDark ? "dark" : "light"
+            );
+
+
+            themeBtn.textContent =
+                isDark ? "☀" : "☾";
+
+        });
+
+    </script>
+
+
+</body>
+
+</html>

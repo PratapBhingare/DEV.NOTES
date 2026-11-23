@@ -1,0 +1,6935 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="dev-prep-favicon.png">
+    <title>Dsa Interview Questions</title>
+
+    <style>
+        /* =========================
+           RESET
+        ========================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        /* =========================
+           THEME VARIABLES
+        ========================= */
+
+        :root {
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --surface-hover: #f1f5f9;
+
+            --text: #0f172a;
+            --muted: #64748b;
+
+            --border: #e2e8f0;
+
+            --accent: #2563eb;
+            --accent-soft: #eff6ff;
+        }
+
+
+        body.dark {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --surface-hover: #263449;
+
+            --text: #f8fafc;
+            --muted: #94a3b8;
+
+            --border: #334155;
+
+            --accent: #60a5fa;
+            --accent-soft: #172554;
+        }
+
+
+        /* =========================
+           BODY
+        ========================= */
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+
+            background: var(--bg);
+            color: var(--text);
+
+            min-height: 100vh;
+
+            transition:
+                background 0.25s ease,
+                color 0.25s ease;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            background: var(--surface);
+
+            border-bottom: 1px solid var(--border);
+        }
+
+
+        .nav-container {
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding: 14px 20px;
+
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+
+        /* LOGO */
+
+        .logo {
+            color: var(--text);
+
+            text-decoration: none;
+
+            font-size: 18px;
+            font-weight: 700;
+
+            white-space: nowrap;
+        }
+
+
+        .logo span {
+            color: var(--accent);
+        }
+
+
+        /* DESKTOP NAVIGATION */
+
+        .nav-links {
+            flex: 1;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 4px;
+        }
+
+
+        .nav-links a {
+            color: var(--muted);
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            padding: 8px 10px;
+
+            border-radius: 7px;
+
+            transition: 0.2s;
+        }
+
+
+        .nav-links a:hover {
+            background: var(--surface-hover);
+            color: var(--text);
+        }
+
+
+        .nav-links a.active {
+            background: var(--accent-soft);
+            color: var(--accent);
+        }
+
+
+        /* =========================
+           NAV ACTIONS
+        ========================= */
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+
+        /* THEME BUTTON */
+
+        .theme-btn {
+            width: 36px;
+            height: 36px;
+
+            border: 1px solid var(--border);
+            border-radius: 8px;
+
+            background: var(--surface);
+            color: var(--text);
+
+            cursor: pointer;
+
+            font-size: 16px;
+
+            transition: 0.2s;
+        }
+
+
+        .theme-btn:hover {
+            background: var(--surface-hover);
+        }
+
+
+        /* MOBILE MENU BUTTON */
+
+        .menu-btn {
+            display: none;
+
+            width: 36px;
+            height: 36px;
+
+            border: 1px solid var(--border);
+            border-radius: 8px;
+
+            background: var(--surface);
+            color: var(--text);
+
+            cursor: pointer;
+
+            font-size: 20px;
+        }
+
+
+        /* =========================
+           MOBILE DROPDOWN
+        ========================= */
+
+        .mobile-menu {
+            display: none;
+
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding: 0 15px 15px;
+        }
+
+
+        .mobile-menu.open {
+            display: block;
+        }
+
+
+        .mobile-menu a {
+            display: block;
+
+            color: var(--muted);
+
+            text-decoration: none;
+
+            padding: 12px 14px;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+
+            transition: 0.2s;
+        }
+
+
+        .mobile-menu a:hover,
+        .mobile-menu a.active {
+            background: var(--surface-hover);
+            color: var(--text);
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        main {
+            width: 100%;
+            max-width: 850px;
+
+            margin: auto;
+
+            padding: 70px 20px 100px;
+        }
+
+
+        /* =========================
+           PAGE HEADER
+        ========================= */
+
+        .page-header {
+            margin-bottom: 40px;
+        }
+
+
+        .page-header span {
+            color: var(--accent);
+
+            font-size: 13px;
+            font-weight: 600;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        .page-header h1 {
+            font-size: clamp(32px, 5vw, 48px);
+
+            line-height: 1.1;
+
+            margin: 10px 0;
+
+            letter-spacing: -1px;
+        }
+
+
+        .page-header p {
+            color: var(--muted);
+
+            line-height: 1.7;
+
+            max-width: 650px;
+
+            font-size: 15px;
+        }
+
+
+        /* =========================
+           QUESTION CARD
+        ========================= */
+
+        /* =========================================================
+   FILTERS
+========================================================= */
+
+        .filters {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .filters select {
+            appearance: none;
+            -webkit-appearance: none;
+
+            min-width: 200px;
+            padding: 11px 42px 11px 14px;
+
+            background-color: var(--surface);
+            color: var(--text);
+
+            border: 1px solid var(--border);
+            border-radius: 8px;
+
+            font-size: 14px;
+            font-weight: 500;
+
+            cursor: pointer;
+            outline: none;
+
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2364758b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+
+            transition:
+                border-color 0.2s ease,
+                background-color 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .filters select:hover {
+            background-color: var(--surface-hover);
+        }
+
+        .filters select:focus {
+            border-color: var(--accent);
+
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        .filters select option {
+            background: var(--surface);
+            color: var(--text);
+        }
+
+
+        /* =========================================================
+   QUESTIONS GRID
+========================================================= */
+
+        #questions {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fill, minmax(320px, 1fr));
+
+            gap: 20px;
+
+            margin-top: 25px;
+        }
+
+
+        /* =========================================================
+   QUESTION CARD
+========================================================= */
+
+        .question-card {
+            display: flex;
+            flex-direction: column;
+
+            min-height: 190px;
+
+            padding: 22px;
+
+            background: var(--surface);
+
+            border: 1px solid var(--border);
+            border-radius: 14px;
+
+            transition:
+                transform 0.25s ease,
+                border-color 0.25s ease,
+                background-color 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .question-card:hover {
+            transform: translateY(-3px);
+
+            background: var(--surface-hover);
+
+            border-color: var(--accent);
+
+            box-shadow:
+                0 10px 25px rgba(15, 23, 42, 0.08);
+        }
+
+
+        /* =========================================================
+   QUESTION TITLE
+========================================================= */
+
+        .question-card h3 {
+            margin: 0 0 18px;
+
+            color: var(--text);
+
+            font-size: 18px;
+            font-weight: 600;
+
+            line-height: 1.5;
+        }
+
+
+        /* =========================================================
+   QUESTION META
+========================================================= */
+
+        .question-meta {
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 12px;
+
+            margin-bottom: 20px;
+        }
+
+
+        /* =========================================================
+   CATEGORIES
+========================================================= */
+
+        .categories {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 7px;
+
+            flex: 1;
+        }
+
+        .category {
+            display: inline-flex;
+
+            align-items: center;
+
+            padding: 5px 9px;
+
+            background: var(--accent-soft);
+
+            border: 1px solid var(--border);
+
+            border-radius: 6px;
+
+            color: var(--accent);
+
+            font-size: 12px;
+            font-weight: 500;
+
+            white-space: nowrap;
+        }
+
+
+        /* =========================================================
+   DIFFICULTY
+========================================================= */
+
+        .level {
+            width: fit-content;
+
+            flex-shrink: 0;
+
+            padding: 5px 10px;
+
+            border-radius: 6px;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        /* Easy */
+
+        .level.easy {
+            background: #ecfdf5;
+
+            border: 1px solid #bbf7d0;
+
+            color: #16a34a;
+        }
+
+
+        /* Medium */
+
+        .level.medium {
+            background: #fefce8;
+
+            border: 1px solid #fde68a;
+
+            color: #ca8a04;
+        }
+
+
+        /* Hard */
+
+        .level.hard {
+            background: #fef2f2;
+
+            border: 1px solid #fecaca;
+
+            color: #dc2626;
+        }
+
+
+        /* Dark mode difficulty */
+
+        body.dark .level.easy {
+            background: rgba(34, 197, 94, 0.12);
+
+            border-color: rgba(34, 197, 94, 0.25);
+
+            color: #4ade80;
+        }
+
+        body.dark .level.medium {
+            background: rgba(234, 179, 8, 0.12);
+
+            border-color: rgba(234, 179, 8, 0.25);
+
+            color: #facc15;
+        }
+
+        body.dark .level.hard {
+            background: rgba(239, 68, 68, 0.12);
+
+            border-color: rgba(239, 68, 68, 0.25);
+
+            color: #f87171;
+        }
+
+
+        /* =========================================================
+   VIEW ANSWER BUTTON
+========================================================= */
+
+        .view-answer-btn {
+            width: 100%;
+
+            margin-top: auto;
+
+            padding: 11px 16px;
+
+            background: var(--accent);
+
+            border: 1px solid var(--accent);
+
+            border-radius: 8px;
+
+            color: #ffffff;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition:
+                background-color 0.2s ease,
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .view-answer-btn:hover {
+            filter: brightness(0.92);
+
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 5px 15px rgba(37, 99, 235, 0.2);
+        }
+
+
+        /* =========================================================
+   NO RESULTS
+========================================================= */
+
+        .no-results {
+            grid-column: 1 / -1;
+
+            padding: 50px 20px;
+
+            text-align: center;
+
+            background: var(--surface);
+
+            border: 1px solid var(--border);
+
+            border-radius: 14px;
+        }
+
+        .no-results h3 {
+            margin: 0 0 8px;
+
+            color: var(--text);
+
+            font-size: 18px;
+        }
+
+        .no-results p {
+            margin: 0;
+
+            color: var(--muted);
+
+            font-size: 14px;
+        }
+
+
+        /* =========================================================
+   ANSWER MODAL
+========================================================= */
+
+        .answer-modal {
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 9999;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            background: rgba(15, 23, 42, 0.55);
+
+            backdrop-filter: blur(6px);
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            transition:
+                opacity 0.25s ease,
+                visibility 0.25s ease;
+        }
+
+        .answer-modal.active {
+            opacity: 1;
+
+            visibility: visible;
+        }
+
+
+        /* =========================================================
+   MODAL CONTENT
+========================================================= */
+
+        .answer-modal-content {
+            width: 100%;
+
+            max-width: 900px;
+
+            max-height: 90vh;
+
+            overflow-y: auto;
+
+            padding: 28px;
+
+            background: var(--surface);
+
+            border: 1px solid var(--border);
+
+            border-radius: 16px;
+
+            box-shadow:
+                0 25px 60px rgba(15, 23, 42, 0.2);
+
+            transform: translateY(20px);
+
+            transition:
+                transform 0.25s ease;
+        }
+
+        .answer-modal.active .answer-modal-content {
+            transform: translateY(0);
+        }
+
+
+        /* =========================================================
+   MODAL HEADER
+========================================================= */
+
+        .answer-modal-header {
+            display: flex;
+
+            align-items: flex-start;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            margin-bottom: 18px;
+        }
+
+        .answer-modal-header h2 {
+            margin: 0;
+
+            color: var(--text);
+
+            font-size: 24px;
+
+            line-height: 1.4;
+        }
+
+
+        /* =========================================================
+   CLOSE BUTTON
+========================================================= */
+
+        .close-modal {
+            flex-shrink: 0;
+
+            width: 36px;
+            height: 36px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background: var(--surface-hover);
+
+            border: 1px solid var(--border);
+
+            border-radius: 8px;
+
+            color: var(--text);
+
+            font-size: 24px;
+
+            line-height: 1;
+
+            cursor: pointer;
+
+            transition:
+                background-color 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+        .close-modal:hover {
+            background: var(--accent-soft);
+
+            border-color: var(--accent);
+
+            color: var(--accent);
+        }
+
+
+        /* =========================================================
+   MODAL CATEGORIES
+========================================================= */
+
+        .modal-categories {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 7px;
+
+            margin-bottom: 10px;
+        }
+
+        .modal-categories .category {
+            background: var(--accent-soft);
+
+            border-color: var(--border);
+
+            color: var(--accent);
+        }
+
+
+        /* =========================================================
+   MODAL LEVEL
+========================================================= */
+
+        .modal-level {
+            display: inline-flex;
+
+            padding: 5px 10px;
+
+            margin-bottom: 25px;
+
+            border-radius: 6px;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+        }
+
+        .modal-level.easy {
+            background: #ecfdf5;
+
+            border: 1px solid #bbf7d0;
+
+            color: #16a34a;
+        }
+
+        .modal-level.medium {
+            background: #fefce8;
+
+            border: 1px solid #fde68a;
+
+            color: #ca8a04;
+        }
+
+        .modal-level.hard {
+            background: #fef2f2;
+
+            border: 1px solid #fecaca;
+
+            color: #dc2626;
+        }
+
+
+        /* Dark mode */
+
+        body.dark .modal-level.easy {
+            background: rgba(34, 197, 94, 0.12);
+
+            border-color: rgba(34, 197, 94, 0.25);
+
+            color: #4ade80;
+        }
+
+        body.dark .modal-level.medium {
+            background: rgba(234, 179, 8, 0.12);
+
+            border-color: rgba(234, 179, 8, 0.25);
+
+            color: #facc15;
+        }
+
+        body.dark .modal-level.hard {
+            background: rgba(239, 68, 68, 0.12);
+
+            border-color: rgba(239, 68, 68, 0.25);
+
+            color: #f87171;
+        }
+
+
+        /* =========================================================
+   ANSWER CONTENT
+========================================================= */
+
+        .answer-content {
+            color: var(--text);
+
+            font-size: 15px;
+
+            line-height: 1.7;
+        }
+
+        .answer-content h3 {
+            margin-top: 25px;
+
+            margin-bottom: 12px;
+
+            color: var(--text);
+
+            font-size: 18px;
+        }
+
+        .answer-content p {
+            margin: 12px 0;
+
+            color: var(--muted);
+        }
+
+
+        /* =========================================================
+   CODE BLOCK
+========================================================= */
+
+        .answer-content pre {
+            margin: 20px 0;
+
+            padding: 20px;
+
+            overflow-x: auto;
+
+            background: var(--bg);
+
+            border: 1px solid var(--border);
+
+            border-radius: 10px;
+        }
+
+        .answer-content code {
+            font-family:
+                "Fira Code",
+                "Cascadia Code",
+                Consolas,
+                monospace;
+
+            font-size: 14px;
+
+            color: var(--text);
+
+            white-space: pre;
+        }
+
+
+        /* =========================================================
+   MODAL SCROLLBAR
+========================================================= */
+
+        .answer-modal-content::-webkit-scrollbar {
+            width: 7px;
+        }
+
+        .answer-modal-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .answer-modal-content::-webkit-scrollbar-thumb {
+            background: var(--border);
+
+            border-radius: 10px;
+        }
+
+        .answer-modal-content::-webkit-scrollbar-thumb:hover {
+            background: var(--muted);
+        }
+
+
+        /* =========================================================
+   BODY LOCK
+========================================================= */
+
+        body.modal-open {
+            overflow: hidden;
+        }
+
+
+        /* =========================================================
+   RESPONSIVE
+========================================================= */
+
+        @media (max-width: 700px) {
+
+            #questions {
+                grid-template-columns: 1fr;
+            }
+
+            .question-card {
+                padding: 18px;
+            }
+
+            .question-card h3 {
+                font-size: 16px;
+            }
+
+            .question-meta {
+                align-items: flex-start;
+            }
+
+            .filters {
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+            .filters select {
+                width: 100%;
+            }
+
+            .answer-modal {
+                padding: 10px;
+            }
+
+            .answer-modal-content {
+                max-height: 95vh;
+
+                padding: 20px;
+
+                border-radius: 12px;
+            }
+
+            .answer-modal-header h2 {
+                font-size: 19px;
+            }
+
+            .answer-content {
+                font-size: 14px;
+            }
+
+            .answer-content pre {
+                padding: 14px;
+            }
+
+            .answer-content code {
+                font-size: 12px;
+            }
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .nav-container {
+                padding: 11px 14px;
+            }
+
+
+            .logo {
+                font-size: 17px;
+            }
+
+
+            .menu-btn,
+            .theme-btn {
+                width: 34px;
+                height: 34px;
+            }
+
+
+            main {
+                padding: 45px 15px 70px;
+            }
+
+
+            .page-header {
+                margin-bottom: 30px;
+            }
+
+
+            .page-header span {
+                font-size: 11px;
+            }
+
+
+            .page-header h1 {
+                font-size: 34px;
+
+                margin-top: 8px;
+            }
+
+
+            .page-header p {
+                font-size: 14px;
+
+                line-height: 1.7;
+            }
+
+
+            .question-card {
+                border-radius: 10px;
+
+                margin-bottom: 10px;
+            }
+
+
+            .question-btn {
+                padding: 16px;
+
+                font-size: 14px;
+
+                gap: 12px;
+            }
+
+
+            .answer {
+                padding: 0 16px 17px;
+
+                font-size: 14px;
+
+                line-height: 1.7;
+            }
+
+
+            .arrow {
+                font-size: 16px;
+            }
+
+        }
+
+
+        /* =========================
+           VERY SMALL DEVICES
+        ========================= */
+
+        @media (max-width: 380px) {
+
+            .logo {
+                font-size: 16px;
+            }
+
+
+            main {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+
+
+            .page-header h1 {
+                font-size: 30px;
+            }
+
+
+            .question-btn {
+                padding: 14px;
+
+                font-size: 13px;
+            }
+
+
+            .answer {
+                padding-left: 14px;
+                padding-right: 14px;
+
+                font-size: 13px;
+            }
+
+        }
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <nav>
+
+        <div class="nav-container">
+
+
+            <!-- LOGO -->
+
+            <a href="index.html" class="logo">
+                Dev.<span>Prep</span>
+            </a>
+
+
+            <!-- DESKTOP LINKS -->
+
+            <div class="nav-links">
+
+                <a href="dn-v1-html.html">
+                    HTML
+                </a>
+
+                <a href="dn-v1-css.html">
+                    CSS
+                </a>
+
+                <a href="dn-v1-js.html">
+                    JavaScript
+                </a>
+
+                <a href="dn-v1-react.html">
+                    React
+                </a>
+
+                <a href="dn-v1-node.html">
+                    Node.js
+                </a>
+
+                <a href="dn-v1-sql.html">
+                    SQL
+                </a>
+
+                <a href="dn-v1-dsa.html" class="active">
+                    DSA
+                </a>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="nav-actions">
+
+                <button class="menu-btn" id="menuBtn" aria-label="Open navigation menu">
+                    ☰
+                </button>
+
+
+                <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
+                    ☾
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- MOBILE MENU -->
+
+        <div class="mobile-menu" id="mobileMenu">
+
+            <a href="dn-v1-html.html">
+                HTML
+            </a>
+
+            <a href="dn-v1-css.html">
+                CSS
+            </a>
+
+            <a href="dn-v1-js.html">
+                JavaScript
+            </a>
+
+            <a href="dn-v1-react.html">
+                React
+            </a>
+
+            <a href="dn-v1-node.html">
+                Node.js
+            </a>
+
+            <a href="dn-v1-sql.html">
+                SQL
+            </a>
+
+            <a href="dn-v1-dsa.html" class="active">
+                DSA
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================= -->
+
+    <main>
+
+
+        <header class="page-header">
+
+            <span>
+                INTERVIEW PREPARATION
+            </span>
+
+            <h1>
+                Dsa
+            </h1>
+
+            <p>
+                Important Dsa concepts and interview
+                questions, from fundamentals to advanced topics.
+            </p>
+
+        </header>
+
+
+        <!-- QUESTIONS -->
+
+        <!-- Filters -->
+
+        <div class="filters">
+
+            <select id="categoryFilter">
+                <option value="all">All Categories</option>
+            </select>
+
+            <select id="levelFilter">
+                <option value="all">All Levels</option>
+            </select>
+
+        </div>
+
+
+        <!-- Questions -->
+
+        <div id="questions"></div>
+
+
+        <!-- Answer Modal -->
+
+        <div id="answerModal" class="answer-modal">
+
+            <div class="answer-modal-content">
+
+                <div class="answer-modal-header">
+
+                    <h2 id="modalQuestion">
+                        Question
+                    </h2>
+
+                    <button class="close-modal" id="closeModal">
+                        &times;
+                    </button>
+
+                </div>
+
+
+                <div id="modalCategories" class="modal-categories"></div>
+
+
+                <div id="modalLevel" class="modal-level"></div>
+
+
+                <div id="answerContent" class="answer-content"></div>
+
+            </div>
+
+        </div>
+
+
+    </main>
+
+
+    <script>
+
+
+        /* =========================
+           QUESTIONS
+        ========================= */
+
+        const questions = [
+
+            {
+                id: 1,
+                question: "Two Sum",
+                category: ["Array", "Hashing"],
+                level: "Easy",
+                answer: `
+        <pre><code>
+import java.util.*;
+
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        HashMap&lt;Integer, Integer&gt; map = new HashMap&lt;&gt;();
+
+        for (int i = 0; i &lt; nums.length; i++) {
+            int complement = target - nums[i];
+
+            if (map.containsKey(complement)) {
+                return new int[]{map.get(complement), i};
+            }
+
+            map.put(nums[i], i);
+        }
+
+        return new int[]{};
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            We use a HashMap to store each number and its index.
+            For every number, we calculate the required complement
+            using <code>target - nums[i]</code>.
+        </p>
+
+        <p>
+            If the complement already exists in the HashMap,
+            we have found the two numbers whose sum equals the target.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(n)</p>
+        `
+            },
+
+
+            {
+                id: 2,
+                question: "Contains Duplicate",
+                category: ["Array", "Hashing"],
+                level: "Easy",
+                answer: `
+        <pre><code>
+import java.util.*;
+
+class Solution {
+    public boolean containsDuplicate(int[] nums) {
+        HashSet&lt;Integer&gt; set = new HashSet&lt;&gt;();
+
+        for (int num : nums) {
+            if (set.contains(num)) {
+                return true;
+            }
+
+            set.add(num);
+        }
+
+        return false;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            A HashSet stores only unique values.
+            We go through the array and check whether the current
+            number already exists in the set.
+        </p>
+
+        <p>
+            If it exists, the number is a duplicate, so we return
+            <code>true</code>. Otherwise, we add it to the set.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(n)</p>
+        `
+            },
+
+
+            {
+                id: 3,
+                question: "Valid Anagram",
+                category: ["String", "Hashing", "Frequency Counting"],
+                level: "Easy",
+                answer: `
+        <pre><code>
+import java.util.*;
+
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        if (s.length() != t.length()) {
+            return false;
+        }
+
+        HashMap&lt;Character, Integer&gt; map = new HashMap&lt;&gt;();
+
+        for (char c : s.toCharArray()) {
+            map.put(c, map.getOrDefault(c, 0) + 1);
+        }
+
+        for (char c : t.toCharArray()) {
+            if (!map.containsKey(c)) {
+                return false;
+            }
+
+            map.put(c, map.get(c) - 1);
+
+            if (map.get(c) == 0) {
+                map.remove(c);
+            }
+        }
+
+        return map.isEmpty();
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            Two strings are anagrams if they contain the same characters
+            with the same frequency.
+        </p>
+
+        <p>
+            First, we count every character in the first string.
+            Then we decrease the count while processing the second string.
+        </p>
+
+        <p>
+            If a character does not exist or the frequencies do not match,
+            the strings are not anagrams.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(k)</p>
+        `
+            },
+
+
+            {
+                id: 4,
+                question: "Group Anagrams",
+                category: ["Array", "String", "Hashing"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+import java.util.*;
+
+class Solution {
+    public List&lt;List&lt;String&gt;&gt; groupAnagrams(String[] strs) {
+
+        HashMap&lt;String, List&lt;String&gt;&gt; map = new HashMap&lt;&gt;();
+
+        for (String str : strs) {
+
+            char[] chars = str.toCharArray();
+
+            Arrays.sort(chars);
+
+            String key = new String(chars);
+
+            map.putIfAbsent(key, new ArrayList&lt;&gt;());
+
+            map.get(key).add(str);
+        }
+
+        return new ArrayList&lt;&gt;(map.values());
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            Anagrams have the same characters, so after sorting their
+            characters they will produce the same string.
+        </p>
+
+        <p>
+            For example, <code>"eat"</code>, <code>"tea"</code> and
+            <code>"ate"</code> all become <code>"aet"</code>.
+        </p>
+
+        <p>
+            We use this sorted string as the HashMap key and store all
+            anagrams under the same key.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n × k log k)</p>
+        <p><strong>Space Complexity:</strong> O(n × k)</p>
+        `
+            },
+
+
+            {
+                id: 5,
+                question: "Product of Array Except Self",
+                category: ["Array", "Prefix Product"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+
+        int n = nums.length;
+        int[] result = new int[n];
+
+        int prefix = 1;
+
+        for (int i = 0; i &lt; n; i++) {
+            result[i] = prefix;
+            prefix *= nums[i];
+        }
+
+        int suffix = 1;
+
+        for (int i = n - 1; i &gt;= 0; i--) {
+            result[i] *= suffix;
+            suffix *= nums[i];
+        }
+
+        return result;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            For every position, we need the product of all elements
+            except the current element.
+        </p>
+
+        <p>
+            First, we store the product of all elements to the left
+            using a prefix product.
+        </p>
+
+        <p>
+            Then we traverse from right to left and multiply each
+            position by the product of all elements on its right.
+        </p>
+
+        <p>
+            This solution does not use division and works correctly
+            even when the array contains zero.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(1) extra space</p>
+        `
+            },
+
+
+            {
+                id: 6,
+                question: "Top K Frequent Elements",
+                category: ["Array", "Hashing", "Frequency Counting", "Heap"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+import java.util.*;
+
+class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+
+        HashMap&lt;Integer, Integer&gt; frequency = new HashMap&lt;&gt;();
+
+        for (int num : nums) {
+            frequency.put(num, frequency.getOrDefault(num, 0) + 1);
+        }
+
+        PriorityQueue&lt;int[]&gt; minHeap =
+            new PriorityQueue&lt;&gt;((a, b) -&gt; a[1] - b[1]);
+
+        for (Map.Entry&lt;Integer, Integer&gt; entry : frequency.entrySet()) {
+
+            minHeap.offer(new int[]{
+                entry.getKey(),
+                entry.getValue()
+            });
+
+            if (minHeap.size() &gt; k) {
+                minHeap.poll();
+            }
+        }
+
+        int[] result = new int[k];
+
+        for (int i = k - 1; i &gt;= 0; i--) {
+            result[i] = minHeap.poll()[0];
+        }
+
+        return result;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            First, we count how many times each number appears using
+            a HashMap.
+        </p>
+
+        <p>
+            Then we use a Min Heap to keep only the <code>k</code>
+            elements with the highest frequencies.
+        </p>
+
+        <p>
+            Whenever the heap contains more than <code>k</code> elements,
+            we remove the element with the smallest frequency.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n log k)</p>
+        <p><strong>Space Complexity:</strong> O(n + k)</p>
+        `
+            },
+
+
+            {
+                id: 7,
+                question: "Longest Consecutive Sequence",
+                category: ["Array", "Hashing", "HashSet"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+import java.util.*;
+
+class Solution {
+    public int longestConsecutive(int[] nums) {
+
+        HashSet&lt;Integer&gt; set = new HashSet&lt;&gt;();
+
+        for (int num : nums) {
+            set.add(num);
+        }
+
+        int longest = 0;
+
+        for (int num : set) {
+
+            // Start only if num is the beginning
+            // of a consecutive sequence.
+            if (!set.contains(num - 1)) {
+
+                int current = num;
+                int length = 1;
+
+                while (set.contains(current + 1)) {
+                    current++;
+                    length++;
+                }
+
+                longest = Math.max(longest, length);
+            }
+        }
+
+        return longest;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            We put all numbers into a HashSet so that we can check
+            whether a number exists in O(1) average time.
+        </p>
+
+        <p>
+            A number is the beginning of a sequence only when
+            <code>num - 1</code> does not exist.
+        </p>
+
+        <p>
+            For example, for <code>1, 2, 3, 4</code>, we start from
+            <code>1</code> and continue checking <code>2, 3, 4</code>.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(n)</p>
+        `
+            },
+
+
+            {
+                id: 8,
+                question: "Majority Element",
+                category: ["Array", "Hashing", "Frequency Counting"],
+                level: "Easy",
+                answer: `
+        <pre><code>
+import java.util.*;
+
+class Solution {
+    public int majorityElement(int[] nums) {
+
+        HashMap&lt;Integer, Integer&gt; map = new HashMap&lt;&gt;();
+
+        for (int num : nums) {
+
+            int count = map.getOrDefault(num, 0) + 1;
+
+            map.put(num, count);
+
+            if (count &gt; nums.length / 2) {
+                return num;
+            }
+        }
+
+        return -1;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            The majority element is the element that appears more than
+            <code>n / 2</code> times.
+        </p>
+
+        <p>
+            We store the frequency of every number in a HashMap.
+            As soon as a number's frequency becomes greater than
+            <code>n / 2</code>, we return it.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(n)</p>
+        `
+            },
+
+
+            {
+                id: 9,
+                question: "Missing Number",
+                category: ["Array", "Math", "Bit Manipulation"],
+                level: "Easy",
+                answer: `
+        <pre><code>
+class Solution {
+    public int missingNumber(int[] nums) {
+
+        int n = nums.length;
+
+        int expectedSum = n * (n + 1) / 2;
+
+        int actualSum = 0;
+
+        for (int num : nums) {
+            actualSum += num;
+        }
+
+        return expectedSum - actualSum;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            The array contains numbers from <code>0</code> to
+            <code>n</code>, with exactly one number missing.
+        </p>
+
+        <p>
+            We calculate the expected sum using the formula:
+            <code>n * (n + 1) / 2</code>.
+        </p>
+
+        <p>
+            Then we subtract the actual array sum from the expected sum.
+            The difference is the missing number.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(1)</p>
+        `
+            },
+
+
+            {
+                id: 10,
+                question: "Find the Duplicate Number",
+                category: ["Array", "Two Pointers", "Cycle Detection"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+class Solution {
+    public int findDuplicate(int[] nums) {
+
+        int slow = nums[0];
+        int fast = nums[0];
+
+        // Phase 1: Find intersection point
+        do {
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        } while (slow != fast);
+
+        // Phase 2: Find entrance of cycle
+        slow = nums[0];
+
+        while (slow != fast) {
+            slow = nums[slow];
+            fast = nums[fast];
+        }
+
+        return slow;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            We treat the array like a linked list where the value at
+            each index points to another index.
+        </p>
+
+        <p>
+            Because one number is duplicated, a cycle is created.
+            We use Floyd's Cycle Detection algorithm with two pointers:
+            <code>slow</code> moves one step and <code>fast</code>
+            moves two steps.
+        </p>
+
+        <p>
+            After they meet, we reset <code>slow</code> to the beginning.
+            Then both pointers move one step at a time.
+            The point where they meet again is the duplicate number.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(1)</p>
+        `
+            },
+            {
+                id: 11,
+                question: "Valid Palindrome",
+                category: ["Two Pointers", "String"],
+                level: "Easy",
+                answer: `
+        <pre><code>
+class Solution {
+    public boolean isPalindrome(String s) {
+
+        int left = 0;
+        int right = s.length() - 1;
+
+        while (left &lt; right) {
+
+            while (left &lt; right &amp;&amp; !Character.isLetterOrDigit(s.charAt(left))) {
+                left++;
+            }
+
+            while (left &lt; right &amp;&amp; !Character.isLetterOrDigit(s.charAt(right))) {
+                right--;
+            }
+
+            if (Character.toLowerCase(s.charAt(left)) !=
+                Character.toLowerCase(s.charAt(right))) {
+                return false;
+            }
+
+            left++;
+            right--;
+        }
+
+        return true;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            We use two pointers: <code>left</code> starts from the beginning
+            and <code>right</code> starts from the end.
+        </p>
+
+        <p>
+            We skip spaces and special characters, then compare both
+            characters after converting them to lowercase.
+        </p>
+
+        <p>
+            If any pair of characters is different, the string is not
+            a palindrome.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(1)</p>
+        `
+            },
+
+
+            {
+                id: 12,
+                question: "Two Sum II — Sorted Array",
+                category: ["Two Pointers", "Array"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+class Solution {
+    public int[] twoSum(int[] numbers, int target) {
+
+        int left = 0;
+        int right = numbers.length - 1;
+
+        while (left &lt; right) {
+
+            int sum = numbers[left] + numbers[right];
+
+            if (sum == target) {
+                return new int[]{left + 1, right + 1};
+            }
+
+            if (sum &lt; target) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+
+        return new int[]{};
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            Because the array is already sorted, we can use two pointers.
+            One starts from the left and the other from the right.
+        </p>
+
+        <p>
+            If the sum is too small, we move <code>left</code> forward
+            to increase the sum.
+        </p>
+
+        <p>
+            If the sum is too large, we move <code>right</code> backward
+            to decrease the sum.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(1)</p>
+        `
+            },
+
+
+            {
+                id: 13,
+                question: "3Sum",
+                category: ["Two Pointers", "Array", "Sorting"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+import java.util.*;
+
+class Solution {
+    public List&lt;List&lt;Integer&gt;&gt; threeSum(int[] nums) {
+
+        List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();
+
+        Arrays.sort(nums);
+
+        for (int i = 0; i &lt; nums.length - 2; i++) {
+
+            // Skip duplicate first elements
+            if (i &gt; 0 &amp;&amp; nums[i] == nums[i - 1]) {
+                continue;
+            }
+
+            int left = i + 1;
+            int right = nums.length - 1;
+
+            while (left &lt; right) {
+
+                int sum = nums[i] + nums[left] + nums[right];
+
+                if (sum == 0) {
+
+                    result.add(Arrays.asList(
+                        nums[i],
+                        nums[left],
+                        nums[right]
+                    ));
+
+                    left++;
+                    right--;
+
+                    // Skip duplicates
+                    while (left &lt; right &amp;&amp;
+                           nums[left] == nums[left - 1]) {
+                        left++;
+                    }
+
+                    while (left &lt; right &amp;&amp;
+                           nums[right] == nums[right + 1]) {
+                        right--;
+                    }
+
+                } else if (sum &lt; 0) {
+                    left++;
+                } else {
+                    right--;
+                }
+            }
+        }
+
+        return result;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            First, we sort the array. Then we fix one number and use
+            two pointers to find the other two numbers.
+        </p>
+
+        <p>
+            If the sum is less than zero, we move <code>left</code>
+            forward to increase the sum.
+        </p>
+
+        <p>
+            If the sum is greater than zero, we move <code>right</code>
+            backward to decrease the sum.
+        </p>
+
+        <p>
+            We skip duplicate values so that the result does not contain
+            duplicate triplets.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n²)</p>
+        <p><strong>Space Complexity:</strong> O(1) extra space
+        (excluding the result)</p>
+        `
+            },
+
+
+            {
+                id: 14,
+                question: "Container With Most Water",
+                category: ["Two Pointers", "Array"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+class Solution {
+    public int maxArea(int[] height) {
+
+        int left = 0;
+        int right = height.length - 1;
+
+        int maxWater = 0;
+
+        while (left &lt; right) {
+
+            int width = right - left;
+
+            int currentHeight =
+                Math.min(height[left], height[right]);
+
+            int area = width * currentHeight;
+
+            maxWater = Math.max(maxWater, area);
+
+            // Move the pointer with smaller height
+            if (height[left] &lt; height[right]) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+
+        return maxWater;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            The amount of water depends on two things:
+            the distance between the pointers and the smaller height.
+        </p>
+
+        <p>
+            We start with the widest possible container.
+            Then we move the pointer having the smaller height because
+            keeping the smaller height cannot give us a better container
+            by moving the other pointer.
+        </p>
+
+        <p>
+            At every step, we calculate the area and keep the maximum.
+        </p>
+
+        <p><strong>Formula:</strong>
+            <code>area = width × min(leftHeight, rightHeight)</code>
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(1)</p>
+        `
+            },
+
+
+            {
+                id: 15,
+                question: "Move Zeroes",
+                category: ["Two Pointers", "Array"],
+                level: "Easy",
+                answer: `
+        <pre><code>
+class Solution {
+    public void moveZeroes(int[] nums) {
+
+        int insertPosition = 0;
+
+        // Move all non-zero elements forward
+        for (int num : nums) {
+            if (num != 0) {
+                nums[insertPosition] = num;
+                insertPosition++;
+            }
+        }
+
+        // Fill remaining positions with zero
+        while (insertPosition &lt; nums.length) {
+            nums[insertPosition] = 0;
+            insertPosition++;
+        }
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            We maintain an <code>insertPosition</code> where the next
+            non-zero element should be placed.
+        </p>
+
+        <p>
+            First, we move all non-zero elements toward the beginning
+            while maintaining their original order.
+        </p>
+
+        <p>
+            After that, all remaining positions are filled with zero.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(1)</p>
+        `
+            },
+
+
+            {
+                id: 16,
+                question: "Remove Duplicates from Sorted Array",
+                category: ["Two Pointers", "Array"],
+                level: "Easy",
+                answer: `
+        <pre><code>
+class Solution {
+    public int removeDuplicates(int[] nums) {
+
+        if (nums.length == 0) {
+            return 0;
+        }
+
+        int insertPosition = 1;
+
+        for (int i = 1; i &lt; nums.length; i++) {
+
+            if (nums[i] != nums[i - 1]) {
+                nums[insertPosition] = nums[i];
+                insertPosition++;
+            }
+        }
+
+        return insertPosition;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            Because the array is sorted, duplicate values are next to
+            each other.
+        </p>
+
+        <p>
+            We use <code>insertPosition</code> to keep track of where
+            the next unique value should be placed.
+        </p>
+
+        <p>
+            Whenever the current value is different from the previous
+            value, we copy it to the insert position.
+        </p>
+
+        <p>
+            The returned value represents the number of unique elements.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(1)</p>
+        `
+            },
+
+
+            {
+                id: 17,
+                question: "Trapping Rain Water",
+                category: ["Two Pointers", "Array", "Prefix/Suffix"],
+                level: "Hard",
+                answer: `
+        <pre><code>
+class Solution {
+    public int trap(int[] height) {
+
+        int left = 0;
+        int right = height.length - 1;
+
+        int leftMax = 0;
+        int rightMax = 0;
+
+        int water = 0;
+
+        while (left &lt; right) {
+
+            if (height[left] &lt; height[right]) {
+
+                if (height[left] &gt;= leftMax) {
+                    leftMax = height[left];
+                } else {
+                    water += leftMax - height[left];
+                }
+
+                left++;
+
+            } else {
+
+                if (height[right] &gt;= rightMax) {
+                    rightMax = height[right];
+                } else {
+                    water += rightMax - height[right];
+                }
+
+                right--;
+            }
+        }
+
+        return water;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            Water above a position depends on the smaller of the tallest
+            wall on its left and the tallest wall on its right.
+        </p>
+
+        <p>
+            Instead of creating separate prefix and suffix arrays,
+            we use two pointers and maintain <code>leftMax</code>
+            and <code>rightMax</code>.
+        </p>
+
+        <p>
+            If the left height is smaller, we process the left side.
+            Otherwise, we process the right side.
+        </p>
+
+        <p>
+            For a position on the left:
+            <code>water = leftMax - height[left]</code>.
+        </p>
+
+        <p>
+            For a position on the right:
+            <code>water = rightMax - height[right]</code>.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(1)</p>
+        `
+            },
+            {
+                id: 18,
+                question: "Maximum Sum Subarray of Size K",
+                category: ["Sliding Window", "Array"],
+                level: "Easy",
+                answer: `
+        <pre><code>
+class Solution {
+    public int maxSum(int[] nums, int k) {
+
+        int windowSum = 0;
+        int maxSum = Integer.MIN_VALUE;
+
+        // Create the first window
+        for (int i = 0; i &lt; k; i++) {
+            windowSum += nums[i];
+        }
+
+        maxSum = windowSum;
+
+        // Slide the window
+        for (int i = k; i &lt; nums.length; i++) {
+
+            windowSum += nums[i];
+            windowSum -= nums[i - k];
+
+            maxSum = Math.max(maxSum, windowSum);
+        }
+
+        return maxSum;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            This is a <strong>fixed-size sliding window</strong> problem.
+            The window always contains exactly <code>k</code> elements.
+        </p>
+
+        <p>
+            First, we calculate the sum of the first <code>k</code>
+            elements.
+        </p>
+
+        <p>
+            Then, instead of calculating every window from scratch,
+            we add the new element entering the window and subtract
+            the element leaving the window.
+        </p>
+
+        <p>
+            This avoids repeatedly calculating the same elements.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(1)</p>
+        `
+            },
+
+
+            {
+                id: 19,
+                question: "Longest Substring Without Repeating Characters",
+                category: ["Sliding Window", "String", "HashSet"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+import java.util.*;
+
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+
+        HashSet&lt;Character&gt; set = new HashSet&lt;&gt;();
+
+        int left = 0;
+        int maxLength = 0;
+
+        for (int right = 0; right &lt; s.length(); right++) {
+
+            while (set.contains(s.charAt(right))) {
+                set.remove(s.charAt(left));
+                left++;
+            }
+
+            set.add(s.charAt(right));
+
+            maxLength = Math.max(
+                maxLength,
+                right - left + 1
+            );
+        }
+
+        return maxLength;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            We maintain a sliding window containing only unique
+            characters.
+        </p>
+
+        <p>
+            <code>right</code> expands the window by adding characters.
+            If the current character already exists in the window,
+            we move <code>left</code> forward until the duplicate is removed.
+        </p>
+
+        <p>
+            At every step, the window represents a substring with
+            no repeating characters.
+        </p>
+
+        <p><strong>Example:</strong></p>
+        <p>
+            For <code>"abcabcbb"</code>, the longest substring without
+            repeating characters is <code>"abc"</code>, so the answer is
+            <code>3</code>.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(k), where k is the character set size</p>
+        `
+            },
+
+
+            {
+                id: 20,
+                question: "Longest Repeating Character Replacement",
+                category: ["Sliding Window", "String", "Frequency Counting"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+class Solution {
+    public int characterReplacement(String s, int k) {
+
+        int[] frequency = new int[26];
+
+        int left = 0;
+        int maxFrequency = 0;
+        int maxLength = 0;
+
+        for (int right = 0; right &lt; s.length(); right++) {
+
+            int index = s.charAt(right) - 'A';
+
+            frequency[index]++;
+
+            maxFrequency = Math.max(
+                maxFrequency,
+                frequency[index]
+            );
+
+            int windowLength = right - left + 1;
+
+            int replacements =
+                windowLength - maxFrequency;
+
+            // Too many characters need replacement
+            if (replacements &gt; k) {
+
+                frequency[s.charAt(left) - 'A']--;
+                left++;
+            }
+
+            maxLength = Math.max(
+                maxLength,
+                right - left + 1
+            );
+        }
+
+        return maxLength;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            We want the longest window where we can replace at most
+            <code>k</code> characters to make every character the same.
+        </p>
+
+        <p>
+            <code>maxFrequency</code> stores the frequency of the most
+            common character inside the current window.
+        </p>
+
+        <p>
+            The number of replacements required is:
+        </p>
+
+        <p>
+            <code>windowLength - maxFrequency</code>
+        </p>
+
+        <p>
+            If replacements are greater than <code>k</code>, the window
+            is invalid, so we move <code>left</code> forward.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(1)</p>
+        `
+            },
+
+
+            {
+                id: 21,
+                question: "Minimum Size Subarray Sum",
+                category: ["Sliding Window", "Array"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+class Solution {
+    public int minSubArrayLen(int target, int[] nums) {
+
+        int left = 0;
+        int windowSum = 0;
+        int minLength = Integer.MAX_VALUE;
+
+        for (int right = 0; right &lt; nums.length; right++) {
+
+            windowSum += nums[right];
+
+            // Shrink while the condition is satisfied
+            while (windowSum &gt;= target) {
+
+                minLength = Math.min(
+                    minLength,
+                    right - left + 1
+                );
+
+                windowSum -= nums[left];
+                left++;
+            }
+        }
+
+        return minLength == Integer.MAX_VALUE
+            ? 0
+            : minLength;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            We need the smallest contiguous subarray whose sum is at
+            least <code>target</code>.
+        </p>
+
+        <p>
+            We expand the window using <code>right</code> until the
+            sum becomes greater than or equal to the target.
+        </p>
+
+        <p>
+            Once the condition is satisfied, we start shrinking the
+            window from the left to find the smallest possible window.
+        </p>
+
+        <p>
+            This is the classic:
+            <strong>Expand → satisfy condition → shrink</strong>
+            sliding window pattern.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(1)</p>
+        `
+            },
+
+
+            {
+                id: 22,
+                question: "Minimum Window Substring",
+                category: ["Sliding Window", "String", "HashMap", "Frequency Counting"],
+                level: "Hard",
+                answer: `
+        <pre><code>
+import java.util.*;
+
+class Solution {
+    public String minWindow(String s, String t) {
+
+        if (s.length() &lt; t.length()) {
+            return "";
+        }
+
+        HashMap&lt;Character, Integer&gt; required = new HashMap&lt;&gt;();
+
+        for (char c : t.toCharArray()) {
+            required.put(
+                c,
+                required.getOrDefault(c, 0) + 1
+            );
+        }
+
+        HashMap&lt;Character, Integer&gt; window = new HashMap&lt;&gt;();
+
+        int left = 0;
+        int formed = 0;
+        int requiredCharacters = required.size();
+
+        int minLength = Integer.MAX_VALUE;
+        int start = 0;
+
+        for (int right = 0; right &lt; s.length(); right++) {
+
+            char c = s.charAt(right);
+
+            window.put(
+                c,
+                window.getOrDefault(c, 0) + 1
+            );
+
+            if (required.containsKey(c) &amp;&amp;
+                window.get(c).intValue() ==
+                required.get(c).intValue()) {
+
+                formed++;
+            }
+
+            // Try to shrink the valid window
+            while (formed == requiredCharacters) {
+
+                if (right - left + 1 &lt; minLength) {
+
+                    minLength = right - left + 1;
+                    start = left;
+                }
+
+                char leftChar = s.charAt(left);
+
+                window.put(
+                    leftChar,
+                    window.get(leftChar) - 1
+                );
+
+                if (required.containsKey(leftChar) &amp;&amp;
+                    window.get(leftChar) &lt;
+                    required.get(leftChar)) {
+
+                    formed--;
+                }
+
+                left++;
+            }
+        }
+
+        return minLength == Integer.MAX_VALUE
+            ? ""
+            : s.substring(start, start + minLength);
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            We need the smallest substring of <code>s</code> that contains
+            every character of <code>t</code> with the required frequency.
+        </p>
+
+        <p>
+            The <code>required</code> map stores how many times each
+            character must appear.
+        </p>
+
+        <p>
+            The <code>window</code> map stores the characters currently
+            inside our sliding window.
+        </p>
+
+        <p>
+            <code>formed</code> tells us how many required characters
+            currently have the correct frequency.
+        </p>
+
+        <p>
+            When the window becomes valid, we shrink it from the left
+            while keeping it valid. This allows us to find the minimum
+            possible window.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(k)</p>
+        `
+            },
+
+
+            {
+                id: 23,
+                question: "Permutation in String",
+                category: ["Sliding Window", "String", "Frequency Counting"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+class Solution {
+    public boolean checkInclusion(String s1, String s2) {
+
+        if (s1.length() &gt; s2.length()) {
+            return false;
+        }
+
+        int[] need = new int[26];
+        int[] window = new int[26];
+
+        for (char c : s1.toCharArray()) {
+            need[c - 'a']++;
+        }
+
+        int k = s1.length();
+
+        for (int i = 0; i &lt; s2.length(); i++) {
+
+            window[s2.charAt(i) - 'a']++;
+
+            // Keep window size equal to s1 length
+            if (i &gt;= k) {
+                window[s2.charAt(i - k) - 'a']--;
+            }
+
+            if (i &gt;= k - 1 &amp;&amp;
+                matches(need, window)) {
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean matches(int[] a, int[] b) {
+
+        for (int i = 0; i &lt; 26; i++) {
+            if (a[i] != b[i]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            A permutation of <code>s1</code> must contain exactly the
+            same characters with the same frequencies.
+        </p>
+
+        <p>
+            Therefore, we create a fixed-size sliding window whose size
+            is exactly <code>s1.length()</code>.
+        </p>
+
+        <p>
+            For every window, we compare its character frequencies with
+            the frequency of <code>s1</code>.
+        </p>
+
+        <p>
+            If both frequency arrays match, that window is a permutation
+            of <code>s1</code>.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n × 26), effectively O(n)</p>
+        <p><strong>Space Complexity:</strong> O(1)</p>
+        `
+            },
+
+
+            {
+                id: 24,
+                question: "Find All Anagrams in a String",
+                category: ["Sliding Window", "String", "Frequency Counting"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+import java.util.*;
+
+class Solution {
+    public List&lt;Integer&gt; findAnagrams(String s, String p) {
+
+        List&lt;Integer&gt; result = new ArrayList&lt;&gt;();
+
+        if (p.length() &gt; s.length()) {
+            return result;
+        }
+
+        int[] need = new int[26];
+        int[] window = new int[26];
+
+        for (char c : p.toCharArray()) {
+            need[c - 'a']++;
+        }
+
+        int k = p.length();
+
+        for (int i = 0; i &lt; s.length(); i++) {
+
+            window[s.charAt(i) - 'a']++;
+
+            // Remove the character outside the window
+            if (i &gt;= k) {
+                window[s.charAt(i - k) - 'a']--;
+            }
+
+            // Current window is an anagram
+            if (i &gt;= k - 1 &amp;&amp;
+                matches(need, window)) {
+
+                result.add(i - k + 1);
+            }
+        }
+
+        return result;
+    }
+
+    private boolean matches(int[] a, int[] b) {
+
+        for (int i = 0; i &lt; 26; i++) {
+            if (a[i] != b[i]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            This is very similar to <strong>Permutation in String</strong>.
+            The difference is that instead of returning true when we
+            find a matching window, we collect the starting index.
+        </p>
+
+        <p>
+            The window size is always equal to the length of
+            <code>p</code>.
+        </p>
+
+        <p>
+            We maintain character frequencies for the current window.
+            If the frequencies match those of <code>p</code>, the current
+            substring is an anagram.
+        </p>
+
+        <p>
+            The starting index of the window is:
+            <code>i - k + 1</code>.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n × 26), effectively O(n)</p>
+        <p><strong>Space Complexity:</strong> O(1)</p>
+        `
+            },
+            {
+                id: 25,
+                question: "Reverse a String",
+                category: ["String", "Two Pointers"],
+                level: "Easy",
+                answer: `
+        <pre><code>
+class Solution {
+    public void reverseString(char[] s) {
+
+        int left = 0;
+        int right = s.length - 1;
+
+        while (left &lt; right) {
+
+            char temp = s[left];
+            s[left] = s[right];
+            s[right] = temp;
+
+            left++;
+            right--;
+        }
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            We use two pointers. One starts from the beginning and the
+            other starts from the end.
+        </p>
+
+        <p>
+            We swap both characters and move the pointers toward the
+            center until they meet.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(1)</p>
+        `
+            },
+
+
+            {
+                id: 26,
+                question: "Reverse Words in a String",
+                category: ["String", "Two Pointers"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+class Solution {
+    public String reverseWords(String s) {
+
+        String[] words = s.trim().split("\\\\s+");
+
+        StringBuilder result = new StringBuilder();
+
+        for (int i = words.length - 1; i &gt;= 0; i--) {
+
+            result.append(words[i]);
+
+            if (i != 0) {
+                result.append(" ");
+            }
+        }
+
+        return result.toString();
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            First, we remove unnecessary spaces using
+            <code>trim()</code>.
+        </p>
+
+        <p>
+            Then <code>split("\\\\s+")</code> separates the string into
+            words while handling multiple spaces.
+        </p>
+
+        <p>
+            Finally, we traverse the words from right to left and build
+            the reversed sentence.
+        </p>
+
+        <p><strong>Example:</strong></p>
+        <p>
+            <code>"the sky is blue"</code> → 
+            <code>"blue is sky the"</code>
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(n)</p>
+        `
+            },
+
+
+            {
+                id: 27,
+                question: "Valid Anagram",
+                category: ["String", "Hashing", "Frequency Counting"],
+                level: "Easy",
+                answer: `
+        <pre><code>
+class Solution {
+    public boolean isAnagram(String s, String t) {
+
+        if (s.length() != t.length()) {
+            return false;
+        }
+
+        int[] frequency = new int[26];
+
+        for (char c : s.toCharArray()) {
+            frequency[c - 'a']++;
+        }
+
+        for (char c : t.toCharArray()) {
+            frequency[c - 'a']--;
+        }
+
+        for (int count : frequency) {
+            if (count != 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            Two strings are anagrams when they contain exactly the same
+            characters with the same frequencies.
+        </p>
+
+        <p>
+            We increase the frequency for every character in the first
+            string and decrease it for every character in the second.
+        </p>
+
+        <p>
+            If all frequencies become zero, both strings contain the
+            same characters.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(1)</p>
+        `
+            },
+
+
+            {
+                id: 28,
+                question: "First Non-Repeating Character",
+                category: ["String", "Hashing", "Frequency Counting"],
+                level: "Easy",
+                answer: `
+        <pre><code>
+import java.util.*;
+
+class Solution {
+    public int firstUniqChar(String s) {
+
+        HashMap&lt;Character, Integer&gt; frequency = new HashMap&lt;&gt;();
+
+        for (char c : s.toCharArray()) {
+            frequency.put(
+                c,
+                frequency.getOrDefault(c, 0) + 1
+            );
+        }
+
+        for (int i = 0; i &lt; s.length(); i++) {
+
+            if (frequency.get(s.charAt(i)) == 1) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            First, we count how many times every character occurs.
+        </p>
+
+        <p>
+            Then we traverse the string again from left to right.
+            The first character whose frequency is <code>1</code>
+            is the first non-repeating character.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(k)</p>
+        `
+            },
+
+
+            {
+                id: 29,
+                question: "Longest Common Prefix",
+                category: ["String", "Array"],
+                level: "Easy",
+                answer: `
+        <pre><code>
+class Solution {
+    public String longestCommonPrefix(String[] strs) {
+
+        if (strs.length == 0) {
+            return "";
+        }
+
+        String prefix = strs[0];
+
+        for (int i = 1; i &lt; strs.length; i++) {
+
+            while (!strs[i].startsWith(prefix)) {
+
+                prefix = prefix.substring(
+                    0,
+                    prefix.length() - 1
+                );
+
+                if (prefix.isEmpty()) {
+                    return "";
+                }
+            }
+        }
+
+        return prefix;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            We initially assume the first string is the common prefix.
+        </p>
+
+        <p>
+            For every other string, we check whether it starts with the
+            current prefix.
+        </p>
+
+        <p>
+            If it does not, we remove the last character from the prefix
+            until it matches.
+        </p>
+
+        <p><strong>Example:</strong></p>
+        <p>
+            <code>["flower", "flow", "flight"]</code>
+            → <code>"fl"</code>
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n × m)</p>
+        <p><strong>Space Complexity:</strong> O(1)</p>
+        `
+            },
+
+
+            {
+                id: 30,
+                question: "String Compression",
+                category: ["String", "Two Pointers"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+class Solution {
+    public int compress(char[] chars) {
+
+        int write = 0;
+        int read = 0;
+
+        while (read &lt; chars.length) {
+
+            char current = chars[read];
+            int count = 0;
+
+            while (read &lt; chars.length &&
+                   chars[read] == current) {
+                read++;
+                count++;
+            }
+
+            chars[write++] = current;
+
+            if (count &gt; 1) {
+
+                String countString =
+                    String.valueOf(count);
+
+                for (char c : countString.toCharArray()) {
+                    chars[write++] = c;
+                }
+            }
+        }
+
+        return write;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            We use a read pointer to find groups of consecutive
+            characters and a write pointer to store the compressed result.
+        </p>
+
+        <p>
+            For example, <code>a a a b b c</code> becomes
+            <code>a3b2c</code>.
+        </p>
+
+        <p>
+            The important pattern is:
+            <strong>read a group → count it → write character → write count</strong>.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(1) extra space</p>
+        `
+            },
+
+
+            {
+                id: 31,
+                question: "Valid Parentheses",
+                category: ["String", "Stack"],
+                level: "Easy",
+                answer: `
+        <pre><code>
+import java.util.*;
+
+class Solution {
+    public boolean isValid(String s) {
+
+        Stack&lt;Character&gt; stack = new Stack&lt;&gt;();
+
+        for (char c : s.toCharArray()) {
+
+            if (c == '(' || c == '{' || c == '[') {
+                stack.push(c);
+            } else {
+
+                if (stack.isEmpty()) {
+                    return false;
+                }
+
+                char top = stack.pop();
+
+                if ((c == ')' &amp;&amp; top != '(') ||
+                    (c == '}' &amp;&amp; top != '{') ||
+                    (c == ']' &amp;&amp; top != '[')) {
+
+                    return false;
+                }
+            }
+        }
+
+        return stack.isEmpty();
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            Parentheses must close in the reverse order in which they
+            were opened, so a Stack is the natural data structure.
+        </p>
+
+        <p>
+            Opening brackets are pushed onto the stack.
+            When a closing bracket appears, we check whether it matches
+            the most recently opened bracket.
+        </p>
+
+        <p>
+            At the end, the stack must be empty for the expression
+            to be valid.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(n)</p>
+        `
+            },
+
+
+            {
+                id: 32,
+                question: "Longest Palindromic Substring",
+                category: ["String", "Two Pointers", "Palindrome"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+class Solution {
+    public String longestPalindrome(String s) {
+
+        if (s.length() &lt; 2) {
+            return s;
+        }
+
+        int start = 0;
+        int maxLength = 1;
+
+        for (int i = 0; i &lt; s.length(); i++) {
+
+            // Odd length palindrome
+            int oddLength = expandFromCenter(s, i, i);
+
+            // Even length palindrome
+            int evenLength = expandFromCenter(s, i, i + 1);
+
+            int currentLength =
+                Math.max(oddLength, evenLength);
+
+            if (currentLength &gt; maxLength) {
+
+                maxLength = currentLength;
+
+                start = i - (currentLength - 1) / 2;
+            }
+        }
+
+        return s.substring(start, start + maxLength);
+    }
+
+    private int expandFromCenter(
+        String s,
+        int left,
+        int right
+    ) {
+
+        while (left &gt;= 0 &amp;&amp;
+               right &lt; s.length() &amp;&amp;
+               s.charAt(left) == s.charAt(right)) {
+
+            left--;
+            right++;
+        }
+
+        return right - left - 1;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            A palindrome reads the same from left to right and right
+            to left.
+        </p>
+
+        <p>
+            Every palindrome has a center. The center can be one
+            character for odd-length palindromes or between two
+            characters for even-length palindromes.
+        </p>
+
+        <p>
+            For every position, we expand outward while the characters
+            on both sides are equal.
+        </p>
+
+        <p>
+            We keep track of the longest palindrome found.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n²)</p>
+        <p><strong>Space Complexity:</strong> O(1)</p>
+        `
+            },
+
+
+            // =========================
+            // 5. LINKED LISTS
+            // =========================
+
+            {
+                id: 33,
+                question: "Reverse Linked List",
+                category: ["Linked List", "Pointer Manipulation"],
+                level: "Easy",
+                answer: `
+        <pre><code>
+class Solution {
+
+    public ListNode reverseList(ListNode head) {
+
+        ListNode previous = null;
+        ListNode current = head;
+
+        while (current != null) {
+
+            ListNode next = current.next;
+
+            current.next = previous;
+
+            previous = current;
+            current = next;
+        }
+
+        return previous;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            We reverse the direction of every <code>next</code> pointer.
+        </p>
+
+        <p>
+            <code>previous</code> keeps track of the previous node,
+            while <code>current</code> points to the node we are
+            currently processing.
+        </p>
+
+        <p>
+            We save the next node before changing the pointer so that
+            we do not lose the rest of the list.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(1)</p>
+        `
+            },
+
+
+            {
+                id: 34,
+                question: "Find Middle of Linked List",
+                category: ["Linked List", "Fast Slow Pointers"],
+                level: "Easy",
+                answer: `
+        <pre><code>
+class Solution {
+
+    public ListNode middleNode(ListNode head) {
+
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while (fast != null &amp;&amp; fast.next != null) {
+
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return slow;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            We use the Fast and Slow Pointer technique.
+        </p>
+
+        <p>
+            The slow pointer moves one node at a time, while the fast
+            pointer moves two nodes at a time.
+        </p>
+
+        <p>
+            When the fast pointer reaches the end, the slow pointer
+            will be at the middle.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(1)</p>
+        `
+            },
+
+
+            {
+                id: 35,
+                question: "Detect Cycle in Linked List",
+                category: ["Linked List", "Fast Slow Pointers", "Cycle Detection"],
+                level: "Easy",
+                answer: `
+        <pre><code>
+class Solution {
+
+    public boolean hasCycle(ListNode head) {
+
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while (fast != null &amp;&amp; fast.next != null) {
+
+            slow = slow.next;
+            fast = fast.next.next;
+
+            if (slow == fast) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            We use Floyd's Cycle Detection algorithm.
+        </p>
+
+        <p>
+            The slow pointer moves one step while the fast pointer moves
+            two steps.
+        </p>
+
+        <p>
+            If there is a cycle, the fast pointer will eventually catch
+            the slow pointer.
+        </p>
+
+        <p>
+            If the fast pointer reaches <code>null</code>, there is no cycle.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(1)</p>
+        `
+            },
+
+
+            {
+                id: 36,
+                question: "Find Start of Cycle",
+                category: ["Linked List", "Fast Slow Pointers", "Cycle Detection"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+class Solution {
+
+    public ListNode detectCycle(ListNode head) {
+
+        ListNode slow = head;
+        ListNode fast = head;
+
+        // Find intersection point
+        while (fast != null &amp;&amp; fast.next != null) {
+
+            slow = slow.next;
+            fast = fast.next.next;
+
+            if (slow == fast) {
+                break;
+            }
+        }
+
+        if (fast == null || fast.next == null) {
+            return null;
+        }
+
+        // Find cycle starting point
+        slow = head;
+
+        while (slow != fast) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+
+        return slow;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            First, we use slow and fast pointers to find a meeting point
+            inside the cycle.
+        </p>
+
+        <p>
+            Once they meet, we move the slow pointer back to the head.
+            Then both pointers move one step at a time.
+        </p>
+
+        <p>
+            The point where they meet again is the starting node of
+            the cycle.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(1)</p>
+        `
+            },
+
+
+            {
+                id: 37,
+                question: "Merge Two Sorted Linked Lists",
+                category: ["Linked List", "Two Pointers", "Dummy Node"],
+                level: "Easy",
+                answer: `
+        <pre><code>
+class Solution {
+
+    public ListNode mergeTwoLists(
+        ListNode list1,
+        ListNode list2
+    ) {
+
+        ListNode dummy = new ListNode(0);
+        ListNode current = dummy;
+
+        while (list1 != null &amp;&amp; list2 != null) {
+
+            if (list1.val &lt;= list2.val) {
+
+                current.next = list1;
+                list1 = list1.next;
+
+            } else {
+
+                current.next = list2;
+                list2 = list2.next;
+            }
+
+            current = current.next;
+        }
+
+        if (list1 != null) {
+            current.next = list1;
+        } else {
+            current.next = list2;
+        }
+
+        return dummy.next;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            We compare the current nodes of both sorted lists.
+            The smaller node is attached to our result list.
+        </p>
+
+        <p>
+            A dummy node makes the implementation easier because we
+            don't need special handling for the first node.
+        </p>
+
+        <p>
+            After one list finishes, we attach the remaining part of
+            the other list.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n + m)</p>
+        <p><strong>Space Complexity:</strong> O(1)</p>
+        `
+            },
+
+
+            {
+                id: 38,
+                question: "Remove Nth Node From End",
+                category: ["Linked List", "Two Pointers", "Dummy Node"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+class Solution {
+
+    public ListNode removeNthFromEnd(
+        ListNode head,
+        int n
+    ) {
+
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+
+        ListNode fast = dummy;
+        ListNode slow = dummy;
+
+        // Create a gap of n nodes
+        for (int i = 0; i &lt;= n; i++) {
+            fast = fast.next;
+        }
+
+        // Move both pointers
+        while (fast != null) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+
+        // Remove the target node
+        slow.next = slow.next.next;
+
+        return dummy.next;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            We maintain a gap of <code>n</code> nodes between the fast
+            and slow pointers.
+        </p>
+
+        <p>
+            When the fast pointer reaches the end, the slow pointer is
+            positioned immediately before the node that needs to be removed.
+        </p>
+
+        <p>
+            The dummy node is important because the node being removed
+            could be the original head.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(1)</p>
+        `
+            },
+
+
+            {
+                id: 39,
+                question: "Palindrome Linked List",
+                category: ["Linked List", "Fast Slow Pointers", "Reverse Linked List"],
+                level: "Easy",
+                answer: `
+        <pre><code>
+class Solution {
+
+    public boolean isPalindrome(ListNode head) {
+
+        ListNode slow = head;
+        ListNode fast = head;
+
+        // Find middle
+        while (fast != null &amp;&amp; fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // Reverse second half
+        ListNode secondHalf = reverse(slow);
+
+        ListNode firstHalf = head;
+
+        // Compare both halves
+        while (secondHalf != null) {
+
+            if (firstHalf.val != secondHalf.val) {
+                return false;
+            }
+
+            firstHalf = firstHalf.next;
+            secondHalf = secondHalf.next;
+        }
+
+        return true;
+    }
+
+    private ListNode reverse(ListNode head) {
+
+        ListNode previous = null;
+        ListNode current = head;
+
+        while (current != null) {
+
+            ListNode next = current.next;
+
+            current.next = previous;
+
+            previous = current;
+            current = next;
+        }
+
+        return previous;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            First, we use fast and slow pointers to find the middle
+            of the linked list.
+        </p>
+
+        <p>
+            Then we reverse the second half of the list.
+        </p>
+
+        <p>
+            Finally, we compare the first half with the reversed second
+            half. If every value matches, the list is a palindrome.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(1)</p>
+        `
+            },
+
+
+            {
+                id: 40,
+                question: "Intersection of Two Linked Lists",
+                category: ["Linked List", "Two Pointers"],
+                level: "Easy",
+                answer: `
+        <pre><code>
+public class Solution {
+
+    public ListNode getIntersectionNode(
+        ListNode headA,
+        ListNode headB
+    ) {
+
+        ListNode a = headA;
+        ListNode b = headB;
+
+        while (a != b) {
+
+            if (a == null) {
+                a = headB;
+            } else {
+                a = a.next;
+            }
+
+            if (b == null) {
+                b = headA;
+            } else {
+                b = b.next;
+            }
+        }
+
+        return a;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            The two linked lists may have different lengths before they
+            reach their common part.
+        </p>
+
+        <p>
+            When pointer <code>a</code> reaches the end, we move it to
+            the head of list B. Similarly, when <code>b</code> reaches
+            the end, we move it to the head of list A.
+        </p>
+
+        <p>
+            This effectively makes both pointers travel the same total
+            distance.
+        </p>
+
+        <p>
+            If an intersection exists, they will meet at the intersection
+            node. Otherwise, both become <code>null</code>.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n + m)</p>
+        <p><strong>Space Complexity:</strong> O(1)</p>
+        `
+            },
+
+
+            {
+                id: 41,
+                question: "Add Two Numbers",
+                category: ["Linked List", "Math", "Dummy Node"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+class Solution {
+
+    public ListNode addTwoNumbers(
+        ListNode l1,
+        ListNode l2
+    ) {
+
+        ListNode dummy = new ListNode(0);
+        ListNode current = dummy;
+
+        int carry = 0;
+
+        while (l1 != null ||
+               l2 != null ||
+               carry != 0) {
+
+            int sum = carry;
+
+            if (l1 != null) {
+                sum += l1.val;
+                l1 = l1.next;
+            }
+
+            if (l2 != null) {
+                sum += l2.val;
+                l2 = l2.next;
+            }
+
+            current.next = new ListNode(sum % 10);
+
+            carry = sum / 10;
+
+            current = current.next;
+        }
+
+        return dummy.next;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            Each linked list represents a number in reverse order.
+            We add the corresponding digits just like normal addition.
+        </p>
+
+        <p>
+            <code>carry</code> stores the value that needs to be carried
+            to the next digit.
+        </p>
+
+        <p>
+            The current digit is:
+            <code>sum % 10</code>
+        </p>
+
+        <p>
+            The carry is:
+            <code>sum / 10</code>
+        </p>
+
+        <p>
+            A dummy node makes building the result list easier.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(max(n, m))</p>
+        <p><strong>Space Complexity:</strong> O(max(n, m))</p>
+        `
+            },
+
+
+            {
+                id: 42,
+                question: "Merge K Sorted Lists",
+                category: ["Linked List", "Heap", "Priority Queue", "Divide and Conquer"],
+                level: "Hard",
+                answer: `
+        <pre><code>
+import java.util.*;
+
+class Solution {
+
+    public ListNode mergeKLists(ListNode[] lists) {
+
+        PriorityQueue&lt;ListNode&gt; minHeap =
+            new PriorityQueue&lt;&gt;(
+                (a, b) -&gt; a.val - b.val
+            );
+
+        // Add first node of every list
+        for (ListNode list : lists) {
+
+            if (list != null) {
+                minHeap.offer(list);
+            }
+        }
+
+        ListNode dummy = new ListNode(0);
+        ListNode current = dummy;
+
+        while (!minHeap.isEmpty()) {
+
+            ListNode smallest = minHeap.poll();
+
+            current.next = smallest;
+            current = current.next;
+
+            if (smallest.next != null) {
+                minHeap.offer(smallest.next);
+            }
+        }
+
+        return dummy.next;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            We have multiple sorted linked lists and need to combine
+            them into one sorted list.
+        </p>
+
+        <p>
+            We use a Min Heap to always get the smallest current node
+            among all lists.
+        </p>
+
+        <p>
+            Initially, we put the first node of every list into the heap.
+            After removing the smallest node, we add its next node to
+            the heap.
+        </p>
+
+        <p>
+            This continues until the heap becomes empty.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(N log k)</p>
+        <p>
+            N = total number of nodes and k = number of linked lists.
+        </p>
+
+        <p><strong>Space Complexity:</strong> O(k)</p>
+        `
+            },
+
+            {
+                id: 43,
+                question: "Implement Stack",
+                category: ["Stack", "Data Structure"],
+                level: "Easy",
+                answer: `
+        <pre><code>
+import java.util.*;
+
+class MyStack {
+
+    private ArrayList&lt;Integer&gt; stack;
+
+    public MyStack() {
+        stack = new ArrayList&lt;&gt;();
+    }
+
+    public void push(int value) {
+        stack.add(value);
+    }
+
+    public int pop() {
+        if (isEmpty()) {
+            return -1;
+        }
+
+        return stack.remove(stack.size() - 1);
+    }
+
+    public int peek() {
+        if (isEmpty()) {
+            return -1;
+        }
+
+        return stack.get(stack.size() - 1);
+    }
+
+    public boolean isEmpty() {
+        return stack.isEmpty();
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            A Stack follows the <strong>LIFO</strong> principle:
+            Last In, First Out.
+        </p>
+
+        <p>
+            The element inserted last is the first element removed.
+        </p>
+
+        <p>
+            We use an <code>ArrayList</code> and perform all stack
+            operations at the end of the list.
+        </p>
+
+        <p>
+            <code>push()</code> adds an element,
+            <code>pop()</code> removes the top element,
+            and <code>peek()</code> returns the top element without removing it.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(1) for push, pop and peek</p>
+        <p><strong>Space Complexity:</strong> O(n)</p>
+        `
+            },
+
+
+            {
+                id: 44,
+                question: "Implement Queue",
+                category: ["Queue", "Data Structure"],
+                level: "Easy",
+                answer: `
+        <pre><code>
+class MyQueue {
+
+    private int[] queue;
+    private int front;
+    private int rear;
+    private int size;
+
+    public MyQueue(int capacity) {
+
+        queue = new int[capacity];
+
+        front = 0;
+        rear = 0;
+        size = 0;
+    }
+
+    public void enqueue(int value) {
+
+        if (size == queue.length) {
+            return;
+        }
+
+        queue[rear] = value;
+        rear = (rear + 1) % queue.length;
+
+        size++;
+    }
+
+    public int dequeue() {
+
+        if (isEmpty()) {
+            return -1;
+        }
+
+        int value = queue[front];
+
+        front = (front + 1) % queue.length;
+
+        size--;
+
+        return value;
+    }
+
+    public int peek() {
+
+        if (isEmpty()) {
+            return -1;
+        }
+
+        return queue[front];
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            A Queue follows the <strong>FIFO</strong> principle:
+            First In, First Out.
+        </p>
+
+        <p>
+            The first element inserted is the first element removed.
+        </p>
+
+        <p>
+            We use a circular array so that after reaching the end,
+            the rear can move back to the beginning.
+        </p>
+
+        <p>
+            <code>front</code> points to the element that will be removed,
+            while <code>rear</code> points to the next position where
+            a new element will be inserted.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(1) for enqueue and dequeue</p>
+        <p><strong>Space Complexity:</strong> O(n)</p>
+        `
+            },
+
+
+            {
+                id: 45,
+                question: "Valid Parentheses",
+                category: ["Stack", "String"],
+                level: "Easy",
+                answer: `
+        <pre><code>
+import java.util.*;
+
+class Solution {
+
+    public boolean isValid(String s) {
+
+        Stack&lt;Character&gt; stack = new Stack&lt;&gt;();
+
+        for (char c : s.toCharArray()) {
+
+            if (c == '(' || c == '{' || c == '[') {
+
+                stack.push(c);
+
+            } else {
+
+                if (stack.isEmpty()) {
+                    return false;
+                }
+
+                char top = stack.pop();
+
+                if ((c == ')' &amp;&amp; top != '(') ||
+                    (c == '}' &amp;&amp; top != '{') ||
+                    (c == ']' &amp;&amp; top != '[')) {
+
+                    return false;
+                }
+            }
+        }
+
+        return stack.isEmpty();
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            Parentheses must be closed in the reverse order in which
+            they were opened, which makes Stack the natural choice.
+        </p>
+
+        <p>
+            Opening brackets are pushed into the stack.
+            When a closing bracket appears, we check whether it matches
+            the most recently opened bracket.
+        </p>
+
+        <p>
+            At the end, the stack must be empty.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(n)</p>
+        `
+            },
+
+
+            {
+                id: 46,
+                question: "Min Stack",
+                category: ["Stack", "Design"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+import java.util.*;
+
+class MinStack {
+
+    private Stack&lt;Integer&gt; stack;
+    private Stack&lt;Integer&gt; minStack;
+
+    public MinStack() {
+
+        stack = new Stack&lt;&gt;();
+        minStack = new Stack&lt;&gt;();
+    }
+
+    public void push(int val) {
+
+        stack.push(val);
+
+        if (minStack.isEmpty()) {
+            minStack.push(val);
+        } else {
+            minStack.push(
+                Math.min(val, minStack.peek())
+            );
+        }
+    }
+
+    public void pop() {
+
+        stack.pop();
+        minStack.pop();
+    }
+
+    public int top() {
+
+        return stack.peek();
+    }
+
+    public int getMin() {
+
+        return minStack.peek();
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            The problem requires <code>getMin()</code> to work in O(1).
+        </p>
+
+        <p>
+            We therefore maintain two stacks.
+        </p>
+
+        <p>
+            The normal stack stores all values.
+            The <code>minStack</code> stores the minimum value seen
+            up to every position.
+        </p>
+
+        <p>
+            Therefore, the top of <code>minStack</code> is always
+            the current minimum.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(1) for every operation</p>
+        <p><strong>Space Complexity:</strong> O(n)</p>
+        `
+            },
+
+
+            {
+                id: 47,
+                question: "Evaluate Reverse Polish Notation",
+                category: ["Stack", "Math"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+import java.util.*;
+
+class Solution {
+
+    public int evalRPN(String[] tokens) {
+
+        Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
+
+        for (String token : tokens) {
+
+            if (token.equals("+") ||
+                token.equals("-") ||
+                token.equals("*") ||
+                token.equals("/")) {
+
+                int second = stack.pop();
+                int first = stack.pop();
+
+                int result = 0;
+
+                if (token.equals("+")) {
+                    result = first + second;
+                } 
+                else if (token.equals("-")) {
+                    result = first - second;
+                } 
+                else if (token.equals("*")) {
+                    result = first * second;
+                } 
+                else {
+                    result = first / second;
+                }
+
+                stack.push(result);
+
+            } else {
+
+                stack.push(Integer.parseInt(token));
+            }
+        }
+
+        return stack.pop();
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            Reverse Polish Notation places operators after their operands.
+        </p>
+
+        <p>
+            For example:
+            <code>["2", "1", "+", "3", "*"]</code>
+            represents <code>(2 + 1) * 3</code>.
+        </p>
+
+        <p>
+            Numbers are pushed onto the stack.
+            When an operator appears, we pop the last two numbers,
+            perform the operation, and push the result back.
+        </p>
+
+        <p>
+            The order is important for subtraction and division:
+            <code>first - second</code> and
+            <code>first / second</code>.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(n)</p>
+        `
+            },
+
+
+            {
+                id: 48,
+                question: "Next Greater Element",
+                category: ["Stack", "Monotonic Stack", "Array"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+import java.util.*;
+
+class Solution {
+
+    public int[] nextGreaterElement(int[] nums) {
+
+        int n = nums.length;
+
+        int[] result = new int[n];
+
+        Arrays.fill(result, -1);
+
+        Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
+
+        for (int i = n - 1; i &gt;= 0; i--) {
+
+            while (!stack.isEmpty() &amp;&amp;
+                   stack.peek() &lt;= nums[i]) {
+
+                stack.pop();
+            }
+
+            if (!stack.isEmpty()) {
+                result[i] = stack.peek();
+            }
+
+            stack.push(nums[i]);
+        }
+
+        return result;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            For every element, we need to find the first greater element
+            to its right.
+        </p>
+
+        <p>
+            We process the array from right to left using a
+            <strong>monotonic decreasing stack</strong>.
+        </p>
+
+        <p>
+            Before checking the answer for the current element, we remove
+            every stack element that is smaller than or equal to it because
+            those elements can never be the next greater element.
+        </p>
+
+        <p>
+            The remaining top element is the next greater element.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(n)</p>
+        `
+            },
+
+
+            {
+                id: 49,
+                question: "Daily Temperatures",
+                category: ["Stack", "Monotonic Stack", "Array"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+import java.util.*;
+
+class Solution {
+
+    public int[] dailyTemperatures(int[] temperatures) {
+
+        int n = temperatures.length;
+
+        int[] result = new int[n];
+
+        Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
+
+        for (int i = 0; i &lt; n; i++) {
+
+            while (!stack.isEmpty() &amp;&amp;
+                   temperatures[i] &gt;
+                   temperatures[stack.peek()]) {
+
+                int previousDay = stack.pop();
+
+                result[previousDay] =
+                    i - previousDay;
+            }
+
+            stack.push(i);
+        }
+
+        return result;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            We need to know how many days we must wait until a warmer
+            temperature appears.
+        </p>
+
+        <p>
+            The stack stores indices of temperatures that have not yet
+            found a warmer day.
+        </p>
+
+        <p>
+            When the current temperature is greater than the temperature
+            at the index on top of the stack, we have found the answer
+            for that previous day.
+        </p>
+
+        <p>
+            The number of days is:
+            <code>currentIndex - previousIndex</code>.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(n)</p>
+        `
+            },
+
+
+            {
+                id: 50,
+                question: "Largest Rectangle in Histogram",
+                category: ["Stack", "Monotonic Stack", "Array"],
+                level: "Hard",
+                answer: `
+        <pre><code>
+import java.util.*;
+
+class Solution {
+
+    public int largestRectangleArea(int[] heights) {
+
+        Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
+
+        int maxArea = 0;
+
+        for (int i = 0; i &lt;= heights.length; i++) {
+
+            int currentHeight =
+                (i == heights.length)
+                ? 0
+                : heights[i];
+
+            while (!stack.isEmpty() &amp;&amp;
+                   currentHeight &lt; heights[stack.peek()]) {
+
+                int height = heights[stack.pop()];
+
+                int width;
+
+                if (stack.isEmpty()) {
+                    width = i;
+                } else {
+                    width = i - stack.peek() - 1;
+                }
+
+                int area = height * width;
+
+                maxArea = Math.max(maxArea, area);
+            }
+
+            stack.push(i);
+        }
+
+        return maxArea;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            The key idea is to find how far each bar can extend to the
+            left and right while maintaining its height.
+        </p>
+
+        <p>
+            We use a <strong>monotonic increasing stack</strong> containing
+            indices of bars.
+        </p>
+
+        <p>
+            When we encounter a smaller bar, the taller bar on the stack
+            can no longer extend to the right.
+        </p>
+
+        <p>
+            We pop it and calculate:
+        </p>
+
+        <p>
+            <code>area = height × width</code>
+        </p>
+
+        <p>
+            We add a virtual height of <code>0</code> at the end so that
+            all remaining bars are processed.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(n)</p>
+        `
+            },
+
+
+            {
+                id: 51,
+                question: "Implement Queue Using Stacks",
+                category: ["Queue", "Stack", "Data Structure"],
+                level: "Easy",
+                answer: `
+        <pre><code>
+import java.util.*;
+
+class MyQueue {
+
+    private Stack&lt;Integer&gt; input;
+    private Stack&lt;Integer&gt; output;
+
+    public MyQueue() {
+
+        input = new Stack&lt;&gt;();
+        output = new Stack&lt;&gt;();
+    }
+
+    public void push(int x) {
+
+        input.push(x);
+    }
+
+    public int pop() {
+
+        moveElements();
+
+        return output.pop();
+    }
+
+    public int peek() {
+
+        moveElements();
+
+        return output.peek();
+    }
+
+    public boolean empty() {
+
+        return input.isEmpty() &amp;&amp;
+               output.isEmpty();
+    }
+
+    private void moveElements() {
+
+        if (output.isEmpty()) {
+
+            while (!input.isEmpty()) {
+                output.push(input.pop());
+            }
+        }
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            A queue follows FIFO, while a stack follows LIFO.
+            We use two stacks to reverse the order.
+        </p>
+
+        <p>
+            New elements are pushed into the <code>input</code> stack.
+        </p>
+
+        <p>
+            When we need the front element, we move elements from
+            <code>input</code> to <code>output</code>.
+            This reverses their order and makes the oldest element
+            available at the top.
+        </p>
+
+        <p>
+            We only move elements when <code>output</code> is empty,
+            which gives amortized O(1) time per operation.
+        </p>
+
+        <p><strong>Amortized Time Complexity:</strong> O(1)</p>
+        <p><strong>Worst-case Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(n)</p>
+        `
+            },
+
+
+            {
+                id: 52,
+                question: "Sliding Window Maximum",
+                category: ["Sliding Window", "Deque", "Monotonic Queue"],
+                level: "Hard",
+                answer: `
+        <pre><code>
+import java.util.*;
+
+class Solution {
+
+    public int[] maxSlidingWindow(
+        int[] nums,
+        int k
+    ) {
+
+        int n = nums.length;
+
+        int[] result = new int[n - k + 1];
+
+        Deque&lt;Integer&gt; deque =
+            new ArrayDeque&lt;&gt;();
+
+        int resultIndex = 0;
+
+        for (int i = 0; i &lt; n; i++) {
+
+            // Remove indices outside the window
+            while (!deque.isEmpty() &amp;&amp;
+                   deque.peekFirst() &lt;= i - k) {
+
+                deque.pollFirst();
+            }
+
+            // Remove smaller elements
+            while (!deque.isEmpty() &amp;&amp;
+                   nums[deque.peekLast()] &lt;= nums[i]) {
+
+                deque.pollLast();
+            }
+
+            deque.offerLast(i);
+
+            // Window is ready
+            if (i &gt;= k - 1) {
+
+                result[resultIndex] =
+                    nums[deque.peekFirst()];
+
+                resultIndex++;
+            }
+        }
+
+        return result;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            We need the maximum value inside every window of size
+            <code>k</code>.
+        </p>
+
+        <p>
+            A Deque allows us to efficiently add and remove elements
+            from both ends.
+        </p>
+
+        <p>
+            We store <strong>indices</strong> in decreasing order of
+            their corresponding values.
+        </p>
+
+        <p>
+            The front of the deque always contains the index of the
+            maximum element in the current window.
+        </p>
+
+        <p>
+            First, we remove indices that have moved outside the window.
+            Then we remove smaller elements from the back because they
+            can never become the maximum while the current larger element
+            remains in the window.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(k)</p>
+        `
+            },
+            {
+                id: 53,
+                question: "Binary Search",
+                category: ["Binary Search", "Array"],
+                level: "Easy",
+                answer: `
+    <pre><code>
+class Solution {
+    public int search(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+
+        while (left &lt;= right) {
+            int mid = left + (right - left) / 2;
+
+            if (nums[mid] == target) {
+                return mid;
+            } 
+            else if (nums[mid] &lt; target) {
+                left = mid + 1;
+            } 
+            else {
+                right = mid - 1;
+            }
+        }
+
+        return -1;
+    }
+}
+    </code></pre>
+
+    <p><strong>Explanation:</strong></p>
+    <p>
+        Since the array is sorted, we can eliminate half of the search space
+        after every comparison.
+        If the middle element is smaller than the target, search the right half.
+        Otherwise, search the left half.
+    </p>
+
+    <p><strong>Time Complexity:</strong> O(log n)</p>
+    <p><strong>Space Complexity:</strong> O(1)</p>
+    `
+            },
+            {
+                id: 54,
+                question: "Search Insert Position",
+                category: ["Binary Search", "Array"],
+                level: "Easy",
+                answer: `
+    <pre><code>
+class Solution {
+    public int searchInsert(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+
+        while (left &lt;= right) {
+            int mid = left + (right - left) / 2;
+
+            if (nums[mid] == target) {
+                return mid;
+            } 
+            else if (nums[mid] &lt; target) {
+                left = mid + 1;
+            } 
+            else {
+                right = mid - 1;
+            }
+        }
+
+        return left;
+    }
+}
+    </code></pre>
+
+    <p><strong>Explanation:</strong></p>
+    <p>
+        We perform normal binary search. If the target is not found,
+        <strong>left</strong> will point to the position where the target
+        should be inserted while keeping the array sorted.
+    </p>
+
+    <p><strong>Time Complexity:</strong> O(log n)</p>
+    <p><strong>Space Complexity:</strong> O(1)</p>
+    `
+            },
+            {
+                id: 55,
+                question: "Find First and Last Position",
+                category: ["Binary Search", "Array"],
+                level: "Medium",
+                answer: `
+    <pre><code>
+class Solution {
+
+    public int[] searchRange(int[] nums, int target) {
+        int first = findFirst(nums, target);
+        int last = findLast(nums, target);
+
+        return new int[]{first, last};
+    }
+
+    private int findFirst(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+        int answer = -1;
+
+        while (left &lt;= right) {
+            int mid = left + (right - left) / 2;
+
+            if (nums[mid] == target) {
+                answer = mid;
+                right = mid - 1;
+            } 
+            else if (nums[mid] &lt; target) {
+                left = mid + 1;
+            } 
+            else {
+                right = mid - 1;
+            }
+        }
+
+        return answer;
+    }
+
+    private int findLast(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+        int answer = -1;
+
+        while (left &lt;= right) {
+            int mid = left + (right - left) / 2;
+
+            if (nums[mid] == target) {
+                answer = mid;
+                left = mid + 1;
+            } 
+            else if (nums[mid] &lt; target) {
+                left = mid + 1;
+            } 
+            else {
+                right = mid - 1;
+            }
+        }
+
+        return answer;
+    }
+}
+    </code></pre>
+
+    <p><strong>Explanation:</strong></p>
+    <p>
+        We use binary search twice. When we find the target for the first
+        position, we continue searching toward the left.
+        For the last position, we continue searching toward the right.
+    </p>
+
+    <p><strong>Time Complexity:</strong> O(log n)</p>
+    <p><strong>Space Complexity:</strong> O(1)</p>
+    `
+            },
+            {
+                id: 56,
+                question: "Search in Rotated Sorted Array",
+                category: ["Binary Search", "Array", "Rotated Array"],
+                level: "Medium",
+                answer: `
+    <pre><code>
+class Solution {
+    public int search(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+
+        while (left &lt;= right) {
+            int mid = left + (right - left) / 2;
+
+            if (nums[mid] == target) {
+                return mid;
+            }
+
+            // Left half is sorted
+            if (nums[left] &lt;= nums[mid]) {
+
+                if (nums[left] &lt;= target &amp;&amp; target &lt; nums[mid]) {
+                    right = mid - 1;
+                } 
+                else {
+                    left = mid + 1;
+                }
+            }
+
+            // Right half is sorted
+            else {
+
+                if (nums[mid] &lt; target &amp;&amp; target &lt;= nums[right]) {
+                    left = mid + 1;
+                } 
+                else {
+                    right = mid - 1;
+                }
+            }
+        }
+
+        return -1;
+    }
+}
+    </code></pre>
+
+    <p><strong>Explanation:</strong></p>
+    <p>
+        Even though the array is rotated, at least one half is always sorted.
+        We determine which half is sorted and then check whether the target
+        lies inside that sorted range.
+    </p>
+
+    <p><strong>Time Complexity:</strong> O(log n)</p>
+    <p><strong>Space Complexity:</strong> O(1)</p>
+    `
+            },
+            {
+                id: 57,
+                question: "Find Minimum in Rotated Sorted Array",
+                category: ["Binary Search", "Array", "Rotated Array"],
+                level: "Medium",
+                answer: `
+    <pre><code>
+class Solution {
+    public int findMin(int[] nums) {
+        int left = 0;
+        int right = nums.length - 1;
+
+        while (left &lt; right) {
+            int mid = left + (right - left) / 2;
+
+            if (nums[mid] &gt; nums[right]) {
+                left = mid + 1;
+            } 
+            else {
+                right = mid;
+            }
+        }
+
+        return nums[left];
+    }
+}
+    </code></pre>
+
+    <p><strong>Explanation:</strong></p>
+    <p>
+        If <strong>nums[mid] &gt; nums[right]</strong>, the minimum must be
+        on the right side of mid.
+        Otherwise, the minimum is at mid or somewhere on its left.
+        When left and right become equal, that position contains the minimum.
+    </p>
+
+    <p><strong>Time Complexity:</strong> O(log n)</p>
+    <p><strong>Space Complexity:</strong> O(1)</p>
+    `
+            },
+            {
+                id: 58,
+                question: "Find Peak Element",
+                category: ["Binary Search", "Array"],
+                level: "Medium",
+                answer: `
+    <pre><code>
+class Solution {
+    public int findPeakElement(int[] nums) {
+        int left = 0;
+        int right = nums.length - 1;
+
+        while (left &lt; right) {
+            int mid = left + (right - left) / 2;
+
+            if (nums[mid] &gt; nums[mid + 1]) {
+                right = mid;
+            } 
+            else {
+                left = mid + 1;
+            }
+        }
+
+        return left;
+    }
+}
+    </code></pre>
+
+    <p><strong>Explanation:</strong></p>
+    <p>
+        Compare the middle element with the next element.
+        If nums[mid] is greater, a peak exists on the left side including mid.
+        Otherwise, a peak exists on the right side.
+        Eventually left and right meet at a peak.
+    </p>
+
+    <p><strong>Time Complexity:</strong> O(log n)</p>
+    <p><strong>Space Complexity:</strong> O(1)</p>
+    `
+            },
+            {
+                id: 59,
+                question: "Sqrt(x)",
+                category: ["Binary Search", "Math"],
+                level: "Easy",
+                answer: `
+    <pre><code>
+class Solution {
+    public int mySqrt(int x) {
+        if (x &lt; 2) {
+            return x;
+        }
+
+        int left = 1;
+        int right = x / 2;
+        int answer = 1;
+
+        while (left &lt;= right) {
+            int mid = left + (right - left) / 2;
+
+            if (mid &lt;= x / mid) {
+                answer = mid;
+                left = mid + 1;
+            } 
+            else {
+                right = mid - 1;
+            }
+        }
+
+        return answer;
+    }
+}
+    </code></pre>
+
+    <p><strong>Explanation:</strong></p>
+    <p>
+        We search for the largest integer whose square is less than or equal
+        to x. We use <strong>x / mid</strong> instead of
+        <strong>mid * mid</strong> to avoid integer overflow.
+    </p>
+
+    <p><strong>Time Complexity:</strong> O(log n)</p>
+    <p><strong>Space Complexity:</strong> O(1)</p>
+    `
+            },
+            {
+                id: 60,
+                question: "Koko Eating Bananas",
+                category: ["Binary Search", "Binary Search on Answer"],
+                level: "Medium",
+                answer: `
+    <pre><code>
+class Solution {
+    public int minEatingSpeed(int[] piles, int h) {
+        int left = 1;
+        int right = 0;
+
+        for (int pile : piles) {
+            right = Math.max(right, pile);
+        }
+
+        int answer = right;
+
+        while (left &lt;= right) {
+            int mid = left + (right - left) / 2;
+
+            long hours = 0;
+
+            for (int pile : piles) {
+                hours += (pile + (long) mid - 1) / mid;
+            }
+
+            if (hours &lt;= h) {
+                answer = mid;
+                right = mid - 1;
+            } 
+            else {
+                left = mid + 1;
+            }
+        }
+
+        return answer;
+    }
+}
+    </code></pre>
+
+    <p><strong>Explanation:</strong></p>
+    <p>
+        Instead of searching through the piles, we binary-search the possible
+        eating speed.
+        For every speed, we calculate how many hours Koko needs.
+        If she can finish within h hours, we try a smaller speed.
+        Otherwise, we increase the speed.
+    </p>
+
+    <p><strong>Time Complexity:</strong> O(n log m), where m is the maximum pile size</p>
+    <p><strong>Space Complexity:</strong> O(1)</p>
+    `
+            },
+            {
+                id: 61,
+                question: "Capacity to Ship Packages Within D Days",
+                category: ["Binary Search", "Binary Search on Answer", "Array"],
+                level: "Medium",
+                answer: `
+    <pre><code>
+class Solution {
+    public int shipWithinDays(int[] weights, int days) {
+        int left = 0;
+        int right = 0;
+
+        for (int weight : weights) {
+            left = Math.max(left, weight);
+            right += weight;
+        }
+
+        int answer = right;
+
+        while (left &lt;= right) {
+            int capacity = left + (right - left) / 2;
+
+            int requiredDays = 1;
+            int currentWeight = 0;
+
+            for (int weight : weights) {
+
+                if (currentWeight + weight &gt; capacity) {
+                    requiredDays++;
+                    currentWeight = 0;
+                }
+
+                currentWeight += weight;
+            }
+
+            if (requiredDays &lt;= days) {
+                answer = capacity;
+                right = capacity - 1;
+            } 
+            else {
+                left = capacity + 1;
+            }
+        }
+
+        return answer;
+    }
+}
+    </code></pre>
+
+    <p><strong>Explanation:</strong></p>
+    <p>
+        The minimum possible capacity is the heaviest package because every
+        package must fit.
+        The maximum possible capacity is the total weight.
+        We binary-search between these values and calculate how many days
+        are required for each capacity.
+    </p>
+
+    <p>
+        If the capacity can ship everything within the required days,
+        try a smaller capacity.
+        Otherwise, increase the capacity.
+    </p>
+
+    <p><strong>Time Complexity:</strong> O(n log(sum of weights))</p>
+    <p><strong>Space Complexity:</strong> O(1)</p>
+    `
+            },
+            {
+                id: 62,
+                question: "Search on Answer / Binary Search on Answer",
+                category: ["Binary Search", "Binary Search on Answer"],
+                level: "Medium",
+                answer: `
+    <pre><code>
+class Solution {
+
+    public int minimumCapacity(int[] weights, int days) {
+
+        int left = 0;
+        int right = 0;
+
+        for (int weight : weights) {
+            left = Math.max(left, weight);
+            right += weight;
+        }
+
+        int answer = right;
+
+        while (left &lt;= right) {
+            int mid = left + (right - left) / 2;
+
+            if (canShip(weights, days, mid)) {
+                answer = mid;
+                right = mid - 1;
+            } 
+            else {
+                left = mid + 1;
+            }
+        }
+
+        return answer;
+    }
+
+    private boolean canShip(int[] weights, int days, int capacity) {
+
+        int requiredDays = 1;
+        int currentWeight = 0;
+
+        for (int weight : weights) {
+
+            if (currentWeight + weight &gt; capacity) {
+                requiredDays++;
+                currentWeight = 0;
+            }
+
+            currentWeight += weight;
+        }
+
+        return requiredDays &lt;= days;
+    }
+}
+    </code></pre>
+
+    <p><strong>Explanation:</strong></p>
+    <p>
+        Binary Search on Answer is used when the answer itself is a number
+        within a searchable range.
+    </p>
+
+    <p>
+        First identify the possible answer range.
+        Then create a function that checks whether a particular answer is
+        possible.
+    </p>
+
+    <p>
+        The important property is <strong>monotonicity</strong>.
+        If an answer works, larger values may also work.
+        If an answer does not work, smaller values will not work.
+        This allows binary search instead of checking every possible answer.
+    </p>
+
+    <p><strong>General Pattern:</strong></p>
+
+    <pre><code>
+int left = minimumPossibleAnswer;
+int right = maximumPossibleAnswer;
+
+while (left &lt;= right) {
+
+    int mid = left + (right - left) / 2;
+
+    if (isPossible(mid)) {
+        answer = mid;
+        right = mid - 1;
+    } 
+    else {
+        left = mid + 1;
+    }
+}
+    </code></pre>
+
+    <p><strong>Time Complexity:</strong> O(n log range)</p>
+    <p><strong>Space Complexity:</strong> O(1)</p>
+    `
+            },
+            {
+                id: 63,
+                question: "Bubble Sort",
+                category: ["Sorting", "Array"],
+                level: "Easy",
+                answer: `
+        <pre><code>
+class Solution {
+    public void bubbleSort(int[] arr) {
+        int n = arr.length;
+
+        for (int i = 0; i &lt; n - 1; i++) {
+            boolean swapped = false;
+
+            for (int j = 0; j &lt; n - i - 1; j++) {
+
+                if (arr[j] &gt; arr[j + 1]) {
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+
+                    swapped = true;
+                }
+            }
+
+            if (!swapped) {
+                break;
+            }
+        }
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            Bubble Sort repeatedly compares adjacent elements and swaps them
+            if they are in the wrong order. After every pass, the largest
+            unsorted element moves to the end of the array.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n²) worst/average, O(n) best</p>
+        <p><strong>Space Complexity:</strong> O(1)</p>
+        `
+            },
+
+            {
+                id: 64,
+                question: "Selection Sort",
+                category: ["Sorting", "Array"],
+                level: "Easy",
+                answer: `
+        <pre><code>
+class Solution {
+    public void selectionSort(int[] arr) {
+        int n = arr.length;
+
+        for (int i = 0; i &lt; n - 1; i++) {
+            int minIndex = i;
+
+            for (int j = i + 1; j &lt; n; j++) {
+                if (arr[j] &lt; arr[minIndex]) {
+                    minIndex = j;
+                }
+            }
+
+            int temp = arr[i];
+            arr[i] = arr[minIndex];
+            arr[minIndex] = temp;
+        }
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            Selection Sort finds the smallest element from the unsorted part
+            and places it at the beginning. The sorted portion grows one
+            element at a time.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n²)</p>
+        <p><strong>Space Complexity:</strong> O(1)</p>
+        `
+            },
+
+            {
+                id: 65,
+                question: "Insertion Sort",
+                category: ["Sorting", "Array"],
+                level: "Easy",
+                answer: `
+        <pre><code>
+class Solution {
+    public void insertionSort(int[] arr) {
+        int n = arr.length;
+
+        for (int i = 1; i &lt; n; i++) {
+            int key = arr[i];
+            int j = i - 1;
+
+            while (j &gt;= 0 &amp;&amp; arr[j] &gt; key) {
+                arr[j + 1] = arr[j];
+                j--;
+            }
+
+            arr[j + 1] = key;
+        }
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            Insertion Sort builds the sorted portion from left to right.
+            Each new element is taken and inserted into its correct position
+            among the already sorted elements.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n²) worst/average, O(n) best</p>
+        <p><strong>Space Complexity:</strong> O(1)</p>
+        `
+            },
+
+            {
+                id: 66,
+                question: "Merge Sort",
+                category: ["Sorting", "Divide and Conquer", "Recursion"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+class Solution {
+
+    public void mergeSort(int[] arr) {
+        mergeSort(arr, 0, arr.length - 1);
+    }
+
+    private void mergeSort(int[] arr, int left, int right) {
+
+        if (left &gt;= right) {
+            return;
+        }
+
+        int mid = left + (right - left) / 2;
+
+        mergeSort(arr, left, mid);
+        mergeSort(arr, mid + 1, right);
+
+        merge(arr, left, mid, right);
+    }
+
+    private void merge(int[] arr, int left, int mid, int right) {
+
+        int[] temp = new int[right - left + 1];
+
+        int i = left;
+        int j = mid + 1;
+        int k = 0;
+
+        while (i &lt;= mid &amp;&amp; j &lt;= right) {
+
+            if (arr[i] &lt;= arr[j]) {
+                temp[k++] = arr[i++];
+            } 
+            else {
+                temp[k++] = arr[j++];
+            }
+        }
+
+        while (i &lt;= mid) {
+            temp[k++] = arr[i++];
+        }
+
+        while (j &lt;= right) {
+            temp[k++] = arr[j++];
+        }
+
+        for (int x = 0; x &lt; temp.length; x++) {
+            arr[left + x] = temp[x];
+        }
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            Merge Sort uses divide and conquer. It repeatedly divides the
+            array into two halves until each part contains one element.
+            Then it merges the smaller sorted arrays back together.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n log n)</p>
+        <p><strong>Space Complexity:</strong> O(n)</p>
+        `
+            },
+
+            {
+                id: 67,
+                question: "Quick Sort",
+                category: ["Sorting", "Divide and Conquer", "Recursion"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+class Solution {
+
+    public void quickSort(int[] arr) {
+        quickSort(arr, 0, arr.length - 1);
+    }
+
+    private void quickSort(int[] arr, int low, int high) {
+
+        if (low &gt;= high) {
+            return;
+        }
+
+        int pivotIndex = partition(arr, low, high);
+
+        quickSort(arr, low, pivotIndex - 1);
+        quickSort(arr, pivotIndex + 1, high);
+    }
+
+    private int partition(int[] arr, int low, int high) {
+
+        int pivot = arr[high];
+        int i = low;
+
+        for (int j = low; j &lt; high; j++) {
+
+            if (arr[j] &lt; pivot) {
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+
+                i++;
+            }
+        }
+
+        int temp = arr[i];
+        arr[i] = arr[high];
+        arr[high] = temp;
+
+        return i;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            Quick Sort chooses a pivot and partitions the array so that
+            smaller elements are placed before the pivot and larger elements
+            are placed after it. It then recursively sorts both parts.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n log n) average, O(n²) worst</p>
+        <p><strong>Space Complexity:</strong> O(log n) average recursion stack</p>
+        `
+            },
+
+            {
+                id: 68,
+                question: "Counting Sort",
+                category: ["Sorting", "Array", "Frequency Counting"],
+                level: "Easy",
+                answer: `
+        <pre><code>
+class Solution {
+
+    public void countingSort(int[] arr) {
+
+        if (arr.length == 0) {
+            return;
+        }
+
+        int max = arr[0];
+
+        for (int num : arr) {
+            max = Math.max(max, num);
+        }
+
+        int[] count = new int[max + 1];
+
+        for (int num : arr) {
+            count[num]++;
+        }
+
+        int index = 0;
+
+        for (int value = 0; value &lt;= max; value++) {
+
+            while (count[value] &gt; 0) {
+                arr[index++] = value;
+                count[value]--;
+            }
+        }
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            Counting Sort counts how many times each value occurs.
+            Then it rebuilds the array in increasing order using those
+            frequencies.
+        </p>
+
+        <p>
+            It is useful when the range of values is relatively small compared
+            with the number of elements.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n + k), where k is the value range</p>
+        <p><strong>Space Complexity:</strong> O(k)</p>
+        `
+            },
+
+            {
+                id: 69,
+                question: "Sort 0s, 1s and 2s",
+                category: ["Sorting", "Array", "Two Pointers", "Dutch National Flag"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+class Solution {
+
+    public void sortColors(int[] nums) {
+
+        int low = 0;
+        int mid = 0;
+        int high = nums.length - 1;
+
+        while (mid &lt;= high) {
+
+            if (nums[mid] == 0) {
+
+                int temp = nums[low];
+                nums[low] = nums[mid];
+                nums[mid] = temp;
+
+                low++;
+                mid++;
+
+            } 
+            else if (nums[mid] == 1) {
+
+                mid++;
+
+            } 
+            else {
+
+                int temp = nums[mid];
+                nums[mid] = nums[high];
+                nums[high] = temp;
+
+                high--;
+            }
+        }
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            This is the Dutch National Flag algorithm.
+            We maintain three regions:
+        </p>
+
+        <p>
+            <strong>0s:</strong> from 0 to low - 1<br>
+            <strong>1s:</strong> from low to mid - 1<br>
+            <strong>Unknown:</strong> from mid to high<br>
+            <strong>2s:</strong> from high + 1 to the end
+        </p>
+
+        <p>
+            When we see 0, move it to the low region.
+            When we see 1, simply move forward.
+            When we see 2, move it to the high region.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(1)</p>
+        `
+            },
+
+            {
+                id: 70,
+                question: "Merge Overlapping Intervals",
+                category: ["Sorting", "Array", "Intervals"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+class Solution {
+
+    public int[][] merge(int[][] intervals) {
+
+        if (intervals.length &lt;= 1) {
+            return intervals;
+        }
+
+        Arrays.sort(intervals, (a, b) -&gt; Integer.compare(a[0], b[0]));
+
+        List&lt;int[]&gt; result = new ArrayList&lt;&gt;();
+
+        int start = intervals[0][0];
+        int end = intervals[0][1];
+
+        for (int i = 1; i &lt; intervals.length; i++) {
+
+            int currentStart = intervals[i][0];
+            int currentEnd = intervals[i][1];
+
+            if (currentStart &lt;= end) {
+                end = Math.max(end, currentEnd);
+            } 
+            else {
+                result.add(new int[]{start, end});
+
+                start = currentStart;
+                end = currentEnd;
+            }
+        }
+
+        result.add(new int[]{start, end});
+
+        return result.toArray(new int[result.size()][]);
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            First, sort the intervals by their starting position.
+            Then compare each interval with the current merged interval.
+        </p>
+
+        <p>
+            If the next interval starts before or at the current end,
+            the intervals overlap, so we extend the current end.
+            Otherwise, we save the current interval and start a new one.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n log n)</p>
+        <p><strong>Space Complexity:</strong> O(n)</p>
+        `
+            },
+            {
+                id: 71,
+                question: "Factorial using Recursion",
+                category: ["Recursion", "Math"],
+                level: "Easy",
+                answer: `
+        <pre><code>
+class Solution {
+
+    public int factorial(int n) {
+        if (n == 0 || n == 1) {
+            return 1;
+        }
+
+        return n * factorial(n - 1);
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            Recursion means a function calls itself to solve a smaller version
+            of the same problem.
+        </p>
+
+        <p>
+            The base case is when n is 0 or 1, where the factorial is 1.
+            Otherwise, we calculate n multiplied by factorial of n - 1.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+        <p><strong>Space Complexity:</strong> O(n) due to recursion stack</p>
+        `
+            },
+
+            {
+                id: 72,
+                question: "Fibonacci",
+                category: ["Recursion", "Dynamic Programming", "Math"],
+                level: "Easy",
+                answer: `
+        <pre><code>
+class Solution {
+
+    public int fib(int n) {
+        if (n &lt;= 1) {
+            return n;
+        }
+
+        return fib(n - 1) + fib(n - 2);
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            Each Fibonacci number is the sum of the previous two numbers.
+            The base cases are F(0) = 0 and F(1) = 1.
+        </p>
+
+        <p>
+            This recursive solution is useful for understanding recursion,
+            but it recalculates the same values many times. In interviews,
+            you should also know the optimized iterative or DP approach.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(2^n)</p>
+        <p><strong>Space Complexity:</strong> O(n)</p>
+        `
+            },
+
+            {
+                id: 73,
+                question: "Generate All Subsets",
+                category: ["Recursion", "Backtracking", "Array"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+class Solution {
+
+    public List&lt;List&lt;Integer&gt;&gt; subsets(int[] nums) {
+        List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();
+
+        backtrack(nums, 0, new ArrayList&lt;&gt;(), result);
+
+        return result;
+    }
+
+    private void backtrack(
+            int[] nums,
+            int index,
+            List&lt;Integer&gt; current,
+            List&lt;List&lt;Integer&gt;&gt; result) {
+
+        result.add(new ArrayList&lt;&gt;(current));
+
+        for (int i = index; i &lt; nums.length; i++) {
+
+            current.add(nums[i]);
+
+            backtrack(nums, i + 1, current, result);
+
+            current.remove(current.size() - 1);
+        }
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            For every element, we have two choices: include it in the current
+            subset or skip it.
+        </p>
+
+        <p>
+            We use backtracking to build a subset, recursively explore it,
+            and then remove the last element to try another possibility.
+        </p>
+
+        <p>
+            An array of n elements has 2^n possible subsets.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n × 2^n)</p>
+        <p><strong>Space Complexity:</strong> O(n) recursion stack, excluding output</p>
+        `
+            },
+
+            {
+                id: 74,
+                question: "Generate Permutations",
+                category: ["Recursion", "Backtracking", "Array"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+class Solution {
+
+    public List&lt;List&lt;Integer&gt;&gt; permute(int[] nums) {
+        List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();
+
+        backtrack(nums, new ArrayList&lt;&gt;(), result);
+
+        return result;
+    }
+
+    private void backtrack(
+            int[] nums,
+            List&lt;Integer&gt; current,
+            List&lt;List&lt;Integer&gt;&gt; result) {
+
+        if (current.size() == nums.length) {
+            result.add(new ArrayList&lt;&gt;(current));
+            return;
+        }
+
+        for (int num : nums) {
+
+            if (current.contains(num)) {
+                continue;
+            }
+
+            current.add(num);
+
+            backtrack(nums, current, result);
+
+            current.remove(current.size() - 1);
+        }
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            A permutation uses every element exactly once, but the order
+            changes.
+        </p>
+
+        <p>
+            At every level of recursion, we choose one unused element,
+            add it to the current permutation, recursively continue,
+            and then remove it during backtracking.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n × n!)</p>
+        <p><strong>Space Complexity:</strong> O(n) recursion stack, excluding output</p>
+        `
+            },
+
+            {
+                id: 75,
+                question: "Combination Sum",
+                category: ["Recursion", "Backtracking", "Array"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+class Solution {
+
+    public List&lt;List&lt;Integer&gt;&gt; combinationSum(
+            int[] candidates,
+            int target) {
+
+        List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();
+
+        backtrack(
+            candidates,
+            target,
+            0,
+            new ArrayList&lt;&gt;(),
+            result
+        );
+
+        return result;
+    }
+
+    private void backtrack(
+            int[] candidates,
+            int target,
+            int start,
+            List&lt;Integer&gt; current,
+            List&lt;List&lt;Integer&gt;&gt; result) {
+
+        if (target == 0) {
+            result.add(new ArrayList&lt;&gt;(current));
+            return;
+        }
+
+        if (target &lt; 0) {
+            return;
+        }
+
+        for (int i = start; i &lt; candidates.length; i++) {
+
+            current.add(candidates[i]);
+
+            // i instead of i + 1 because
+            // the same number can be reused.
+            backtrack(
+                candidates,
+                target - candidates[i],
+                i,
+                current,
+                result
+            );
+
+            current.remove(current.size() - 1);
+        }
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            We build combinations recursively while keeping track of the
+            remaining target.
+        </p>
+
+        <p>
+            If the target becomes 0, we found a valid combination.
+            If it becomes negative, that path cannot produce a valid answer.
+        </p>
+
+        <p>
+            We pass <strong>i</strong> instead of <strong>i + 1</strong>
+            because a candidate can be used multiple times.
+        </p>
+
+        <p><strong>Time Complexity:</strong> Exponential, depends on target and candidates</p>
+        <p><strong>Space Complexity:</strong> O(target / minimum candidate)</p>
+        `
+            },
+
+            {
+                id: 76,
+                question: "Letter Combinations of Phone Number",
+                category: ["Recursion", "Backtracking", "String"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+class Solution {
+
+    private String[] mapping = {
+        "", "", "abc", "def",
+        "ghi", "jkl", "mno",
+        "pqrs", "tuv", "wxyz"
+    };
+
+    public List&lt;String&gt; letterCombinations(String digits) {
+
+        List&lt;String&gt; result = new ArrayList&lt;&gt;();
+
+        if (digits == null || digits.length() == 0) {
+            return result;
+        }
+
+        backtrack(
+            digits,
+            0,
+            new StringBuilder(),
+            result
+        );
+
+        return result;
+    }
+
+    private void backtrack(
+            String digits,
+            int index,
+            StringBuilder current,
+            List&lt;String&gt; result) {
+
+        if (index == digits.length()) {
+            result.add(current.toString());
+            return;
+        }
+
+        int digit = digits.charAt(index) - '0';
+
+        String letters = mapping[digit];
+
+        for (char ch : letters.toCharArray()) {
+
+            current.append(ch);
+
+            backtrack(
+                digits,
+                index + 1,
+                current,
+                result
+            );
+
+            current.deleteCharAt(current.length() - 1);
+        }
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            Each digit represents multiple letters. For every digit, we try
+            each possible letter and recursively process the next digit.
+        </p>
+
+        <p>
+            When we have processed all digits, the current string is one
+            valid combination.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(4^n × n)</p>
+        <p><strong>Space Complexity:</strong> O(n) recursion stack, excluding output</p>
+        `
+            },
+
+            {
+                id: 77,
+                question: "Generate Parentheses",
+                category: ["Recursion", "Backtracking", "String"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+class Solution {
+
+    public List&lt;String&gt; generateParenthesis(int n) {
+
+        List&lt;String&gt; result = new ArrayList&lt;&gt;();
+
+        backtrack(
+            n,
+            0,
+            0,
+            new StringBuilder(),
+            result
+        );
+
+        return result;
+    }
+
+    private void backtrack(
+            int n,
+            int open,
+            int close,
+            StringBuilder current,
+            List&lt;String&gt; result) {
+
+        if (current.length() == 2 * n) {
+            result.add(current.toString());
+            return;
+        }
+
+        if (open &lt; n) {
+            current.append('(');
+
+            backtrack(
+                n,
+                open + 1,
+                close,
+                current,
+                result
+            );
+
+            current.deleteCharAt(current.length() - 1);
+        }
+
+        if (close &lt; open) {
+            current.append(')');
+
+            backtrack(
+                n,
+                open,
+                close + 1,
+                current,
+                result
+            );
+
+            current.deleteCharAt(current.length() - 1);
+        }
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            We can add an opening parenthesis as long as we have not used all
+            n opening parentheses.
+        </p>
+
+        <p>
+            We can add a closing parenthesis only when the number of closing
+            parentheses is smaller than the number of opening parentheses.
+            This guarantees that the generated sequence remains valid.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(Cn × n), where Cn is the nth Catalan number</p>
+        <p><strong>Space Complexity:</strong> O(n) recursion stack, excluding output</p>
+        `
+            },
+
+            {
+                id: 78,
+                question: "N-Queens",
+                category: ["Recursion", "Backtracking", "Matrix"],
+                level: "Hard",
+                answer: `
+        <pre><code>
+class Solution {
+
+    public List&lt;List&lt;String&gt;&gt; solveNQueens(int n) {
+
+        List&lt;List&lt;String&gt;&gt; result = new ArrayList&lt;&gt;();
+
+        char[][] board = new char[n][n];
+
+        for (int i = 0; i &lt; n; i++) {
+            Arrays.fill(board[i], '.');
+        }
+
+        backtrack(board, 0, result);
+
+        return result;
+    }
+
+    private void backtrack(
+            char[][] board,
+            int row,
+            List&lt;List&lt;String&gt;&gt; result) {
+
+        int n = board.length;
+
+        if (row == n) {
+
+            List&lt;String&gt; solution = new ArrayList&lt;&gt;();
+
+            for (char[] chars : board) {
+                solution.add(new String(chars));
+            }
+
+            result.add(solution);
+            return;
+        }
+
+        for (int col = 0; col &lt; n; col++) {
+
+            if (!isSafe(board, row, col)) {
+                continue;
+            }
+
+            board[row][col] = 'Q';
+
+            backtrack(board, row + 1, result);
+
+            board[row][col] = '.';
+        }
+    }
+
+    private boolean isSafe(
+            char[][] board,
+            int row,
+            int col) {
+
+        int n = board.length;
+
+        // Check column
+        for (int i = 0; i &lt; row; i++) {
+            if (board[i][col] == 'Q') {
+                return false;
+            }
+        }
+
+        // Check upper-left diagonal
+        for (int i = row - 1, j = col - 1;
+             i &gt;= 0 &amp;&amp; j &gt;= 0;
+             i--, j--) {
+
+            if (board[i][j] == 'Q') {
+                return false;
+            }
+        }
+
+        // Check upper-right diagonal
+        for (int i = row - 1, j = col + 1;
+             i &gt;= 0 &amp;&amp; j &lt; n;
+             i--, j++) {
+
+            if (board[i][j] == 'Q') {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            We place one queen in each row. For every row, we try every column
+            and check whether placing a queen there is safe.
+        </p>
+
+        <p>
+            A queen cannot share the same column or diagonal with another
+            queen. If a placement leads to a dead end, we remove the queen
+            and try another position.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(n!) approximately</p>
+        <p><strong>Space Complexity:</strong> O(n²) for the board</p>
+        `
+            },
+
+            {
+                id: 79,
+                question: "Word Search",
+                category: ["Recursion", "Backtracking", "Matrix", "DFS"],
+                level: "Medium",
+                answer: `
+        <pre><code>
+class Solution {
+
+    public boolean exist(char[][] board, String word) {
+
+        int rows = board.length;
+        int cols = board[0].length;
+
+        for (int row = 0; row &lt; rows; row++) {
+            for (int col = 0; col &lt; cols; col++) {
+
+                if (dfs(board, word, row, col, 0)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private boolean dfs(
+            char[][] board,
+            String word,
+            int row,
+            int col,
+            int index) {
+
+        if (index == word.length()) {
+            return true;
+        }
+
+        if (row &lt; 0 ||
+            row &gt;= board.length ||
+            col &lt; 0 ||
+            col &gt;= board[0].length ||
+            board[row][col] != word.charAt(index)) {
+
+            return false;
+        }
+
+        char original = board[row][col];
+
+        // Mark current cell as visited
+        board[row][col] = '#';
+
+        boolean found =
+            dfs(board, word, row + 1, col, index + 1) ||
+            dfs(board, word, row - 1, col, index + 1) ||
+            dfs(board, word, row, col + 1, index + 1) ||
+            dfs(board, word, row, col - 1, index + 1);
+
+        // Backtrack
+        board[row][col] = original;
+
+        return found;
+    }
+}
+        </code></pre>
+
+        <p><strong>Explanation:</strong></p>
+        <p>
+            We start from every cell and perform DFS to find the characters
+            of the word.
+        </p>
+
+        <p>
+            Once a cell is used, we temporarily mark it as visited so that
+            the same cell is not used twice in the current path.
+        </p>
+
+        <p>
+            After exploring the path, we restore the original character.
+            This restoration is the backtracking step.
+        </p>
+
+        <p><strong>Time Complexity:</strong> O(m × n × 4^L), where L is the word length</p>
+        <p><strong>Space Complexity:</strong> O(L) recursion stack</p>
+        `
+            }
+
+
+
+
+        ];
+
+
+        const categoryFilter =
+            document.querySelector("#categoryFilter");
+
+        const levelFilter =
+            document.querySelector("#levelFilter");
+
+
+        // ========================================
+        // CREATE CATEGORY OPTIONS
+        // ========================================
+
+        function createCategoryOptions() {
+
+            const categories = new Set();
+
+            questions.forEach(question => {
+
+                question.category.forEach(category => {
+                    categories.add(category);
+                });
+
+            });
+
+            categories.forEach(category => {
+
+                const option = document.createElement("option");
+
+                option.value = category;
+                option.textContent = category;
+
+                categoryFilter.appendChild(option);
+
+            });
+        }
+
+
+        // ========================================
+        // CREATE LEVEL OPTIONS
+        // ========================================
+
+        function createLevelOptions() {
+
+            const levels = new Set();
+
+            questions.forEach(question => {
+
+                levels.add(question.level);
+
+            });
+
+            levels.forEach(level => {
+
+                const option = document.createElement("option");
+
+                option.value = level;
+                option.textContent = level;
+
+                levelFilter.appendChild(option);
+
+            });
+        }
+
+
+        // ========================================
+        // FILTER QUESTIONS
+        // ========================================
+
+        function filterQuestions() {
+
+            const selectedCategory =
+                categoryFilter.value.toLowerCase();
+
+            const selectedLevel =
+                levelFilter.value.toLowerCase();
+
+
+            const filteredQuestions = questions.filter(question => {
+
+                // -----------------------------
+                // Category
+                // -----------------------------
+
+                const categoryMatch =
+                    selectedCategory === "all" ||
+                    question.category.some(category =>
+                        category.toLowerCase() === selectedCategory
+                    );
+
+
+                // -----------------------------
+                // Level
+                // -----------------------------
+
+                const levelMatch =
+                    selectedLevel === "all" ||
+                    question.level.toLowerCase() === selectedLevel;
+
+
+                return categoryMatch && levelMatch;
+
+            });
+
+
+            renderQuestions(filteredQuestions);
+        }
+
+
+        // ========================================
+        // EVENT LISTENERS
+        // ========================================
+
+        categoryFilter.addEventListener(
+            "change",
+            filterQuestions
+        );
+
+        levelFilter.addEventListener(
+            "change",
+            filterQuestions
+        );
+
+
+        // ========================================
+        // INITIALIZE
+        // ========================================
+
+        createCategoryOptions();
+
+        createLevelOptions();
+
+
+        // Show ALL questions initially
+
+        renderQuestions(questions);
+
+
+
+        /* =========================
+           RENDER QUESTIONS
+        ========================= */
+
+
+        function renderQuestions(questionList) {
+
+            const container =
+                document.querySelector("#questions");
+
+
+            if (questionList.length === 0) {
+
+                container.innerHTML = `
+            <div class="no-results">
+                <h3>No questions found</h3>
+                <p>
+                    Try changing the category or difficulty.
+                </p>
+            </div>
+        `;
+
+                return;
+            }
+
+
+            container.innerHTML = questionList.map(question => {
+
+                return `
+
+            <div class="question-card">
+
+                <h3>
+                    ${question.question}
+                </h3>
+
+
+                <div class="question-meta">
+
+                    <div class="categories">
+
+                        ${question.category.map(category => `
+
+                            <span class="category">
+                                ${category}
+                            </span>
+
+                        `).join("")}
+
+                    </div>
+
+
+                    <span
+                        class="level ${question.level.toLowerCase()}"
+                    >
+                        ${question.level}
+                    </span>
+
+                </div>
+
+
+                <button
+                    class="view-answer-btn"
+                    onclick="showAnswer(${question.id})"
+                >
+                    View Answer →
+                </button>
+
+            </div>
+
+        `;
+
+            }).join("");
+        }
+
+
+        //Modal js
+
+        const answerModal =
+            document.querySelector("#answerModal");
+
+        const closeModal =
+            document.querySelector("#closeModal");
+
+        const modalQuestion =
+            document.querySelector("#modalQuestion");
+
+        const modalCategories =
+            document.querySelector("#modalCategories");
+
+        const modalLevel =
+            document.querySelector("#modalLevel");
+
+        const answerContent =
+            document.querySelector("#answerContent");
+
+
+        // ========================================
+        // OPEN MODAL
+        // ========================================
+
+        function showAnswer(id) {
+
+            const question = questions.find(
+                question => question.id === id
+            );
+
+
+            if (!question) {
+                console.error("Question not found:", id);
+                return;
+            }
+
+
+            // Question title
+
+            modalQuestion.textContent =
+                question.question;
+
+
+            // Categories
+
+            modalCategories.innerHTML =
+                question.category.map(category => `
+
+            <span class="category">
+                ${category}
+            </span>
+
+        `).join("");
+
+
+            // Level
+
+            modalLevel.textContent =
+                question.level;
+
+            modalLevel.className =
+                `modal-level ${question.level.toLowerCase()}`;
+
+
+            // Answer
+
+            answerContent.innerHTML =
+                question.answer;
+
+
+            // Open modal
+
+            answerModal.classList.add("active");
+
+
+            // Prevent background scrolling
+
+            document.body.classList.add("modal-open");
+        }
+
+
+        // ========================================
+        // CLOSE MODAL
+        // ========================================
+
+        function closeAnswerModal() {
+
+            answerModal.classList.remove("active");
+
+            document.body.classList.remove("modal-open");
+
+        }
+
+
+        closeModal.addEventListener(
+            "click",
+            closeAnswerModal
+        );
+
+
+        // ========================================
+        // CLICK OUTSIDE MODAL
+        // ========================================
+
+        answerModal.addEventListener(
+            "click",
+            function (event) {
+
+                if (event.target === answerModal) {
+
+                    closeAnswerModal();
+
+                }
+
+            }
+        );
+
+
+        // ========================================
+        // ESC KEY
+        // ========================================
+
+        document.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (event.key === "Escape") {
+
+                    closeAnswerModal();
+
+                }
+
+            }
+        );
+
+        /* =========================
+           MOBILE MENU
+        ========================= */
+
+        const menuBtn =
+            document.getElementById("menuBtn");
+
+
+        const mobileMenu =
+            document.getElementById("mobileMenu");
+
+
+        menuBtn.addEventListener("click", () => {
+
+            mobileMenu.classList.toggle("open");
+
+
+            if (mobileMenu.classList.contains("open")) {
+
+                menuBtn.textContent = "✕";
+
+            } else {
+
+                menuBtn.textContent = "☰";
+
+            }
+
+        });
+
+
+        /* CLOSE MENU AFTER CLICKING LINK */
+
+        const mobileLinks =
+            mobileMenu.querySelectorAll("a");
+
+
+        mobileLinks.forEach(link => {
+
+            link.addEventListener("click", () => {
+
+                mobileMenu.classList.remove("open");
+
+                menuBtn.textContent = "☰";
+
+            });
+
+        });
+
+
+        /* =========================
+           THEME
+        ========================= */
+
+        const themeBtn =
+            document.getElementById("themeBtn");
+
+
+        const savedTheme =
+            localStorage.getItem("theme");
+
+
+        if (savedTheme === "dark") {
+
+            document.body.classList.add("dark");
+
+            themeBtn.textContent = "☀";
+
+        }
+
+
+        themeBtn.addEventListener("click", () => {
+
+            document.body.classList.toggle("dark");
+
+
+            const isDark =
+                document.body.classList.contains("dark");
+
+
+            localStorage.setItem(
+                "theme",
+                isDark ? "dark" : "light"
+            );
+
+
+            themeBtn.textContent =
+                isDark ? "☀" : "☾";
+
+        });
+
+    </script>
+
+
+</body>
+
+</html>

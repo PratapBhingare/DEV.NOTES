@@ -1,0 +1,3569 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="dev-prep-favicon.png">
+    <title>SQL Interview Questions</title>
+
+    <style>
+        /* =========================
+           RESET
+        ========================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        /* =========================
+           THEME VARIABLES
+        ========================= */
+
+        :root {
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --surface-hover: #f1f5f9;
+
+            --text: #0f172a;
+            --muted: #64748b;
+
+            --border: #e2e8f0;
+
+            --accent: #2563eb;
+            --accent-soft: #eff6ff;
+        }
+
+
+        body.dark {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --surface-hover: #263449;
+
+            --text: #f8fafc;
+            --muted: #94a3b8;
+
+            --border: #334155;
+
+            --accent: #60a5fa;
+            --accent-soft: #172554;
+        }
+
+
+        /* =========================
+           BODY
+        ========================= */
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+
+            background: var(--bg);
+            color: var(--text);
+
+            min-height: 100vh;
+
+            transition:
+                background 0.25s ease,
+                color 0.25s ease;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            background: var(--surface);
+
+            border-bottom: 1px solid var(--border);
+        }
+
+
+        .nav-container {
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding: 14px 20px;
+
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+
+        /* LOGO */
+
+        .logo {
+            color: var(--text);
+
+            text-decoration: none;
+
+            font-size: 18px;
+            font-weight: 700;
+
+            white-space: nowrap;
+        }
+
+
+        .logo span {
+            color: var(--accent);
+        }
+
+
+        /* DESKTOP NAVIGATION */
+
+        .nav-links {
+            flex: 1;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 4px;
+        }
+
+
+        .nav-links a {
+            color: var(--muted);
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            padding: 8px 10px;
+
+            border-radius: 7px;
+
+            transition: 0.2s;
+        }
+
+
+        .nav-links a:hover {
+            background: var(--surface-hover);
+            color: var(--text);
+        }
+
+
+        .nav-links a.active {
+            background: var(--accent-soft);
+            color: var(--accent);
+        }
+
+
+        /* =========================
+           NAV ACTIONS
+        ========================= */
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+
+        /* THEME BUTTON */
+
+        .theme-btn {
+            width: 36px;
+            height: 36px;
+
+            border: 1px solid var(--border);
+            border-radius: 8px;
+
+            background: var(--surface);
+            color: var(--text);
+
+            cursor: pointer;
+
+            font-size: 16px;
+
+            transition: 0.2s;
+        }
+
+
+        .theme-btn:hover {
+            background: var(--surface-hover);
+        }
+
+
+        /* MOBILE MENU BUTTON */
+
+        .menu-btn {
+            display: none;
+
+            width: 36px;
+            height: 36px;
+
+            border: 1px solid var(--border);
+            border-radius: 8px;
+
+            background: var(--surface);
+            color: var(--text);
+
+            cursor: pointer;
+
+            font-size: 20px;
+        }
+
+
+        /* =========================
+           MOBILE DROPDOWN
+        ========================= */
+
+        .mobile-menu {
+            display: none;
+
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding: 0 15px 15px;
+        }
+
+
+        .mobile-menu.open {
+            display: block;
+        }
+
+
+        .mobile-menu a {
+            display: block;
+
+            color: var(--muted);
+
+            text-decoration: none;
+
+            padding: 12px 14px;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+
+            transition: 0.2s;
+        }
+
+
+        .mobile-menu a:hover,
+        .mobile-menu a.active {
+            background: var(--surface-hover);
+            color: var(--text);
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        main {
+            width: 100%;
+            max-width: 850px;
+
+            margin: auto;
+
+            padding: 70px 20px 100px;
+        }
+
+
+        /* =========================
+           PAGE HEADER
+        ========================= */
+
+        .page-header {
+            margin-bottom: 40px;
+        }
+
+
+        .page-header span {
+            color: var(--accent);
+
+            font-size: 13px;
+            font-weight: 600;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        .page-header h1 {
+            font-size: clamp(32px, 5vw, 48px);
+
+            line-height: 1.1;
+
+            margin: 10px 0;
+
+            letter-spacing: -1px;
+        }
+
+
+        .page-header p {
+            color: var(--muted);
+
+            line-height: 1.7;
+
+            max-width: 650px;
+
+            font-size: 15px;
+        }
+
+
+        /* =========================
+           QUESTION CARD
+        ========================= */
+
+        .question-card {
+            width: 100%;
+
+            background: var(--surface);
+
+            border: 1px solid var(--border);
+
+            border-radius: 12px;
+
+            margin-bottom: 14px;
+
+            overflow: hidden;
+
+            transition:
+                border-color 0.2s,
+                transform 0.2s;
+        }
+
+
+        .question-card:hover {
+            border-color: color-mix(in srgb,
+                    var(--accent) 40%,
+                    var(--border));
+        }
+
+
+        /* QUESTION BUTTON */
+
+        .question-btn {
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            padding: 20px;
+
+            border: none;
+
+            background: transparent;
+
+            color: var(--text);
+
+            text-align: left;
+
+            font-family: inherit;
+
+            font-size: 16px;
+            font-weight: 600;
+
+            line-height: 1.5;
+
+            cursor: pointer;
+        }
+
+
+        .question-btn:hover {
+            background: var(--surface-hover);
+        }
+
+
+        /* ARROW */
+
+        .arrow {
+            flex-shrink: 0;
+
+            color: var(--muted);
+
+            font-size: 18px;
+
+            transition: transform 0.2s;
+        }
+
+
+        /* ANSWER */
+
+        .answer {
+            display: none;
+
+            padding: 0 20px 20px;
+
+            color: var(--muted);
+
+            font-size: 15px;
+
+            line-height: 1.8;
+        }
+
+
+        .question-card.open .answer {
+            display: block;
+        }
+
+
+        .question-card.open .arrow {
+            transform: rotate(180deg);
+        }
+
+
+        /* =========================
+           TABLET
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            .nav-container {
+                padding: 13px 16px;
+            }
+
+
+            .nav-links {
+                display: none;
+            }
+
+
+            .menu-btn {
+                display: block;
+            }
+
+
+            .nav-actions {
+                margin-left: auto;
+            }
+
+
+            main {
+                padding-top: 55px;
+            }
+
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .nav-container {
+                padding: 11px 14px;
+            }
+
+
+            .logo {
+                font-size: 17px;
+            }
+
+
+            .menu-btn,
+            .theme-btn {
+                width: 34px;
+                height: 34px;
+            }
+
+
+            main {
+                padding: 45px 15px 70px;
+            }
+
+
+            .page-header {
+                margin-bottom: 30px;
+            }
+
+
+            .page-header span {
+                font-size: 11px;
+            }
+
+
+            .page-header h1 {
+                font-size: 34px;
+
+                margin-top: 8px;
+            }
+
+
+            .page-header p {
+                font-size: 14px;
+
+                line-height: 1.7;
+            }
+
+
+            .question-card {
+                border-radius: 10px;
+
+                margin-bottom: 10px;
+            }
+
+
+            .question-btn {
+                padding: 16px;
+
+                font-size: 14px;
+
+                gap: 12px;
+            }
+
+
+            .answer {
+                padding: 0 16px 17px;
+
+                font-size: 14px;
+
+                line-height: 1.7;
+            }
+
+
+            .arrow {
+                font-size: 16px;
+            }
+
+        }
+
+
+        /* =========================
+           VERY SMALL DEVICES
+        ========================= */
+
+        @media (max-width: 380px) {
+
+            .logo {
+                font-size: 16px;
+            }
+
+
+            main {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+
+
+            .page-header h1 {
+                font-size: 30px;
+            }
+
+
+            .question-btn {
+                padding: 14px;
+
+                font-size: 13px;
+            }
+
+
+            .answer {
+                padding-left: 14px;
+                padding-right: 14px;
+
+                font-size: 13px;
+            }
+
+        }
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <nav>
+
+        <div class="nav-container">
+
+
+            <!-- LOGO -->
+
+            <a href="index.html" class="logo">
+                Dev.<span>Prep</span>
+            </a>
+
+
+            <!-- DESKTOP LINKS -->
+
+            <div class="nav-links">
+
+                <a href="dn-v1-html.html">
+                    HTML
+                </a>
+
+                <a href="dn-v1-css.html">
+                    CSS
+                </a>
+
+                <a href="dn-v1-js.html">
+                    JavaScript
+                </a>
+
+                <a href="dn-v1-react.html">
+                    React
+                </a>
+
+                <a href="dn-v1-node.html">
+                    Node.js
+                </a>
+
+                <a href="dn-v1-sql.html" class="active">
+                    SQL
+                </a>
+
+                <a href="dn-v1-dsa.html">
+                    DSA
+                </a>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="nav-actions">
+
+                <button class="menu-btn" id="menuBtn" aria-label="Open navigation menu">
+                    ☰
+                </button>
+
+
+                <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
+                    ☾
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- MOBILE MENU -->
+
+        <div class="mobile-menu" id="mobileMenu">
+
+            <a href="dn-v1-html.html">
+                HTML
+            </a>
+
+            <a href="dn-v1-css.html">
+                CSS
+            </a>
+
+            <a href="dn-v1-js.html">
+                JavaScript
+            </a>
+
+            <a href="dn-v1-react.html">
+                React
+            </a>
+
+            <a href="dn-v1-node.html">
+                Node.js
+            </a>
+
+            <a href="dn-v1-sql.html" class="active">
+                SQL
+            </a>
+
+            <a href="dn-v1-dsa.html">
+                DSA
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================= -->
+
+    <main>
+
+
+        <header class="page-header">
+
+            <span>
+                INTERVIEW PREPARATION
+            </span>
+
+            <h1>
+                SQL
+            </h1>
+
+            <p>
+                Important SQL concepts and interview
+                questions, from fundamentals to advanced topics.
+            </p>
+
+        </header>
+
+
+        <!-- QUESTIONS -->
+
+        <section id="questions"></section>
+
+
+    </main>
+
+
+    <script>
+
+
+        /* =========================
+           QUESTIONS
+        ========================= */
+
+        const questions = [
+
+            {
+                question: "What is SQL and what is a relational database?",
+
+                answer: `
+            <p>
+                <strong>SQL (Structured Query Language)</strong> is a language used
+                to store, retrieve, update, and manage data in relational databases.
+            </p>
+
+            <p>
+                A <strong>relational database</strong> stores data in tables consisting
+                of rows and columns. Tables can be related to each other using keys
+                such as primary keys and foreign keys.
+            </p>
+
+            <h4>Examples:</h4>
+
+            <p>
+                MySQL, PostgreSQL, SQL Server, and Oracle are popular relational
+                database systems.
+            </p>
+
+            <p>
+                In an interview, you can say: SQL is the language used to communicate
+                with relational databases, while a relational database organizes
+                structured data into related tables.
+            </p>
+        `
+            },
+
+            {
+                question: "What is the difference between SQL and NoSQL?",
+
+                answer: `
+            <p>
+                <strong>SQL databases</strong> are generally relational and store
+                structured data in tables with predefined schemas.
+            </p>
+
+            <p>
+                <strong>NoSQL databases</strong> are non-relational and can store
+                data in formats such as documents, key-value pairs, graphs, or
+                wide-column structures.
+            </p>
+
+            <h4>Key Differences:</h4>
+
+            <ul>
+                <li>
+                    <strong>SQL:</strong> Table-based and usually uses a predefined schema.
+                </li>
+                <li>
+                    <strong>NoSQL:</strong> Flexible data models and schema.
+                </li>
+                <li>
+                    <strong>SQL:</strong> Supports powerful joins and relational queries.
+                </li>
+                <li>
+                    <strong>NoSQL:</strong> Often preferred for flexible or rapidly
+                    changing data structures.
+                </li>
+                <li>
+                    <strong>SQL:</strong> Commonly used when strong relationships
+                    and transactional consistency are important.
+                </li>
+            </ul>
+
+            <p>
+                Examples of SQL databases include PostgreSQL and MySQL.
+                MongoDB and Redis are examples of NoSQL databases.
+            </p>
+        `
+            },
+
+            {
+                question: "What is a table, row, column, and record?",
+
+                answer: `
+            <p>
+                A <strong>table</strong> is a structure used to organize related
+                data in a relational database.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>Table:</strong> A collection of related data organized
+                    into rows and columns.
+                </li>
+                <li>
+                    <strong>Column:</strong> Represents a specific attribute or
+                    property of the data.
+                </li>
+                <li>
+                    <strong>Row:</strong> Represents one complete entry in a table.
+                </li>
+                <li>
+                    <strong>Record:</strong> Another term commonly used for a row
+                    containing one complete set of data.
+                </li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+id | name  | email
+1  | John  | john@example.com
+2  | Sarah | sarah@example.com
+            </code></pre>
+
+            <p>
+                Here, <code>users</code> is the table, <code>name</code> and
+                <code>email</code> are columns, and each individual user entry
+                is a row or record.
+            </p>
+        `
+            },
+
+            {
+                question: "What are Primary Key and Foreign Key?",
+
+                answer: `
+            <p>
+                A <strong>Primary Key</strong> uniquely identifies each row in a table.
+                It must contain unique values and cannot contain <code>NULL</code>.
+            </p>
+
+            <p>
+                A <strong>Foreign Key</strong> is a column that references a key,
+                usually the primary key, in another table. It is used to establish
+                a relationship between tables.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+users
+id | name
+1  | John
+2  | Sarah
+
+orders
+id | user_id | amount
+101| 1       | 500
+102| 2       | 800
+            </code></pre>
+
+            <p>
+                Here, <code>users.id</code> is the primary key and
+                <code>orders.user_id</code> is a foreign key referencing
+                <code>users.id</code>.
+            </p>
+        `
+            },
+
+            {
+                question: "What are constraints in SQL?",
+
+                answer: `
+            <p>
+                <strong>Constraints</strong> are rules applied to table columns
+                to maintain data accuracy, validity, and integrity.
+            </p>
+
+            <h4>Common SQL Constraints:</h4>
+
+            <ul>
+                <li>
+                    <strong>PRIMARY KEY:</strong> Uniquely identifies each row.
+                </li>
+                <li>
+                    <strong>FOREIGN KEY:</strong> Maintains a relationship between
+                    tables.
+                </li>
+                <li>
+                    <strong>UNIQUE:</strong> Ensures that values in a column are unique.
+                </li>
+                <li>
+                    <strong>NOT NULL:</strong> Prevents a column from containing
+                    <code>NULL</code>.
+                </li>
+                <li>
+                    <strong>CHECK:</strong> Ensures that values satisfy a specified condition.
+                </li>
+                <li>
+                    <strong>DEFAULT:</strong> Provides a default value when no value
+                    is supplied.
+                </li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+CREATE TABLE users (
+    id INT PRIMARY KEY,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    age INT CHECK (age &gt;= 18),
+    status VARCHAR(20) DEFAULT 'active'
+);
+            </code></pre>
+        `
+            },
+
+            {
+                question: "What is the difference between WHERE and HAVING?",
+
+                answer: `
+            <p>
+                Both <code>WHERE</code> and <code>HAVING</code> are used to filter
+                data, but they operate at different stages of a query.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>WHERE:</strong> Filters individual rows before
+                    <code>GROUP BY</code> and aggregation.
+                </li>
+                <li>
+                    <strong>HAVING:</strong> Filters grouped results after
+                    <code>GROUP BY</code> and aggregation.
+                </li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT city, COUNT(*) AS total_users
+FROM users
+WHERE age &gt; 18
+GROUP BY city
+HAVING COUNT(*) &gt; 5;
+            </code></pre>
+
+            <p>
+                Here, <code>WHERE</code> first filters users whose age is greater
+                than 18. Then the users are grouped by city, and
+                <code>HAVING</code> keeps only cities having more than 5 users.
+            </p>
+
+            <p>
+                <strong>Interview shortcut:</strong> WHERE filters rows,
+                HAVING filters groups.
+            </p>
+        `
+            },
+
+            {
+                question: "What is the difference between DELETE, DROP, and TRUNCATE?",
+
+                answer: `
+            <p>
+                All three can remove data, but they operate differently.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>DELETE:</strong> Removes selected rows from a table
+                    and can use a <code>WHERE</code> condition.
+                </li>
+                <li>
+                    <strong>TRUNCATE:</strong> Removes all rows from a table but
+                    keeps the table structure.
+                </li>
+                <li>
+                    <strong>DROP:</strong> Removes the entire table, including
+                    its structure and data.
+                </li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+DELETE FROM users
+WHERE id = 10;
+
+TRUNCATE TABLE users;
+
+DROP TABLE users;
+            </code></pre>
+
+            <p>
+                <strong>Interview shortcut:</strong>
+                DELETE removes rows, TRUNCATE removes all rows while keeping
+                the table, and DROP removes the table itself.
+            </p>
+        `
+            },
+
+            {
+                question: "What is the difference between UNION and UNION ALL?",
+
+                answer: `
+            <p>
+                <code>UNION</code> and <code>UNION ALL</code> are used to combine
+                the results of multiple <code>SELECT</code> queries.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>UNION:</strong> Combines results and removes duplicate rows.
+                </li>
+                <li>
+                    <strong>UNION ALL:</strong> Combines results without removing
+                    duplicates.
+                </li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT city FROM customers
+UNION
+SELECT city FROM suppliers;
+
+SELECT city FROM customers
+UNION ALL
+SELECT city FROM suppliers;
+            </code></pre>
+
+            <p>
+                <code>UNION ALL</code> is generally faster because the database
+                does not need to perform duplicate removal.
+            </p>
+
+            <p>
+                The combined queries must return the same number of columns
+                with compatible data types.
+            </p>
+        `
+            },
+
+            {
+                question: "What is the difference between INNER JOIN, LEFT JOIN, RIGHT JOIN, and FULL JOIN?",
+
+                answer: `
+            <p>
+                A <strong>JOIN</strong> combines rows from two or more tables
+                based on a related column.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>INNER JOIN:</strong> Returns only rows that have
+                    matching values in both tables.
+                </li>
+                <li>
+                    <strong>LEFT JOIN:</strong> Returns all rows from the left
+                    table and matching rows from the right table. If there is
+                    no match, the right-side columns contain <code>NULL</code>.
+                </li>
+                <li>
+                    <strong>RIGHT JOIN:</strong> Returns all rows from the right
+                    table and matching rows from the left table.
+                </li>
+                <li>
+                    <strong>FULL JOIN:</strong> Returns all rows from both tables.
+                    Non-matching columns contain <code>NULL</code>.
+                </li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT u.name, o.amount
+FROM users u
+LEFT JOIN orders o
+ON u.id = o.user_id;
+            </code></pre>
+
+            <p>
+                This returns every user, including users who have not placed
+                an order. For users without an order, the order columns will
+                contain <code>NULL</code>.
+            </p>
+        `
+            },
+
+            {
+                question: "What is a self join?",
+
+                answer: `
+            <p>
+                A <strong>self join</strong> is a join where a table is joined
+                with itself. It is useful when rows in the same table have
+                relationships with other rows in that table.
+            </p>
+
+            <h4>Example:</h4>
+
+            <p>
+                Suppose an employees table contains an employee's manager ID.
+                We can use a self join to find each employee's manager.
+            </p>
+
+            <pre><code>
+SELECT
+    e.name AS employee,
+    m.name AS manager
+FROM employees e
+LEFT JOIN employees m
+ON e.manager_id = m.id;
+            </code></pre>
+
+            <p>
+                Here, the table is given two different aliases:
+                <code>e</code> represents the employee and <code>m</code>
+                represents the manager.
+            </p>
+        `
+            },
+            {
+                question: "What is a subquery?",
+
+                answer: `
+            <p>
+                A <strong>subquery</strong> is a query written inside another SQL query.
+                It is used when the result of one query is required by another query.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT *
+FROM employees
+WHERE salary &gt; (
+    SELECT AVG(salary)
+    FROM employees
+);
+            </code></pre>
+
+            <p>
+                Here, the inner query calculates the average salary, and the
+                outer query returns employees whose salary is greater than that average.
+            </p>
+
+            <p>
+                A subquery can be used inside <code>SELECT</code>, <code>FROM</code>,
+                or <code>WHERE</code>, depending on the requirement.
+            </p>
+        `
+            },
+
+            {
+                question: "What is a correlated subquery?",
+
+                answer: `
+            <p>
+                A <strong>correlated subquery</strong> is a subquery that depends
+                on a value from the outer query. It is logically evaluated for
+                each row processed by the outer query.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT e1.name, e1.salary, e1.department_id
+FROM employees e1
+WHERE e1.salary &gt; (
+    SELECT AVG(e2.salary)
+    FROM employees e2
+    WHERE e2.department_id = e1.department_id
+);
+            </code></pre>
+
+            <p>
+                Here, the inner query uses <code>e1.department_id</code> from
+                the outer query. Therefore, the average salary is calculated
+                separately for each employee's department.
+            </p>
+
+            <p>
+                <strong>Key difference:</strong> A normal subquery can run
+                independently, while a correlated subquery depends on the
+                outer query.
+            </p>
+        `
+            },
+
+            {
+                question: "What is normalization?",
+
+                answer: `
+            <p>
+                <strong>Normalization</strong> is the process of organizing data
+                in a database to reduce data duplication and improve data
+                consistency and integrity.
+            </p>
+
+            <p>
+                It usually involves dividing large tables into smaller,
+                logically related tables and connecting them using keys.
+            </p>
+
+            <h4>Main goals:</h4>
+
+            <ul>
+                <li>Reduce duplicate data.</li>
+                <li>Prevent data inconsistencies.</li>
+                <li>Improve data integrity.</li>
+                <li>Make database structure easier to maintain.</li>
+            </ul>
+
+            <p>
+                Normalization is commonly explained using normal forms such as
+                <strong>1NF, 2NF, and 3NF</strong>.
+            </p>
+        `
+            },
+
+            {
+                question: "What are 1NF, 2NF, and 3NF?",
+
+                answer: `
+            <p>
+                <strong>1NF, 2NF, and 3NF</strong> are normal forms used to
+                organize relational database tables and reduce redundancy.
+            </p>
+
+            <h4>1NF — First Normal Form</h4>
+
+            <p>
+                A table is in 1NF when each column contains atomic values,
+                meaning each cell contains a single value, and there are
+                no repeating groups.
+            </p>
+
+            <h4>2NF — Second Normal Form</h4>
+
+            <p>
+                A table must first be in 1NF, and every non-key column must
+                depend on the <strong>entire primary key</strong>, not just
+                part of a composite primary key.
+            </p>
+
+            <h4>3NF — Third Normal Form</h4>
+
+            <p>
+                A table must first be in 2NF, and non-key columns should not
+                depend on other non-key columns. In other words, there should
+                be no transitive dependency.
+            </p>
+
+            <p>
+                <strong>Interview shortcut:</strong>
+                1NF = atomic values,
+                2NF = full dependency on the key,
+                3NF = no dependency between non-key columns.
+            </p>
+        `
+            },
+
+            {
+                question: "What is denormalization and when would you use it?",
+
+                answer: `
+            <p>
+                <strong>Denormalization</strong> is the process of intentionally
+                adding redundant data or combining related data to reduce the
+                number of joins and improve read performance.
+            </p>
+
+            <p>
+                While normalization focuses on reducing redundancy,
+                denormalization can introduce controlled redundancy when
+                performance or simpler reads are more important.
+            </p>
+
+            <h4>When would you use it?</h4>
+
+            <ul>
+                <li>When read performance is more important than storage efficiency.</li>
+                <li>When frequent joins are causing performance issues.</li>
+                <li>For reporting or analytics systems.</li>
+                <li>When duplicated data can significantly simplify queries.</li>
+            </ul>
+
+            <p>
+                The trade-off is that duplicated data must be kept consistent
+                when the original data changes.
+            </p>
+        `
+            },
+
+            {
+                question: "How do you retrieve all records from a table?",
+
+                answer: `
+            <p>
+                Use <code>SELECT *</code> to retrieve all columns and all
+                rows from a table.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT *
+FROM users;
+            </code></pre>
+
+            <p>
+                The <code>*</code> represents all columns in the
+                <code>users</code> table.
+            </p>
+        `
+            },
+
+            {
+                question: "How do you select specific columns?",
+
+                answer: `
+            <p>
+                Specify the required column names after the <code>SELECT</code>
+                keyword instead of using <code>*</code>.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT name, email
+FROM users;
+            </code></pre>
+
+            <p>
+                This query returns only the <code>name</code> and
+                <code>email</code> columns from the <code>users</code> table.
+            </p>
+        `
+            },
+
+            {
+                question: "How do you filter records using WHERE?",
+
+                answer: `
+            <p>
+                The <code>WHERE</code> clause is used to filter rows based
+                on a specified condition.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT *
+FROM users
+WHERE age &gt; 25;
+            </code></pre>
+
+            <p>
+                This query returns only users whose age is greater than 25.
+            </p>
+
+            <p>
+                <code>WHERE</code> can be used with operators such as
+                <code>=</code>, <code>&gt;</code>, <code>&lt;</code>,
+                <code>&gt;=</code>, <code>&lt;=</code>, <code>!=</code>,
+                <code>IN</code>, <code>BETWEEN</code>, and <code>LIKE</code>.
+            </p>
+        `
+            },
+
+            {
+                question: "How do you use multiple conditions with AND / OR?",
+
+                answer: `
+            <p>
+                <code>AND</code> is used when all specified conditions must
+                be true, while <code>OR</code> is used when at least one
+                condition must be true.
+            </p>
+
+            <h4>Using AND:</h4>
+
+            <pre><code>
+SELECT *
+FROM users
+WHERE age &gt; 25
+AND city = 'Pune';
+            </code></pre>
+
+            <p>
+                This returns users who are older than 25 <strong>and</strong>
+                live in Pune.
+            </p>
+
+            <h4>Using OR:</h4>
+
+            <pre><code>
+SELECT *
+FROM users
+WHERE city = 'Pune'
+OR city = 'Mumbai';
+            </code></pre>
+
+            <p>
+                This returns users who live in either Pune or Mumbai.
+            </p>
+        `
+            },
+
+            {
+                question: "How does IN work?",
+
+                answer: `
+            <p>
+                The <code>IN</code> operator is used to check whether a value
+                matches any value from a specified list.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT *
+FROM users
+WHERE city IN ('Pune', 'Mumbai', 'Delhi');
+            </code></pre>
+
+            <p>
+                This returns users whose city is Pune, Mumbai, or Delhi.
+            </p>
+
+            <p>
+                It is a shorter and cleaner alternative to writing multiple
+                <code>OR</code> conditions.
+            </p>
+
+            <pre><code>
+-- Instead of:
+WHERE city = 'Pune'
+OR city = 'Mumbai'
+OR city = 'Delhi'
+
+-- We can use:
+WHERE city IN ('Pune', 'Mumbai', 'Delhi')
+            </code></pre>
+        `
+            },
+            {
+                question: "How does BETWEEN work?",
+
+                answer: `
+            <p>
+                The <code>BETWEEN</code> operator is used to filter values
+                within a specified range. It is <strong>inclusive</strong>,
+                meaning both boundary values are included.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT *
+FROM products
+WHERE price BETWEEN 500 AND 2000;
+            </code></pre>
+
+            <p>
+                This returns products whose price is between 500 and 2000,
+                including products priced exactly at 500 or 2000.
+            </p>
+
+            <p>
+                <strong>Note:</strong> <code>BETWEEN</code> can be used with
+                numbers, dates, and other comparable values.
+            </p>
+        `
+            },
+
+            {
+                question: "How does LIKE work?",
+
+                answer: `
+            <p>
+                The <code>LIKE</code> operator is used to search for a
+                specific pattern in text values.
+            </p>
+
+            <h4>Common wildcards:</h4>
+
+            <ul>
+                <li>
+                    <code>%</code> matches zero or more characters.
+                </li>
+                <li>
+                    <code>_</code> matches exactly one character.
+                </li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT *
+FROM users
+WHERE name LIKE 'A%';
+            </code></pre>
+
+            <p>
+                This returns users whose names start with <strong>A</strong>.
+            </p>
+
+            <h4>More examples:</h4>
+
+            <pre><code>
+-- Ends with "son"
+WHERE name LIKE '%son';
+
+-- Contains "oh"
+WHERE name LIKE '%oh%';
+
+-- Second character is "a"
+WHERE name LIKE '_a%';
+            </code></pre>
+        `
+            },
+
+            {
+                question: "How do you sort query results?",
+
+                answer: `
+            <p>
+                The <code>ORDER BY</code> clause is used to sort query results
+                in ascending or descending order.
+            </p>
+
+            <ul>
+                <li>
+                    <code>ASC</code> sorts in ascending order and is the default.
+                </li>
+                <li>
+                    <code>DESC</code> sorts in descending order.
+                </li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT *
+FROM users
+ORDER BY age DESC;
+            </code></pre>
+
+            <p>
+                This returns users from the highest age to the lowest age.
+            </p>
+
+            <h4>Multiple columns:</h4>
+
+            <pre><code>
+SELECT *
+FROM users
+ORDER BY city ASC, age DESC;
+            </code></pre>
+
+            <p>
+                Here, users are first sorted by city and then by age within
+                each city.
+            </p>
+        `
+            },
+
+            {
+                question: "How do you limit the number of records?",
+
+                answer: `
+            <p>
+                The <code>LIMIT</code> clause is used to restrict the number
+                of rows returned by a query. It is commonly used in MySQL
+                and PostgreSQL.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT *
+FROM users
+LIMIT 10;
+            </code></pre>
+
+            <p>
+                This returns a maximum of 10 records.
+            </p>
+
+            <h4>With OFFSET:</h4>
+
+            <pre><code>
+SELECT *
+FROM users
+LIMIT 10 OFFSET 20;
+            </code></pre>
+
+            <p>
+                This skips the first 20 records and returns the next 10.
+                This is commonly used for pagination.
+            </p>
+        `
+            },
+
+            {
+                question: "How do you remove duplicate results?",
+
+                answer: `
+            <p>
+                The <code>DISTINCT</code> keyword is used to remove duplicate
+                rows from the query result.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT DISTINCT city
+FROM users;
+            </code></pre>
+
+            <p>
+                This returns each city only once, even if multiple users
+                belong to the same city.
+            </p>
+
+            <h4>Multiple columns:</h4>
+
+            <pre><code>
+SELECT DISTINCT city, department
+FROM users;
+            </code></pre>
+
+            <p>
+                Here, duplicate combinations of <code>city</code> and
+                <code>department</code> are removed.
+            </p>
+        `
+            },
+
+            {
+                question: "What are aggregate functions?",
+
+                answer: `
+            <p>
+                <strong>Aggregate functions</strong> perform calculations
+                on multiple rows and return a single result or a result
+                for each group.
+            </p>
+
+            <h4>Common aggregate functions:</h4>
+
+            <ul>
+                <li><code>COUNT()</code> — Counts rows or values.</li>
+                <li><code>SUM()</code> — Calculates the total.</li>
+                <li><code>AVG()</code> — Calculates the average.</li>
+                <li><code>MIN()</code> — Returns the minimum value.</li>
+                <li><code>MAX()</code> — Returns the maximum value.</li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT
+    COUNT(*) AS total_users,
+    AVG(age) AS average_age,
+    MIN(age) AS minimum_age,
+    MAX(age) AS maximum_age
+FROM users;
+            </code></pre>
+
+            <p>
+                Aggregate functions are commonly used together with
+                <code>GROUP BY</code> to calculate values for each group.
+            </p>
+        `
+            },
+
+            {
+                question: "How do you count users?",
+
+                answer: `
+            <p>
+                Use the <code>COUNT()</code> aggregate function to count
+                records.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT COUNT(*) AS total_users
+FROM users;
+            </code></pre>
+
+            <p>
+                <code>COUNT(*)</code> counts all rows in the table.
+            </p>
+
+            <h4>COUNT(column) vs COUNT(*):</h4>
+
+            <pre><code>
+SELECT COUNT(email)
+FROM users;
+            </code></pre>
+
+            <p>
+                <code>COUNT(email)</code> counts only rows where
+                <code>email</code> is not <code>NULL</code>, while
+                <code>COUNT(*)</code> counts all rows.
+            </p>
+        `
+            },
+
+            {
+                question: "What is GROUP BY and why is it used?",
+
+                answer: `
+            <p>
+                The <code>GROUP BY</code> clause groups rows that have the
+                same values in one or more columns. It is commonly used
+                with aggregate functions.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT city, COUNT(*) AS total_users
+FROM users
+GROUP BY city;
+            </code></pre>
+
+            <p>
+                This groups users by city and calculates the number of users
+                in each city.
+            </p>
+
+            <p>
+                <strong>Interview shortcut:</strong>
+                <code>GROUP BY</code> creates groups of rows so aggregate
+                functions such as <code>COUNT()</code>, <code>SUM()</code>,
+                and <code>AVG()</code> can be applied to each group.
+            </p>
+        `
+            },
+
+            {
+                question: "How do you count users in each city?",
+
+                answer: `
+            <p>
+                Use <code>COUNT()</code> together with <code>GROUP BY</code>
+                on the city column.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT
+    city,
+    COUNT(*) AS total_users
+FROM users
+GROUP BY city;
+            </code></pre>
+
+            <p>
+                The query creates one group for each city and counts the
+                number of users in each group.
+            </p>
+        `
+            },
+
+            {
+                question: "How do you filter grouped results using HAVING?",
+
+                answer: `
+            <p>
+                The <code>HAVING</code> clause is used to filter groups
+                after <code>GROUP BY</code> has been applied.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT
+    city,
+    COUNT(*) AS total_users
+FROM users
+GROUP BY city
+HAVING COUNT(*) &gt; 5;
+            </code></pre>
+
+            <p>
+                This returns only cities that have more than 5 users.
+            </p>
+
+            <p>
+                <strong>Interview shortcut:</strong>
+                <code>WHERE</code> filters individual rows before grouping,
+                while <code>HAVING</code> filters groups after aggregation.
+            </p>
+        `
+            },
+            {
+                question: "What is a JOIN and why is it used?",
+
+                answer: `
+            <p>
+                A <strong>JOIN</strong> is used to combine rows from two or more
+                tables based on a related column between them.
+            </p>
+
+            <p>
+                JOINs are useful when related data is stored in separate tables
+                and we need to retrieve it together.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT users.name, orders.amount
+FROM users
+INNER JOIN orders
+ON users.id = orders.user_id;
+            </code></pre>
+
+            <p>
+                Here, the <code>users</code> and <code>orders</code> tables are
+                connected using <code>users.id</code> and <code>orders.user_id</code>.
+            </p>
+
+            <p>
+                Common JOIN types are <code>INNER JOIN</code>,
+                <code>LEFT JOIN</code>, <code>RIGHT JOIN</code>, and
+                <code>FULL JOIN</code>.
+            </p>
+        `
+            },
+
+            {
+                question: "Write an INNER JOIN query.",
+
+                answer: `
+            <p>
+                An <strong>INNER JOIN</strong> returns only the rows where
+                there is a matching record in both tables.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT
+    users.name,
+    orders.amount
+FROM users
+INNER JOIN orders
+ON users.id = orders.user_id;
+            </code></pre>
+
+            <p>
+                This returns users who have matching orders. Users without
+                an order are not included in the result.
+            </p>
+        `
+            },
+
+            {
+                question: "What is the difference between INNER JOIN and LEFT JOIN?",
+
+                answer: `
+            <p>
+                The main difference is how they handle rows that do not
+                have a matching record.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>INNER JOIN:</strong> Returns only rows that
+                    have a match in both tables.
+                </li>
+                <li>
+                    <strong>LEFT JOIN:</strong> Returns all rows from the
+                    left table and matching rows from the right table.
+                    If there is no match, the right-side columns contain
+                    <code>NULL</code>.
+                </li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+-- INNER JOIN
+SELECT u.name, o.amount
+FROM users u
+INNER JOIN orders o
+ON u.id = o.user_id;
+
+-- LEFT JOIN
+SELECT u.name, o.amount
+FROM users u
+LEFT JOIN orders o
+ON u.id = o.user_id;
+            </code></pre>
+
+            <p>
+                If a user has no order, the <code>INNER JOIN</code> excludes
+                that user, while the <code>LEFT JOIN</code> still includes
+                the user with <code>NULL</code> order values.
+            </p>
+        `
+            },
+
+            {
+                question: "How do you find users who have placed orders?",
+
+                answer: `
+            <p>
+                Use an <code>INNER JOIN</code> between the users and orders
+                tables. Since INNER JOIN returns only matching records, the
+                result contains users who have placed at least one order.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT DISTINCT u.*
+FROM users u
+INNER JOIN orders o
+ON u.id = o.user_id;
+            </code></pre>
+
+            <p>
+                <code>DISTINCT</code> is used so that a user with multiple
+                orders appears only once.
+            </p>
+        `
+            },
+
+            {
+                question: "How do you find users who have never placed an order?",
+
+                answer: `
+            <p>
+                Use a <code>LEFT JOIN</code> and then filter for rows where
+                the order does not exist.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT u.*
+FROM users u
+LEFT JOIN orders o
+ON u.id = o.user_id
+WHERE o.user_id IS NULL;
+            </code></pre>
+
+            <p>
+                The <code>LEFT JOIN</code> keeps all users, and users without
+                a matching order have <code>NULL</code> values in the
+                <code>orders</code> columns.
+            </p>
+        `
+            },
+
+            {
+                question: "What is a self JOIN and when would you use it?",
+
+                answer: `
+            <p>
+                A <strong>self JOIN</strong> is a JOIN where a table is
+                joined with itself. It is useful when rows in the same table
+                have a relationship with other rows in that table.
+            </p>
+
+            <p>
+                A common example is an employees table where each employee
+                has a <code>manager_id</code> that references another
+                employee's <code>id</code>.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT
+    e.name AS employee,
+    m.name AS manager
+FROM employees e
+LEFT JOIN employees m
+ON e.manager_id = m.id;
+            </code></pre>
+
+            <p>
+                Here, <code>e</code> represents the employee and
+                <code>m</code> represents the manager.
+            </p>
+        `
+            },
+
+            {
+                question: "How do you JOIN more than two tables?",
+
+                answer: `
+            <p>
+                You can JOIN multiple tables by adding additional JOIN
+                clauses and specifying the relationship between each table.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT
+    u.name,
+    o.id AS order_id,
+    p.name AS product
+FROM users u
+INNER JOIN orders o
+ON u.id = o.user_id
+INNER JOIN products p
+ON o.product_id = p.id;
+            </code></pre>
+
+            <p>
+                Here, three tables are connected:
+                <code>users</code> → <code>orders</code> →
+                <code>products</code>.
+            </p>
+
+            <p>
+                You can add as many JOINs as required, although too many
+                joins can make queries complex and may affect performance.
+            </p>
+        `
+            },
+
+            {
+                question: "How do you find the second-highest salary?",
+
+                answer: `
+            <p>
+                One common approach is to find the maximum salary that is
+                less than the highest salary.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT MAX(salary) AS second_highest
+FROM employees
+WHERE salary &lt; (
+    SELECT MAX(salary)
+    FROM employees
+);
+            </code></pre>
+
+            <p>
+                The inner query finds the highest salary. The outer query
+                then finds the highest salary that is less than that value.
+            </p>
+
+            <p>
+                This approach returns the second-highest
+                <strong>distinct</strong> salary.
+            </p>
+        `
+            },
+
+            {
+                question: "How do you find the Nth highest salary?",
+
+                answer: `
+            <p>
+                The Nth highest salary can be found using different approaches,
+                such as <code>LIMIT/OFFSET</code>, subqueries, or window functions.
+            </p>
+
+            <h4>Using LIMIT and OFFSET:</h4>
+
+            <pre><code>
+SELECT DISTINCT salary
+FROM employees
+ORDER BY salary DESC
+LIMIT 1 OFFSET 2;
+            </code></pre>
+
+            <p>
+                This returns the third-highest distinct salary.
+                For the Nth highest salary, the offset is <code>N - 1</code>.
+            </p>
+
+            <h4>Using DENSE_RANK():</h4>
+
+            <pre><code>
+SELECT salary
+FROM (
+    SELECT
+        salary,
+        DENSE_RANK() OVER (ORDER BY salary DESC) AS salary_rank
+    FROM employees
+) ranked
+WHERE salary_rank = 3;
+            </code></pre>
+
+            <p>
+                The window-function approach is particularly useful when
+                handling duplicate salaries and more complex ranking problems.
+            </p>
+        `
+            },
+
+            {
+                question: "How do you find duplicate records?",
+
+                answer: `
+            <p>
+                Use <code>GROUP BY</code> with <code>HAVING COUNT(*) &gt; 1</code>
+                to find values that occur more than once.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT
+    email,
+    COUNT(*) AS occurrence
+FROM users
+GROUP BY email
+HAVING COUNT(*) &gt; 1;
+            </code></pre>
+
+            <p>
+                This identifies email addresses that appear more than once
+                in the <code>users</code> table.
+            </p>
+
+            <p>
+                The columns used in <code>GROUP BY</code> should represent
+                what you consider a duplicate.
+            </p>
+        `
+            },
+            {
+                question: "How do you find employees with salary greater than the average salary?",
+
+                answer: `
+            <p>
+                First calculate the average salary using <code>AVG()</code>,
+                then use a subquery to find employees whose salary is greater
+                than that average.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT *
+FROM employees
+WHERE salary &gt; (
+    SELECT AVG(salary)
+    FROM employees
+);
+            </code></pre>
+
+            <p>
+                The inner query calculates the average salary, and the outer
+                query returns employees whose salary is greater than that value.
+            </p>
+        `
+            },
+
+            {
+                question: "How do you find the highest salary in each department?",
+
+                answer: `
+            <p>
+                Use <code>MAX()</code> together with <code>GROUP BY</code>
+                to find the highest salary for each department.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT
+    department_id,
+    MAX(salary) AS highest_salary
+FROM employees
+GROUP BY department_id;
+            </code></pre>
+
+            <p>
+                The query creates one group for each department and finds
+                the maximum salary within each group.
+            </p>
+
+            <p>
+                <strong>Note:</strong> This returns the salary value, not
+                the employee's complete details. To find the employee as
+                well, use a JOIN or window function.
+            </p>
+        `
+            },
+
+            {
+                question: "How do you find the employee with the highest salary in each department?",
+
+                answer: `
+            <p>
+                A common approach is to use the <code>RANK()</code> or
+                <code>DENSE_RANK()</code> window function with
+                <code>PARTITION BY</code>.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT name, department_id, salary
+FROM (
+    SELECT
+        name,
+        department_id,
+        salary,
+        DENSE_RANK() OVER (
+            PARTITION BY department_id
+            ORDER BY salary DESC
+        ) AS salary_rank
+    FROM employees
+) ranked
+WHERE salary_rank = 1;
+            </code></pre>
+
+            <p>
+                <code>PARTITION BY department_id</code> creates a separate
+                ranking for each department. The highest salary receives
+                rank <code>1</code>.
+            </p>
+
+            <p>
+                Using <code>DENSE_RANK()</code> means employees with the same
+                highest salary will all be returned.
+            </p>
+        `
+            },
+
+            {
+                question: "How do you find employees who don't belong to any department?",
+
+                answer: `
+            <p>
+                Use a <code>LEFT JOIN</code> between employees and departments,
+                then find employees whose department does not have a matching
+                record.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT e.*
+FROM employees e
+LEFT JOIN departments d
+ON e.department_id = d.id
+WHERE d.id IS NULL;
+            </code></pre>
+
+            <p>
+                The <code>LEFT JOIN</code> keeps every employee. If an employee
+                has no matching department, the department columns become
+                <code>NULL</code>.
+            </p>
+        `
+            },
+
+            {
+                question: "How do you find customers who have never placed an order?",
+
+                answer: `
+            <p>
+                Use a <code>LEFT JOIN</code> and filter for customers where
+                no matching order exists.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT c.*
+FROM customers c
+LEFT JOIN orders o
+ON c.id = o.customer_id
+WHERE o.id IS NULL;
+            </code></pre>
+
+            <p>
+                Customers without a matching order will have
+                <code>NULL</code> in the order columns, so they can be
+                identified using <code>WHERE o.id IS NULL</code>.
+            </p>
+        `
+            },
+
+            {
+                question: "How do you find the total order amount for each customer?",
+
+                answer: `
+            <p>
+                Use <code>SUM()</code> to calculate the total order amount
+                and <code>GROUP BY</code> to calculate it separately for
+                each customer.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT
+    customer_id,
+    SUM(amount) AS total_amount
+FROM orders
+GROUP BY customer_id;
+            </code></pre>
+
+            <p>
+                This returns one row for each customer along with the total
+                amount of all their orders.
+            </p>
+        `
+            },
+
+            {
+                question: "How do you find the top 5 highest-paid employees?",
+
+                answer: `
+            <p>
+                Sort employees by salary in descending order and limit the
+                result to 5 records.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT *
+FROM employees
+ORDER BY salary DESC
+LIMIT 5;
+            </code></pre>
+
+            <p>
+                This returns the five employees with the highest salaries.
+            </p>
+
+            <p>
+                If you need the top 5 <strong>distinct salary values</strong>,
+                use <code>DISTINCT</code> before ordering and limiting.
+            </p>
+        `
+            },
+
+            {
+                question: "How do you find the number of employees in each department?",
+
+                answer: `
+            <p>
+                Use <code>COUNT()</code> with <code>GROUP BY</code> to count
+                employees separately for each department.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT
+    department_id,
+    COUNT(*) AS employee_count
+FROM employees
+GROUP BY department_id;
+            </code></pre>
+
+            <p>
+                The query creates one group for each department and counts
+                the employees in each group.
+            </p>
+        `
+            },
+
+            {
+                question: "How do you find records created within a particular date range?",
+
+                answer: `
+            <p>
+                You can filter date values using comparison operators.
+                For timestamp columns, using an inclusive start and exclusive
+                end is a reliable approach.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT *
+FROM orders
+WHERE created_at &gt;= '2026-01-01'
+AND created_at &lt; '2026-02-01';
+            </code></pre>
+
+            <p>
+                This returns records created from January 1 up to, but not
+                including, February 1.
+            </p>
+
+            <p>
+                This approach is especially useful when
+                <code>created_at</code> contains both date and time.
+            </p>
+        `
+            },
+
+            {
+                question: "How do you find users whose names start with 'A'?",
+
+                answer: `
+            <p>
+                Use the <code>LIKE</code> operator with the <code>%</code>
+                wildcard.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT *
+FROM users
+WHERE name LIKE 'A%';
+            </code></pre>
+
+            <p>
+                The <code>A</code> specifies that the name must start with
+                A, while <code>%</code> means that any number of characters
+                can follow it.
+            </p>
+
+            <p>
+                For example, it can match names such as
+                <code>Alex</code>, <code>Andrew</code>, and <code>Anita</code>.
+            </p>
+        `
+            },
+            {
+                question: "What are window functions?",
+
+                answer: `
+            <p>
+                <strong>Window functions</strong> perform calculations across
+                a set of related rows without combining those rows into a
+                single result row.
+            </p>
+
+            <p>
+                Unlike <code>GROUP BY</code>, window functions keep the
+                individual rows in the result while adding a calculated value
+                such as a rank, running total, or average.
+            </p>
+
+            <h4>Common window functions:</h4>
+
+            <ul>
+                <li><code>ROW_NUMBER()</code></li>
+                <li><code>RANK()</code></li>
+                <li><code>DENSE_RANK()</code></li>
+                <li><code>SUM()</code></li>
+                <li><code>AVG()</code></li>
+                <li><code>COUNT()</code></li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT
+    name,
+    salary,
+    RANK() OVER (ORDER BY salary DESC) AS salary_rank
+FROM employees;
+            </code></pre>
+
+            <p>
+                Here, each employee remains in the result while a salary rank
+                is calculated for them.
+            </p>
+        `
+            },
+
+            {
+                question: "What is the difference between RANK(), DENSE_RANK(), and ROW_NUMBER()?",
+
+                answer: `
+            <p>
+                All three functions assign numbers to rows, but they handle
+                duplicate values differently.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>ROW_NUMBER():</strong> Gives every row a unique
+                    sequential number, even when values are equal.
+                </li>
+                <li>
+                    <strong>RANK():</strong> Gives the same rank to tied values
+                    and leaves gaps after a tie.
+                </li>
+                <li>
+                    <strong>DENSE_RANK():</strong> Gives the same rank to tied
+                    values but does not leave gaps.
+                </li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+salary | ROW_NUMBER | RANK | DENSE_RANK
+-------|------------|------|-----------
+100000 | 1          | 1    | 1
+100000 | 2          | 1    | 1
+90000  | 3          | 3    | 2
+80000  | 4          | 4    | 3
+            </code></pre>
+
+            <p>
+                <strong>Interview shortcut:</strong>
+                ROW_NUMBER = always unique,
+                RANK = gaps after ties,
+                DENSE_RANK = no gaps after ties.
+            </p>
+        `
+            },
+
+            {
+                question: "How do you find the second-highest salary using DENSE_RANK()?",
+
+                answer: `
+            <p>
+                Use <code>DENSE_RANK()</code> to rank salaries in descending
+                order and then filter for rank <code>2</code>.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT name, salary
+FROM (
+    SELECT
+        name,
+        salary,
+        DENSE_RANK() OVER (
+            ORDER BY salary DESC
+        ) AS salary_rank
+    FROM employees
+) ranked
+WHERE salary_rank = 2;
+            </code></pre>
+
+            <p>
+                <code>DENSE_RANK()</code> is useful here because duplicate
+                salaries receive the same rank.
+            </p>
+
+            <p>
+                If multiple employees have the second-highest salary,
+                this query returns all of them.
+            </p>
+        `
+            },
+
+            {
+                question: "How do you find the top 3 employees from each department?",
+
+                answer: `
+            <p>
+                Use a window function with <code>PARTITION BY</code> to
+                create a separate ranking for each department.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT name, department_id, salary
+FROM (
+    SELECT
+        name,
+        department_id,
+        salary,
+        DENSE_RANK() OVER (
+            PARTITION BY department_id
+            ORDER BY salary DESC
+        ) AS salary_rank
+    FROM employees
+) ranked
+WHERE salary_rank &lt;= 3;
+            </code></pre>
+
+            <p>
+                <code>PARTITION BY department_id</code> creates an independent
+                ranking for every department.
+            </p>
+
+            <p>
+                <code>DENSE_RANK()</code> also allows employees with the same
+                salary to receive the same rank.
+            </p>
+        `
+            },
+
+            {
+                question: "What does PARTITION BY do?",
+
+                answer: `
+            <p>
+                <code>PARTITION BY</code> divides the rows into separate
+                groups, called partitions, within a window function.
+                The window function then operates independently on each group.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT
+    name,
+    department_id,
+    salary,
+    RANK() OVER (
+        PARTITION BY department_id
+        ORDER BY salary DESC
+    ) AS salary_rank
+FROM employees;
+            </code></pre>
+
+            <p>
+                Here, employees are ranked separately within each department.
+                The ranking starts again from 1 for every department.
+            </p>
+        `
+            },
+
+            {
+                question: "What is the difference between GROUP BY and PARTITION BY?",
+
+                answer: `
+            <p>
+                Both can divide data into groups, but they work differently.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>GROUP BY:</strong> Combines rows into groups and
+                    usually returns one row per group.
+                </li>
+                <li>
+                    <strong>PARTITION BY:</strong> Divides rows into groups
+                    for a window function but keeps the individual rows.
+                </li>
+            </ul>
+
+            <h4>GROUP BY Example:</h4>
+
+            <pre><code>
+SELECT
+    department_id,
+    AVG(salary) AS average_salary
+FROM employees
+GROUP BY department_id;
+            </code></pre>
+
+            <h4>PARTITION BY Example:</h4>
+
+            <pre><code>
+SELECT
+    name,
+    department_id,
+    salary,
+    AVG(salary) OVER (
+        PARTITION BY department_id
+    ) AS department_average
+FROM employees;
+            </code></pre>
+
+            <p>
+                <strong>Interview shortcut:</strong>
+                GROUP BY reduces rows into groups, while PARTITION BY
+                calculates over groups without removing individual rows.
+            </p>
+        `
+            },
+
+            {
+                question: "What is an index?",
+
+                answer: `
+            <p>
+                An <strong>index</strong> is a database data structure that
+                helps the database find rows faster without scanning the
+                entire table.
+            </p>
+
+            <p>
+                Indexes are commonly created on columns that are frequently
+                used in <code>WHERE</code>, <code>JOIN</code>,
+                <code>ORDER BY</code>, or other query conditions.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+CREATE INDEX idx_users_email
+ON users(email);
+            </code></pre>
+
+            <p>
+                After creating this index, searches involving the
+                <code>email</code> column can potentially be performed more
+                efficiently.
+            </p>
+
+            <p>
+                <strong>Important:</strong> Indexes improve read performance,
+                but they also require storage and can make INSERT, UPDATE,
+                and DELETE operations slower.
+            </p>
+        `
+            },
+
+            {
+                question: "Why do indexes improve query performance?",
+
+                answer: `
+            <p>
+                Indexes improve query performance by allowing the database
+                to locate matching rows more efficiently instead of scanning
+                every row in the table.
+            </p>
+
+            <p>
+                An index is typically organized in a structure that allows
+                efficient searching, such as a B-tree.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+SELECT *
+FROM users
+WHERE email = 'john@example.com';
+            </code></pre>
+
+            <p>
+                If <code>email</code> has a suitable index, the database can
+                use the index to locate the matching row instead of performing
+                a full table scan.
+            </p>
+
+            <p>
+                <strong>Interview point:</strong> An index is useful when the
+                database can actually use it efficiently; adding indexes to
+                every column does not automatically improve performance.
+            </p>
+        `
+            },
+
+            {
+                question: "What are the disadvantages of indexes?",
+
+                answer: `
+            <p>
+                Although indexes can significantly improve read performance,
+                they also have some costs.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>Storage:</strong> Indexes require additional
+                    disk space.
+                </li>
+                <li>
+                    <strong>Write overhead:</strong> INSERT, UPDATE, and
+                    DELETE operations may become slower because indexes also
+                    need to be updated.
+                </li>
+                <li>
+                    <strong>Maintenance:</strong> Too many indexes can
+                    increase database maintenance and optimization overhead.
+                </li>
+                <li>
+                    <strong>Memory usage:</strong> Frequently used indexes
+                    may consume memory through database caching.
+                </li>
+            </ul>
+
+            <p>
+                Therefore, indexes should be created strategically on columns
+                that are frequently used by important queries.
+            </p>
+        `
+            },
+
+            {
+                question: "What is a composite index?",
+
+                answer: `
+            <p>
+                A <strong>composite index</strong> is an index created on
+                two or more columns.
+            </p>
+
+            <p>
+                It is useful when queries frequently filter, sort, or search
+                using a combination of columns.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+CREATE INDEX idx_users_city_age
+ON users(city, age);
+            </code></pre>
+
+            <p>
+                This creates an index using both <code>city</code> and
+                <code>age</code>.
+            </p>
+
+            <h4>Important interview point:</h4>
+
+            <p>
+                The <strong>column order matters</strong> in a composite index.
+                An index on <code>(city, age)</code> is primarily organized
+                starting with <code>city</code>, so query patterns using
+                the leading column are especially important.
+            </p>
+        `
+            },
+            {
+                question: "What is a unique index?",
+
+                answer: `
+            <p>
+                A <strong>unique index</strong> is an index that ensures that
+                the indexed column or combination of columns contains unique
+                values.
+            </p>
+
+            <p>
+                It is commonly used when duplicate values should not be
+                allowed, such as email addresses or usernames.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+CREATE UNIQUE INDEX idx_users_email
+ON users(email);
+            </code></pre>
+
+            <p>
+                After creating this index, two users cannot have the same
+                email value.
+            </p>
+
+            <p>
+                A <code>UNIQUE</code> constraint is another common way to
+                enforce uniqueness, and database systems typically create
+                a unique index to support it.
+            </p>
+        `
+            },
+
+            {
+                question: "What is a transaction?",
+
+                answer: `
+            <p>
+                A <strong>transaction</strong> is a group of one or more
+                database operations that are treated as a single unit of work.
+            </p>
+
+            <p>
+                A transaction ensures that either all required operations
+                succeed or the changes can be rolled back if something fails.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+BEGIN;
+
+UPDATE accounts
+SET balance = balance - 1000
+WHERE id = 1;
+
+UPDATE accounts
+SET balance = balance + 1000
+WHERE id = 2;
+
+COMMIT;
+            </code></pre>
+
+            <p>
+                Here, money is transferred between two accounts. Both updates
+                should succeed together; otherwise, the transaction should
+                be rolled back.
+            </p>
+        `
+            },
+
+            {
+                question: "What are ACID properties?",
+
+                answer: `
+            <p>
+                <strong>ACID</strong> represents four properties that help
+                ensure reliable database transactions.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>Atomicity:</strong> A transaction is treated as
+                    one unit. Either all operations succeed or none are applied.
+                </li>
+                <li>
+                    <strong>Consistency:</strong> A transaction moves the
+                    database from one valid state to another valid state.
+                </li>
+                <li>
+                    <strong>Isolation:</strong> Concurrent transactions should
+                    not improperly interfere with each other.
+                </li>
+                <li>
+                    <strong>Durability:</strong> Once a transaction is committed,
+                    its changes should survive system failures.
+                </li>
+            </ul>
+
+            <p>
+                <strong>Interview shortcut:</strong>
+                Atomicity = all or nothing,
+                Consistency = valid state,
+                Isolation = transactions are isolated,
+                Durability = committed data persists.
+            </p>
+        `
+            },
+
+            {
+                question: "What are COMMIT and ROLLBACK?",
+
+                answer: `
+            <p>
+                <code>COMMIT</code> permanently saves the changes made by
+                a transaction, while <code>ROLLBACK</code> undoes changes
+                made during the current transaction that have not been committed.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+BEGIN;
+
+UPDATE accounts
+SET balance = balance - 500
+WHERE id = 1;
+
+-- If everything is successful:
+COMMIT;
+
+-- If something goes wrong:
+ROLLBACK;
+            </code></pre>
+
+            <p>
+                <code>COMMIT</code> makes the transaction's changes permanent.
+                <code>ROLLBACK</code> returns the affected data to its state
+                before the transaction.
+            </p>
+        `
+            },
+
+            {
+                question: "What is a database deadlock?",
+
+                answer: `
+            <p>
+                A <strong>deadlock</strong> occurs when two or more transactions
+                are waiting for each other to release resources, so none of
+                them can continue.
+            </p>
+
+            <h4>Example scenario:</h4>
+
+            <ul>
+                <li>
+                    Transaction A locks Row 1 and waits for Row 2.
+                </li>
+                <li>
+                    Transaction B locks Row 2 and waits for Row 1.
+                </li>
+                <li>
+                    Both transactions keep waiting for each other.
+                </li>
+            </ul>
+
+            <p>
+                Database systems can detect deadlocks and typically resolve
+                them by aborting or rolling back one of the transactions.
+            </p>
+
+            <h4>How to reduce deadlocks:</h4>
+
+            <ul>
+                <li>Keep transactions short.</li>
+                <li>Access tables and rows in a consistent order.</li>
+                <li>Avoid unnecessary locks.</li>
+                <li>Use appropriate transaction isolation levels.</li>
+            </ul>
+        `
+            },
+
+            {
+                question: "What is connection pooling?",
+
+                answer: `
+            <p>
+                <strong>Connection pooling</strong> is a technique where a
+                set of database connections is created and reused instead
+                of creating a new connection for every database request.
+            </p>
+
+            <p>
+                Creating a database connection repeatedly can be expensive.
+                A connection pool improves performance by reusing existing
+                connections.
+            </p>
+
+            <h4>Basic flow:</h4>
+
+            <pre><code>
+Application
+    ↓
+Connection Pool
+    ↓
+Database Connections
+    ↓
+Database
+            </code></pre>
+
+            <p>
+                When a request needs the database, it gets an available
+                connection from the pool. After the query finishes, the
+                connection is returned to the pool.
+            </p>
+
+            <p>
+                Connection pools also commonly limit the maximum number of
+                simultaneous database connections.
+            </p>
+        `
+            },
+
+            {
+                question: "What is a view?",
+
+                answer: `
+            <p>
+                A <strong>view</strong> is a virtual table based on the result
+                of a SQL query. It generally does not store the result data
+                itself; instead, the underlying query is used when the view
+                is accessed.
+            </p>
+
+            <p>
+                Views are useful for simplifying complex queries, reusing
+                common queries, and controlling which columns or rows users
+                can access.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+CREATE VIEW employee_details AS
+SELECT
+    e.name,
+    d.name AS department
+FROM employees e
+JOIN departments d
+ON e.department_id = d.id;
+            </code></pre>
+
+            <p>
+                The view can then be queried like a table:
+            </p>
+
+            <pre><code>
+SELECT *
+FROM employee_details;
+            </code></pre>
+
+            <p>
+                <strong>Interview point:</strong> A view provides a reusable
+                abstraction over one or more underlying queries.
+            </p>
+        `
+            },
+
+            {
+                question: "What is a stored procedure?",
+
+                answer: `
+            <p>
+                A <strong>stored procedure</strong> is a named set of SQL
+                statements stored in the database that can be executed
+                whenever required.
+            </p>
+
+            <p>
+                Stored procedures can accept parameters and can contain
+                business or database logic, depending on the database system.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+CREATE PROCEDURE get_users()
+BEGIN
+    SELECT *
+    FROM users;
+END;
+            </code></pre>
+
+            <p>
+                The exact syntax for creating and calling stored procedures
+                varies between database systems such as MySQL and PostgreSQL.
+            </p>
+
+            <p>
+                They can be useful for reusable database operations, but many
+                modern applications also keep business logic in the application
+                layer.
+            </p>
+        `
+            },
+
+            {
+                question: "What is a trigger?",
+
+                answer: `
+            <p>
+                A <strong>trigger</strong> is a database object that
+                automatically executes a specified action when an event such
+                as <code>INSERT</code>, <code>UPDATE</code>, or
+                <code>DELETE</code> occurs on a table.
+            </p>
+
+            <h4>Common uses:</h4>
+
+            <ul>
+                <li>Maintaining audit information.</li>
+                <li>Automatically updating related data.</li>
+                <li>Enforcing certain database-level rules.</li>
+                <li>Recording changes to important tables.</li>
+            </ul>
+
+            <h4>Example concept:</h4>
+
+            <pre><code>
+INSERT INTO users (...);
+
+-- Trigger automatically performs another action,
+-- such as recording the insertion in an audit table.
+            </code></pre>
+
+            <p>
+                Triggers run automatically, so application developers do not
+                need to explicitly call them.
+            </p>
+
+            <p>
+                <strong>Interview point:</strong> Triggers can be powerful,
+                but excessive use can make database behavior harder to
+                understand and maintain.
+            </p>
+        `
+            },
+
+            {
+                question: "What is a CTE (WITH clause)?",
+
+                answer: `
+            <p>
+                A <strong>CTE (Common Table Expression)</strong> is a temporary
+                named result set defined using the <code>WITH</code> clause.
+                It exists only for the duration of the query.
+            </p>
+
+            <p>
+                CTEs are useful for making complex queries easier to read,
+                breaking a query into logical steps, and writing recursive
+                queries.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+WITH high_salary AS (
+    SELECT *
+    FROM employees
+    WHERE salary &gt; 100000
+)
+SELECT *
+FROM high_salary;
+            </code></pre>
+
+            <p>
+                Here, <code>high_salary</code> is the CTE, which is then
+                queried by the main <code>SELECT</code> statement.
+            </p>
+        `
+            },
+            {
+                question: "What is the difference between a CTE and a subquery?",
+
+                answer: `
+            <p>
+                A <strong>CTE (Common Table Expression)</strong> is a temporary named result set created using the
+                <strong>WITH</strong> clause. A subquery is a query written inside another SQL query.
+            </p>
+
+            <p>
+                CTEs are generally easier to read and can be reused within the same query, while subqueries are
+                useful for smaller or one-time operations.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+            WITH high_salary AS (
+                SELECT *
+                FROM employees
+                WHERE salary &gt; 50000
+            )
+            SELECT *
+            FROM high_salary;
+            </code></pre>
+        `
+            },
+
+            {
+                question: "What is a recursive CTE?",
+
+                answer: `
+            <p>
+                A <strong>recursive CTE</strong> is a CTE that references itself. It is mainly used for
+                hierarchical or tree-structured data such as employees and managers, categories, folders,
+                or organizational structures.
+            </p>
+
+            <p>
+                A recursive CTE generally contains two parts:
+                <strong>anchor query</strong> and <strong>recursive query</strong>.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+            WITH RECURSIVE numbers AS (
+                SELECT 1 AS num
+
+                UNION ALL
+
+                SELECT num + 1
+                FROM numbers
+                WHERE num &lt; 5
+            )
+            SELECT * FROM numbers;
+            </code></pre>
+        `
+            },
+
+            {
+                question: "What is a composite primary key?",
+
+                answer: `
+            <p>
+                A <strong>composite primary key</strong> is a primary key made up of two or more columns.
+                The combination of those columns must uniquely identify each row.
+            </p>
+
+            <p>
+                It is commonly used in junction tables that represent many-to-many relationships.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+            CREATE TABLE student_courses (
+                student_id INT,
+                course_id INT,
+
+                PRIMARY KEY (student_id, course_id)
+            );
+            </code></pre>
+
+            <p>
+                Here, the combination of <code>student_id</code> and <code>course_id</code> must be unique.
+            </p>
+        `
+            },
+
+            {
+                question: "What is referential integrity?",
+
+                answer: `
+            <p>
+                <strong>Referential integrity</strong> ensures that relationships between tables remain valid.
+            </p>
+
+            <p>
+                It is usually enforced using a <strong>FOREIGN KEY</strong>. A foreign key value must either
+                match an existing primary key value in the referenced table or be <code>NULL</code> if allowed.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+            CREATE TABLE orders (
+                id INT PRIMARY KEY,
+                user_id INT,
+
+                FOREIGN KEY (user_id)
+                REFERENCES users(id)
+            );
+            </code></pre>
+
+            <p>
+                This prevents an order from referencing a user that does not exist.
+            </p>
+        `
+            },
+
+            {
+                question: "What is a database execution plan?",
+
+                answer: `
+            <p>
+                A <strong>database execution plan</strong> shows how the database intends to execute a SQL query.
+                It helps developers understand how tables are scanned, how indexes are used, and how joins and
+                sorting are performed.
+            </p>
+
+            <p>
+                Execution plans are useful for identifying slow queries and finding opportunities for optimization.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+            EXPLAIN
+            SELECT *
+            FROM employees
+            WHERE department_id = 10;
+            </code></pre>
+
+            <p>
+                The database may show whether it is using an index or scanning the entire table.
+            </p>
+        `
+            },
+
+            {
+                question: "What is query optimization?",
+
+                answer: `
+            <p>
+                <strong>Query optimization</strong> is the process of improving a SQL query so that it executes
+                faster and uses fewer database resources while producing the same result.
+            </p>
+
+            <h4>Common optimization techniques:</h4>
+
+            <ul>
+                <li>Create appropriate indexes.</li>
+                <li>Avoid unnecessary columns such as <code>SELECT *</code>.</li>
+                <li>Filter data early using <code>WHERE</code>.</li>
+                <li>Use efficient JOIN conditions.</li>
+                <li>Analyze queries using execution plans.</li>
+                <li>Avoid unnecessary subqueries or expensive operations.</li>
+                <li>Retrieve only the required number of rows.</li>
+            </ul>
+
+            <p>
+                The goal is to reduce execution time, CPU usage, memory usage, and unnecessary disk or network
+                operations.
+            </p>
+        `
+            }
+
+        ];
+
+
+        /* =========================
+           RENDER QUESTIONS
+        ========================= */
+
+        const container =
+            document.getElementById("questions");
+
+
+        questions.forEach((item, index) => {
+
+            const card =
+                document.createElement("div");
+
+
+            card.className =
+                "question-card";
+
+
+            card.innerHTML = `
+
+                <button
+                    class="question-btn"
+                    type="button"
+                >
+
+                    <span>
+                        ${index + 1}. ${item.question}
+                    </span>
+
+                    <span class="arrow">
+                        ⌄
+                    </span>
+
+                </button>
+
+
+                <div class="answer">
+
+                    ${item.answer}
+
+                </div>
+
+            `;
+
+
+            const button =
+                card.querySelector(".question-btn");
+
+
+            button.addEventListener("click", () => {
+
+                card.classList.toggle("open");
+
+            });
+
+
+            container.appendChild(card);
+
+        });
+
+
+        /* =========================
+           MOBILE MENU
+        ========================= */
+
+        const menuBtn =
+            document.getElementById("menuBtn");
+
+
+        const mobileMenu =
+            document.getElementById("mobileMenu");
+
+
+        menuBtn.addEventListener("click", () => {
+
+            mobileMenu.classList.toggle("open");
+
+
+            if (mobileMenu.classList.contains("open")) {
+
+                menuBtn.textContent = "✕";
+
+            } else {
+
+                menuBtn.textContent = "☰";
+
+            }
+
+        });
+
+
+        /* CLOSE MENU AFTER CLICKING LINK */
+
+        const mobileLinks =
+            mobileMenu.querySelectorAll("a");
+
+
+        mobileLinks.forEach(link => {
+
+            link.addEventListener("click", () => {
+
+                mobileMenu.classList.remove("open");
+
+                menuBtn.textContent = "☰";
+
+            });
+
+        });
+
+
+        /* =========================
+           THEME
+        ========================= */
+
+        const themeBtn =
+            document.getElementById("themeBtn");
+
+
+        const savedTheme =
+            localStorage.getItem("theme");
+
+
+        if (savedTheme === "dark") {
+
+            document.body.classList.add("dark");
+
+            themeBtn.textContent = "☀";
+
+        }
+
+
+        themeBtn.addEventListener("click", () => {
+
+            document.body.classList.toggle("dark");
+
+
+            const isDark =
+                document.body.classList.contains("dark");
+
+
+            localStorage.setItem(
+                "theme",
+                isDark ? "dark" : "light"
+            );
+
+
+            themeBtn.textContent =
+                isDark ? "☀" : "☾";
+
+        });
+
+    </script>
+
+
+</body>
+
+</html>

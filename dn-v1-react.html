@@ -1,0 +1,4739 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="dev-prep-favicon.png">
+    <title>React Interview Questions</title>
+
+    <style>
+        /* =========================
+           RESET
+        ========================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        /* =========================
+           THEME VARIABLES
+        ========================= */
+
+        :root {
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --surface-hover: #f1f5f9;
+
+            --text: #0f172a;
+            --muted: #64748b;
+
+            --border: #e2e8f0;
+
+            --accent: #2563eb;
+            --accent-soft: #eff6ff;
+        }
+
+
+        body.dark {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --surface-hover: #263449;
+
+            --text: #f8fafc;
+            --muted: #94a3b8;
+
+            --border: #334155;
+
+            --accent: #60a5fa;
+            --accent-soft: #172554;
+        }
+
+
+        /* =========================
+           BODY
+        ========================= */
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+
+            background: var(--bg);
+            color: var(--text);
+
+            min-height: 100vh;
+
+            transition:
+                background 0.25s ease,
+                color 0.25s ease;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            background: var(--surface);
+
+            border-bottom: 1px solid var(--border);
+        }
+
+
+        .nav-container {
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding: 14px 20px;
+
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+
+        /* LOGO */
+
+        .logo {
+            color: var(--text);
+
+            text-decoration: none;
+
+            font-size: 18px;
+            font-weight: 700;
+
+            white-space: nowrap;
+        }
+
+
+        .logo span {
+            color: var(--accent);
+        }
+
+
+        /* DESKTOP NAVIGATION */
+
+        .nav-links {
+            flex: 1;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 4px;
+        }
+
+
+        .nav-links a {
+            color: var(--muted);
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            padding: 8px 10px;
+
+            border-radius: 7px;
+
+            transition: 0.2s;
+        }
+
+
+        .nav-links a:hover {
+            background: var(--surface-hover);
+            color: var(--text);
+        }
+
+
+        .nav-links a.active {
+            background: var(--accent-soft);
+            color: var(--accent);
+        }
+
+
+        /* =========================
+           NAV ACTIONS
+        ========================= */
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+
+        /* THEME BUTTON */
+
+        .theme-btn {
+            width: 36px;
+            height: 36px;
+
+            border: 1px solid var(--border);
+            border-radius: 8px;
+
+            background: var(--surface);
+            color: var(--text);
+
+            cursor: pointer;
+
+            font-size: 16px;
+
+            transition: 0.2s;
+        }
+
+
+        .theme-btn:hover {
+            background: var(--surface-hover);
+        }
+
+
+        /* MOBILE MENU BUTTON */
+
+        .menu-btn {
+            display: none;
+
+            width: 36px;
+            height: 36px;
+
+            border: 1px solid var(--border);
+            border-radius: 8px;
+
+            background: var(--surface);
+            color: var(--text);
+
+            cursor: pointer;
+
+            font-size: 20px;
+        }
+
+
+        /* =========================
+           MOBILE DROPDOWN
+        ========================= */
+
+        .mobile-menu {
+            display: none;
+
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding: 0 15px 15px;
+        }
+
+
+        .mobile-menu.open {
+            display: block;
+        }
+
+
+        .mobile-menu a {
+            display: block;
+
+            color: var(--muted);
+
+            text-decoration: none;
+
+            padding: 12px 14px;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+
+            transition: 0.2s;
+        }
+
+
+        .mobile-menu a:hover,
+        .mobile-menu a.active {
+            background: var(--surface-hover);
+            color: var(--text);
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        main {
+            width: 100%;
+            max-width: 850px;
+
+            margin: auto;
+
+            padding: 70px 20px 100px;
+        }
+
+
+        /* =========================
+           PAGE HEADER
+        ========================= */
+
+        .page-header {
+            margin-bottom: 40px;
+        }
+
+
+        .page-header span {
+            color: var(--accent);
+
+            font-size: 13px;
+            font-weight: 600;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        .page-header h1 {
+            font-size: clamp(32px, 5vw, 48px);
+
+            line-height: 1.1;
+
+            margin: 10px 0;
+
+            letter-spacing: -1px;
+        }
+
+
+        .page-header p {
+            color: var(--muted);
+
+            line-height: 1.7;
+
+            max-width: 650px;
+
+            font-size: 15px;
+        }
+
+
+        /* =========================
+           QUESTION CARD
+        ========================= */
+
+        .question-card {
+            width: 100%;
+
+            background: var(--surface);
+
+            border: 1px solid var(--border);
+
+            border-radius: 12px;
+
+            margin-bottom: 14px;
+
+            overflow: hidden;
+
+            transition:
+                border-color 0.2s,
+                transform 0.2s;
+        }
+
+
+        .question-card:hover {
+            border-color: color-mix(in srgb,
+                    var(--accent) 40%,
+                    var(--border));
+        }
+
+
+        /* QUESTION BUTTON */
+
+        .question-btn {
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            padding: 20px;
+
+            border: none;
+
+            background: transparent;
+
+            color: var(--text);
+
+            text-align: left;
+
+            font-family: inherit;
+
+            font-size: 16px;
+            font-weight: 600;
+
+            line-height: 1.5;
+
+            cursor: pointer;
+        }
+
+
+        .question-btn:hover {
+            background: var(--surface-hover);
+        }
+
+
+        /* ARROW */
+
+        .arrow {
+            flex-shrink: 0;
+
+            color: var(--muted);
+
+            font-size: 18px;
+
+            transition: transform 0.2s;
+        }
+
+
+        /* ANSWER */
+
+        .answer {
+            display: none;
+
+            padding: 0 20px 20px;
+
+            color: var(--muted);
+
+            font-size: 15px;
+
+            line-height: 1.8;
+        }
+
+
+        .question-card.open .answer {
+            display: block;
+        }
+
+
+        .question-card.open .arrow {
+            transform: rotate(180deg);
+        }
+
+
+        /* =========================
+           TABLET
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            .nav-container {
+                padding: 13px 16px;
+            }
+
+
+            .nav-links {
+                display: none;
+            }
+
+
+            .menu-btn {
+                display: block;
+            }
+
+
+            .nav-actions {
+                margin-left: auto;
+            }
+
+
+            main {
+                padding-top: 55px;
+            }
+
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .nav-container {
+                padding: 11px 14px;
+            }
+
+
+            .logo {
+                font-size: 17px;
+            }
+
+
+            .menu-btn,
+            .theme-btn {
+                width: 34px;
+                height: 34px;
+            }
+
+
+            main {
+                padding: 45px 15px 70px;
+            }
+
+
+            .page-header {
+                margin-bottom: 30px;
+            }
+
+
+            .page-header span {
+                font-size: 11px;
+            }
+
+
+            .page-header h1 {
+                font-size: 34px;
+
+                margin-top: 8px;
+            }
+
+
+            .page-header p {
+                font-size: 14px;
+
+                line-height: 1.7;
+            }
+
+
+            .question-card {
+                border-radius: 10px;
+
+                margin-bottom: 10px;
+            }
+
+
+            .question-btn {
+                padding: 16px;
+
+                font-size: 14px;
+
+                gap: 12px;
+            }
+
+
+            .answer {
+                padding: 0 16px 17px;
+
+                font-size: 14px;
+
+                line-height: 1.7;
+            }
+
+
+            .arrow {
+                font-size: 16px;
+            }
+
+        }
+
+
+        /* =========================
+           VERY SMALL DEVICES
+        ========================= */
+
+        @media (max-width: 380px) {
+
+            .logo {
+                font-size: 16px;
+            }
+
+
+            main {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+
+
+            .page-header h1 {
+                font-size: 30px;
+            }
+
+
+            .question-btn {
+                padding: 14px;
+
+                font-size: 13px;
+            }
+
+
+            .answer {
+                padding-left: 14px;
+                padding-right: 14px;
+
+                font-size: 13px;
+            }
+
+        }
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <nav>
+
+        <div class="nav-container">
+
+
+            <!-- LOGO -->
+
+            <a href="index.html" class="logo">
+                Dev.<span>Prep</span>
+            </a>
+
+
+            <!-- DESKTOP LINKS -->
+
+            <div class="nav-links">
+
+                <a href="dn-v1-html.html">
+                    HTML
+                </a>
+
+                <a href="dn-v1-css.html" >
+                    CSS
+                </a>
+
+                <a href="dn-v1-js.html" >
+                    JavaScript
+                </a>
+
+                <a href="dn-v1-react.html" class="active">
+                    React
+                </a>
+
+                <a href="dn-v1-node.html">
+                    Node.js
+                </a>
+
+                <a href="dn-v1-sql.html">
+                    SQL
+                </a>
+
+                <a href="dn-v1-dsa.html">
+                    DSA
+                </a>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="nav-actions">
+
+                <button class="menu-btn" id="menuBtn" aria-label="Open navigation menu">
+                    ☰
+                </button>
+
+
+                <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
+                    ☾
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- MOBILE MENU -->
+
+        <div class="mobile-menu" id="mobileMenu">
+
+            <a href="dn-v1-html.html">
+                HTML
+            </a>
+
+            <a href="dn-v1-css.html" >
+                CSS
+            </a>
+
+            <a href="dn-v1-js.html" >
+                JavaScript
+            </a>
+
+            <a href="dn-v1-react.html" class="active">
+                React
+            </a>
+
+            <a href="dn-v1-node.html">
+                Node.js
+            </a>
+
+            <a href="dn-v1-sql.html">
+                SQL
+            </a>
+
+            <a href="dn-v1-dsa.html">
+                DSA
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================= -->
+
+    <main>
+
+
+        <header class="page-header">
+
+            <span>
+                INTERVIEW PREPARATION
+            </span>
+
+            <h1>
+                React.js
+            </h1>
+
+            <p>
+                Important React.js concepts and interview
+                questions, from fundamentals to advanced topics.
+            </p>
+
+        </header>
+
+
+        <!-- QUESTIONS -->
+
+        <section id="questions"></section>
+
+
+    </main>
+
+
+    <script>
+
+
+        /* =========================
+           QUESTIONS
+        ========================= */
+
+        const questions = [
+
+    {
+        question: "What is React and why is it used?",
+
+        answer: `
+            <p>
+                React is a JavaScript library developed by Meta for building
+                user interfaces, especially single-page applications (SPAs).
+            </p>
+
+            <p>
+                React allows developers to build applications using reusable
+                components and efficiently update the UI when data changes.
+            </p>
+
+            <h4>Why is React used?</h4>
+
+            <ul>
+                <li>Component-based architecture</li>
+                <li>Reusable UI components</li>
+                <li>Efficient UI updates using reconciliation</li>
+                <li>Supports building single-page applications</li>
+                <li>Large ecosystem and community support</li>
+                <li>Easy integration with APIs and other libraries</li>
+            </ul>
+
+            <p>
+                In simple terms, React helps us build complex and interactive
+                user interfaces by breaking them into small, reusable components.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is JSX and how does it work?",
+
+        answer: `
+            <p>
+                JSX stands for JavaScript XML. It is a syntax extension for
+                JavaScript that allows us to write HTML-like code inside
+                JavaScript.
+            </p>
+
+            <p>
+                JSX makes React components easier to read and write because
+                the UI structure can be written directly inside JavaScript.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const element = &lt;h1&gt;Hello World&lt;/h1&gt;;
+            </code></pre>
+
+            <p>
+                JSX is not directly understood by the JavaScript engine.
+                Tools such as Babel transform JSX into regular JavaScript
+                function calls that React can understand.
+            </p>
+
+            <p>
+                JSX also allows JavaScript expressions to be embedded using
+                curly braces.
+            </p>
+
+            <pre><code>
+const name = "Pratap";
+
+const element = &lt;h1&gt;Hello, {name}&lt;/h1&gt;;
+            </code></pre>
+        `
+    },
+
+
+    {
+        question: "What are components in React?",
+
+        answer: `
+            <p>
+                Components are independent and reusable building blocks of a
+                React application. A component usually contains the UI,
+                logic, and behavior for a particular part of the application.
+            </p>
+
+            <p>
+                Components can accept data through props and maintain their
+                own state when required.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+function Welcome() {
+    return &lt;h1&gt;Welcome to React&lt;/h1&gt;;
+}
+            </code></pre>
+
+            <p>
+                Here, <code>Welcome</code> is a React component that can be
+                reused wherever the same UI is required.
+            </p>
+
+            <h4>Types of components:</h4>
+
+            <ul>
+                <li>Functional components</li>
+                <li>Class components</li>
+            </ul>
+
+            <p>
+                Modern React primarily uses functional components with Hooks.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is the difference between functional and class components?",
+
+        answer: `
+            <p>
+                Functional components are JavaScript functions that return
+                JSX, while class components are JavaScript classes that extend
+                <code>React.Component</code>.
+            </p>
+
+            <h4>Functional Component:</h4>
+
+            <pre><code>
+function User() {
+    return &lt;h1&gt;Hello User&lt;/h1&gt;;
+}
+            </code></pre>
+
+            <h4>Class Component:</h4>
+
+            <pre><code>
+class User extends React.Component {
+    render() {
+        return &lt;h1&gt;Hello User&lt;/h1&gt;;
+    }
+}
+            </code></pre>
+
+            <h4>Key differences:</h4>
+
+            <ul>
+                <li>
+                    Functional components are simpler and use Hooks for
+                    state and side effects.
+                </li>
+                <li>
+                    Class components use <code>this</code>, lifecycle methods,
+                    and class state.
+                </li>
+                <li>
+                    Functional components are the preferred approach in
+                    modern React development.
+                </li>
+            </ul>
+        `
+    },
+
+
+    {
+        question: "What are props in React?",
+
+        answer: `
+            <p>
+                Props, short for properties, are read-only data passed from
+                a parent component to a child component.
+            </p>
+
+            <p>
+                Props are used to make components reusable and allow a parent
+                component to provide data or behavior to a child.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+function User({ name }) {
+    return &lt;h2&gt;Hello, {name}&lt;/h2&gt;;
+}
+
+function App() {
+    return &lt;User name="Pratap" /&gt;;
+}
+            </code></pre>
+
+            <p>
+                Here, <code>name</code> is a prop passed from
+                <code>App</code> to the <code>User</code> component.
+            </p>
+
+            <p>
+                Props should not be directly modified by the child component.
+                If the data needs to change, the parent should update it and
+                pass the new value again.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is state in React?",
+
+        answer: `
+            <p>
+                State is data managed by a React component that can change
+                over time. When state changes, React re-renders the component
+                so that the UI can reflect the latest data.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+import { useState } from "react";
+
+function Counter() {
+    const [count, setCount] = useState(0);
+
+    return (
+        &lt;div&gt;
+            &lt;p&gt;Count: {count}&lt;/p&gt;
+
+            &lt;button onClick={() =&gt; setCount(count + 1)}&gt;
+                Increment
+            &lt;/button&gt;
+        &lt;/div&gt;
+    );
+}
+            </code></pre>
+
+            <p>
+                Here, <code>count</code> is the state value and
+                <code>setCount</code> is the function used to update it.
+            </p>
+
+            <p>
+                State is commonly used for things such as form values,
+                counters, loading states, selected items, and UI visibility.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is the difference between props and state?",
+
+        answer: `
+            <p>
+                Props and state both store data used by React components, but
+                they have different purposes and sources.
+            </p>
+
+            <h4>Props</h4>
+
+            <ul>
+                <li>Passed from parent to child.</li>
+                <li>Read-only for the receiving component.</li>
+                <li>Used to pass data or behavior between components.</li>
+                <li>Controlled by the parent component.</li>
+            </ul>
+
+            <h4>State</h4>
+
+            <ul>
+                <li>Managed inside a component.</li>
+                <li>Can be updated using a state setter.</li>
+                <li>Used for data that changes over time.</li>
+                <li>Updating state causes a re-render.</li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+function User({ name }) {
+    const [age, setAge] = useState(24);
+
+    return (
+        &lt;div&gt;
+            &lt;p&gt;Name: {name}&lt;/p&gt;
+            &lt;p&gt;Age: {age}&lt;/p&gt;
+        &lt;/div&gt;
+    );
+}
+            </code></pre>
+
+            <p>
+                In this example, <code>name</code> is a prop received from the
+                parent, while <code>age</code> is state managed by the
+                <code>User</code> component.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What causes a React component to re-render?",
+
+        answer: `
+            <p>
+                A React component re-renders when React determines that its
+                rendered output may need to be updated.
+            </p>
+
+            <h4>Common reasons for a re-render:</h4>
+
+            <ul>
+                <li>
+                    The component's state is updated.
+                </li>
+                <li>
+                    The component receives new props.
+                </li>
+                <li>
+                    A consumed Context value changes.
+                </li>
+                <li>
+                    Its parent component re-renders, causing the child to
+                    be evaluated again.
+                </li>
+            </ul>
+
+            <p>
+                A re-render does not necessarily mean that the actual DOM
+                will be changed. React compares the new result with the
+                previous result during reconciliation and updates only the
+                necessary DOM elements.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+function Counter() {
+    const [count, setCount] = useState(0);
+
+    return (
+        &lt;button onClick={() =&gt; setCount(count + 1)}&gt;
+            {count}
+        &lt;/button&gt;
+    );
+}
+            </code></pre>
+
+            <p>
+                When <code>setCount()</code> updates the state, the component
+                re-renders with the new value of <code>count</code>.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is the Virtual DOM?",
+
+        answer: `
+            <p>
+                The Virtual DOM is an in-memory representation of the UI
+                maintained by React. It is a lightweight representation of
+                the actual browser DOM.
+            </p>
+
+            <p>
+                When state or props change, React creates a new representation
+                of the UI and compares it with the previous one. React then
+                determines the necessary changes and updates the actual DOM.
+            </p>
+
+            <h4>Basic flow:</h4>
+
+            <ol>
+                <li>State or props change.</li>
+                <li>React renders the component again.</li>
+                <li>React compares the new UI representation with the previous one.</li>
+                <li>React updates the required parts of the actual DOM.</li>
+            </ol>
+
+            <p>
+                This approach helps React manage UI updates efficiently and
+                provides a declarative way to build user interfaces.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is reconciliation in React?",
+
+        answer: `
+            <p>
+                Reconciliation is the process React uses to compare the
+                previous rendered UI with the new rendered UI and determine
+                what needs to be updated.
+            </p>
+
+            <p>
+                When state or props change, React creates a new element tree.
+                It then compares this tree with the previous one and applies
+                the required changes to the actual DOM.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+function App() {
+    const [count, setCount] = useState(0);
+
+    return (
+        &lt;div&gt;
+            &lt;h1&gt;Counter&lt;/h1&gt;
+            &lt;p&gt;{count}&lt;/p&gt;
+        &lt;/div&gt;
+    );
+}
+            </code></pre>
+
+            <p>
+                If <code>count</code> changes from <code>0</code> to
+                <code>1</code>, React compares the previous and new UI and
+                updates the part that changed instead of rebuilding the
+                entire DOM.
+            </p>
+
+            <p>
+                Keys are especially important during reconciliation when
+                React is comparing elements in lists.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is the purpose of the key prop when rendering lists?",
+
+        answer: `
+            <p>
+                The <code>key</code> prop gives each element in a React list
+                a stable and unique identity. React uses keys during
+                reconciliation to determine which list items were added,
+                removed, or changed.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const users = [
+    { id: 1, name: "John" },
+    { id: 2, name: "Alex" },
+    { id: 3, name: "Sam" }
+];
+
+function UserList() {
+    return (
+        &lt;ul&gt;
+            {users.map(user =&gt; (
+                &lt;li key={user.id}&gt;
+                    {user.name}
+                &lt;/li&gt;
+            ))}
+        &lt;/ul&gt;
+    );
+}
+            </code></pre>
+
+            <p>
+                Here, <code>user.id</code> provides a stable identity for
+                each list item.
+            </p>
+
+            <h4>Why are keys important?</h4>
+
+            <ul>
+                <li>Help React identify list elements efficiently.</li>
+                <li>Improve reconciliation of dynamic lists.</li>
+                <li>Help React preserve the correct component state.</li>
+                <li>Prevent unnecessary DOM updates.</li>
+            </ul>
+
+            <p>
+                Keys should generally be unique and stable among the items
+                in the same list.
+            </p>
+        `
+    },
+    {
+        question: "Why is using array index as a key sometimes problematic?",
+
+        answer: `
+            <p>
+                Using the array index as a key can be problematic when the
+                list can be reordered, inserted into, or deleted from.
+                The index can change when the list changes, so React may
+                associate the wrong component instance with an item.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const users = [
+    { id: 101, name: "John" },
+    { id: 102, name: "Alex" }
+];
+
+{users.map((user, index) =&gt; (
+    &lt;User key={index} name={user.name} /&gt;
+))}
+            </code></pre>
+
+            <p>
+                If a new user is inserted at the beginning, the indexes of
+                the existing users change. React may then reuse component
+                instances for different users.
+            </p>
+
+            <p>
+                This can cause incorrect UI state, especially when list items
+                contain inputs or other stateful components.
+            </p>
+
+            <h4>Better approach:</h4>
+
+            <pre><code>
+{users.map(user =&gt; (
+    &lt;User key={user.id} name={user.name} /&gt;
+))}
+            </code></pre>
+
+            <p>
+                Use a stable and unique identifier such as a database ID
+                whenever possible. Using the index is acceptable when the
+                list is static and never reordered, inserted into, or deleted
+                from.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is conditional rendering in React?",
+
+        answer: `
+            <p>
+                Conditional rendering means displaying different UI
+                elements based on a condition.
+            </p>
+
+            <p>
+                React commonly uses JavaScript operators such as
+                <code>if</code>, ternary operators, and
+                <code>&amp;&amp;</code> for conditional rendering.
+            </p>
+
+            <h4>Ternary operator:</h4>
+
+            <pre><code>
+function App({ isLoggedIn }) {
+    return (
+        &lt;div&gt;
+            {isLoggedIn
+                ? &lt;h1&gt;Welcome User&lt;/h1&gt;
+                : &lt;h1&gt;Please Login&lt;/h1&gt;
+            }
+        &lt;/div&gt;
+    );
+}
+            </code></pre>
+
+            <h4>Using &&:</h4>
+
+            <pre><code>
+{isLoggedIn &amp;&amp; &lt;button&gt;Logout&lt;/button&gt;}
+            </code></pre>
+
+            <p>
+                Here, the button is rendered only when
+                <code>isLoggedIn</code> is truthy.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is lifting state up?",
+
+        answer: `
+            <p>
+                Lifting state up means moving shared state from a child
+                component to their closest common parent so that multiple
+                components can access and update the same data.
+            </p>
+
+            <p>
+                This is useful when two or more sibling components need to
+                share the same state.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+function Parent() {
+    const [name, setName] = useState("");
+
+    return (
+        &lt;&gt;
+            &lt;Input value={name} setName={setName} /&gt;
+            &lt;Display name={name} /&gt;
+        &lt;/&gt;
+    );
+}
+            </code></pre>
+
+            <p>
+                Here, the state is stored in the parent and passed to the
+                child components through props. This gives both children
+                access to the same source of truth.
+            </p>
+
+            <p>
+                The main benefit is that related components stay synchronized
+                because the shared state is managed in one place.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is prop drilling?",
+
+        answer: `
+            <p>
+                Prop drilling is the process of passing data through multiple
+                intermediate components using props, even when those
+                intermediate components do not need the data themselves.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+function App() {
+    const user = { name: "John" };
+
+    return &lt;Parent user={user} /&gt;;
+}
+
+function Parent({ user }) {
+    return &lt;Child user={user} /&gt;;
+}
+
+function Child({ user }) {
+    return &lt;UserProfile user={user} /&gt;;
+}
+            </code></pre>
+
+            <p>
+                Here, <code>user</code> is passed from
+                <code>App</code> → <code>Parent</code> → <code>Child</code>
+                even though <code>Parent</code> and <code>Child</code> may
+                not actually use the data.
+            </p>
+
+            <h4>How can prop drilling be avoided?</h4>
+
+            <ul>
+                <li>Context API</li>
+                <li>State management libraries</li>
+                <li>Better component structure</li>
+                <li>Custom Hooks in appropriate cases</li>
+            </ul>
+        `
+    },
+
+
+    {
+        question: "What are React Hooks and why were they introduced?",
+
+        answer: `
+            <p>
+                Hooks are special functions provided by React that allow
+                functional components to use features such as state,
+                lifecycle-related effects, context, and refs.
+            </p>
+
+            <p>
+                Hooks were introduced in React 16.8 to allow developers to
+                use state and other React features without writing class
+                components.
+            </p>
+
+            <h4>Common Hooks:</h4>
+
+            <ul>
+                <li><code>useState()</code> — manages component state</li>
+                <li><code>useEffect()</code> — handles side effects</li>
+                <li><code>useContext()</code> — consumes context</li>
+                <li><code>useRef()</code> — stores mutable values or DOM references</li>
+                <li><code>useMemo()</code> — memoizes calculated values</li>
+                <li><code>useCallback()</code> — memoizes functions</li>
+            </ul>
+
+            <p>
+                Hooks make it easier to reuse stateful logic and keep
+                components simpler without relying on class lifecycle methods.
+            </p>
+        `
+    },
+
+
+    {
+        question: "How does useState() work?",
+
+        answer: `
+            <p>
+                <code>useState()</code> is a React Hook used to add state to
+                a functional component.
+            </p>
+
+            <p>
+                It returns an array containing the current state value and a
+                setter function used to update that state.
+            </p>
+
+            <h4>Syntax:</h4>
+
+            <pre><code>
+const [state, setState] = useState(initialValue);
+            </code></pre>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+function Counter() {
+    const [count, setCount] = useState(0);
+
+    return (
+        &lt;div&gt;
+            &lt;p&gt;{count}&lt;/p&gt;
+
+            &lt;button onClick={() =&gt; setCount(count + 1)}&gt;
+                Increment
+            &lt;/button&gt;
+        &lt;/div&gt;
+    );
+}
+            </code></pre>
+
+            <p>
+                When <code>setCount()</code> is called, React schedules an
+                update and the component renders again using the new state.
+            </p>
+
+            <p>
+                State updates should be treated as requests for a future
+                render rather than as immediate changes to the current
+                render's state value.
+            </p>
+        `
+    },
+
+
+    {
+        question: "Why should you not directly mutate React state?",
+
+        answer: `
+            <p>
+                React state should not be directly mutated because React
+                relies on state updates to determine when a component needs
+                to render again.
+            </p>
+
+            <p>
+                Direct mutation can lead to incorrect UI updates and makes
+                state changes harder to track and reason about.
+            </p>
+
+            <h4>Incorrect:</h4>
+
+            <pre><code>
+const [user, setUser] = useState({
+    name: "John",
+    age: 24
+});
+
+user.age = 25;
+            </code></pre>
+
+            <h4>Correct:</h4>
+
+            <pre><code>
+setUser({
+    ...user,
+    age: 25
+});
+            </code></pre>
+
+            <p>
+                The correct approach is to create a new value and pass it to
+                the state setter.
+            </p>
+
+            <p>
+                For objects and arrays, this usually means creating a new
+                object or array using techniques such as the spread operator,
+                rather than modifying the existing value.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is the difference between normal state updates and functional state updates?",
+
+        answer: `
+            <p>
+                A normal state update uses the current state value directly,
+                while a functional state update receives the previous state
+                value and calculates the next state from it.
+            </p>
+
+            <h4>Normal update:</h4>
+
+            <pre><code>
+setCount(count + 1);
+            </code></pre>
+
+            <h4>Functional update:</h4>
+
+            <pre><code>
+setCount(prevCount =&gt; prevCount + 1);
+            </code></pre>
+
+            <p>
+                Functional updates are especially useful when the new state
+                depends on the previous state.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+function Counter() {
+    const [count, setCount] = useState(0);
+
+    function increase() {
+        setCount(prev =&gt; prev + 1);
+        setCount(prev =&gt; prev + 1);
+    }
+
+    return (
+        &lt;button onClick={increase}&gt;
+            {count}
+        &lt;/button&gt;
+    );
+}
+            </code></pre>
+
+            <p>
+                Here, each update receives the latest previous value, so the
+                count increases by 2.
+            </p>
+
+            <p>
+                Use functional updates whenever the next state depends on
+                the previous state.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is useEffect()?",
+
+        answer: `
+            <p>
+                <code>useEffect()</code> is a React Hook used to synchronize a
+                component with external systems and perform side effects
+                after rendering.
+            </p>
+
+            <p>
+                Common examples include API requests, subscriptions, timers,
+                event listeners, and interacting with browser APIs.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+useEffect(() =&gt; {
+    document.title = "Dashboard";
+}, []);
+            </code></pre>
+
+            <p>
+                The function passed to <code>useEffect()</code> runs after
+                React commits the render to the DOM.
+            </p>
+
+            <p>
+                An effect can also return a cleanup function that React uses
+                to clean up the previous effect when necessary.
+            </p>
+        `
+    },
+
+
+    {
+        question: "When does useEffect() execute?",
+
+        answer: `
+            <p>
+                The execution of <code>useEffect()</code> depends on its
+                dependency array.
+            </p>
+
+            <h4>1. No dependency array</h4>
+
+            <pre><code>
+useEffect(() =&gt; {
+    console.log("Effect");
+});
+            </code></pre>
+
+            <p>
+                The effect runs after every committed render.
+            </p>
+
+            <h4>2. Empty dependency array</h4>
+
+            <pre><code>
+useEffect(() =&gt; {
+    console.log("Effect");
+}, []);
+            </code></pre>
+
+            <p>
+                The effect runs after the initial mount. In development
+                Strict Mode, React may run the effect setup and cleanup an
+                extra time to help detect side-effect bugs.
+            </p>
+
+            <h4>3. With dependencies</h4>
+
+            <pre><code>
+useEffect(() =&gt; {
+    console.log("Effect");
+}, [userId]);
+            </code></pre>
+
+            <p>
+                The effect runs after the initial mount and again when
+                <code>userId</code> changes.
+            </p>
+
+            <p>
+                Effects run after the render is committed, not during the
+                component's render phase.
+            </p>
+        `
+    },
+    {
+        question: "What is the dependency array in useEffect()?",
+
+        answer: `
+            <p>
+                The dependency array tells React when an effect should
+                re-run. React compares the current dependency values with
+                their values from the previous render.
+            </p>
+
+            <p>
+                If any dependency changes, React runs the effect again.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+useEffect(() =&gt; {
+    console.log("User changed");
+}, [userId]);
+            </code></pre>
+
+            <p>
+                Here, the effect runs after the initial render and whenever
+                <code>userId</code> changes.
+            </p>
+
+            <p>
+                The dependency array should include reactive values used by
+                the effect that can change between renders.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is the difference between these three useEffect() patterns?",
+
+        answer: `
+            <p>
+                The behavior of <code>useEffect()</code> depends on whether
+                a dependency array is provided and what it contains.
+            </p>
+
+            <h4>1. No dependency array</h4>
+
+            <pre><code>
+useEffect(() =&gt; {
+    console.log("Effect");
+});
+            </code></pre>
+
+            <p>
+                Runs after every committed render.
+            </p>
+
+            <h4>2. Empty dependency array</h4>
+
+            <pre><code>
+useEffect(() =&gt; {
+    console.log("Effect");
+}, []);
+            </code></pre>
+
+            <p>
+                Runs after the initial mount. In development Strict Mode,
+                React may run the effect setup and cleanup an additional time.
+            </p>
+
+            <h4>3. Dependency array with values</h4>
+
+            <pre><code>
+useEffect(() =&gt; {
+    console.log("User changed");
+}, [userId]);
+            </code></pre>
+
+            <p>
+                Runs after the initial mount and whenever
+                <code>userId</code> changes.
+            </p>
+
+            <p>
+                In short:
+            </p>
+
+            <ul>
+                <li>No array → every committed render</li>
+                <li><code>[]</code> → initial mount</li>
+                <li><code>[value]</code> → initial mount + when value changes</li>
+            </ul>
+        `
+    },
+
+
+    {
+        question: "What is the cleanup function in useEffect()?",
+
+        answer: `
+            <p>
+                A cleanup function is a function returned from an effect.
+                It is used to clean up resources created by that effect.
+            </p>
+
+            <p>
+                Cleanup is commonly required for event listeners, timers,
+                subscriptions, WebSocket connections, and other external
+                resources.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+useEffect(() =&gt; {
+    const handleResize = () =&gt; {
+        console.log(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () =&gt; {
+        window.removeEventListener("resize", handleResize);
+    };
+}, []);
+            </code></pre>
+
+            <p>
+                React runs the cleanup before the effect is re-run when its
+                dependencies change, and when the component is unmounted.
+            </p>
+
+            <p>
+                The main purpose of cleanup is to prevent memory leaks,
+                duplicate subscriptions, and unwanted side effects.
+            </p>
+        `
+    },
+
+
+    {
+        question: "Why can useEffect() cause an infinite loop?",
+
+        answer: `
+            <p>
+                An infinite loop can occur when an effect updates state and
+                that state change causes the effect to run again.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const [count, setCount] = useState(0);
+
+useEffect(() =&gt; {
+    setCount(count + 1);
+}, [count]);
+            </code></pre>
+
+            <p>
+                Here, the effect runs when <code>count</code> changes. The
+                effect then updates <code>count</code>, which causes another
+                render and runs the effect again.
+            </p>
+
+            <p>
+                Infinite loops can also happen when an effect depends on a
+                value that is recreated on every render, such as an object,
+                array, or function.
+            </p>
+
+            <p>
+                To prevent this, carefully choose dependencies and avoid
+                unnecessary state updates inside effects.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What are common mistakes when using useEffect()?",
+
+        answer: `
+            <p>
+                Common <code>useEffect()</code> mistakes include incorrect
+                dependencies, unnecessary effects, missing cleanup, and
+                creating infinite render loops.
+            </p>
+
+            <h4>Common mistakes:</h4>
+
+            <ul>
+                <li>
+                    Missing required dependencies.
+                </li>
+                <li>
+                    Adding unnecessary dependencies that cause excessive
+                    effect executions.
+                </li>
+                <li>
+                    Updating state inside an effect without proper conditions,
+                    causing an infinite loop.
+                </li>
+                <li>
+                    Forgetting to clean up event listeners, timers, or
+                    subscriptions.
+                </li>
+                <li>
+                    Using effects for calculations that can be performed
+                    directly during rendering.
+                </li>
+                <li>
+                    Making the effect callback itself <code>async</code>.
+                </li>
+            </ul>
+
+            <p>
+                Effects should mainly be used when the component needs to
+                synchronize with something outside React, such as an API,
+                timer, subscription, or browser API.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is useRef()?",
+
+        answer: `
+            <p>
+                <code>useRef()</code> is a React Hook that returns a mutable
+                ref object whose value persists across renders.
+            </p>
+
+            <p>
+                Changing the value of a ref does not cause the component to
+                re-render.
+            </p>
+
+            <h4>Common uses:</h4>
+
+            <ul>
+                <li>Accessing DOM elements</li>
+                <li>Storing mutable values between renders</li>
+                <li>Keeping timer IDs or previous values</li>
+                <li>Interacting with browser APIs</li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+function Input() {
+    const inputRef = useRef(null);
+
+    function focusInput() {
+        inputRef.current.focus();
+    }
+
+    return (
+        &lt;&gt;
+            &lt;input ref={inputRef} /&gt;
+
+            &lt;button onClick={focusInput}&gt;
+                Focus
+            &lt;/button&gt;
+        &lt;/&gt;
+    );
+}
+            </code></pre>
+
+            <p>
+                Here, <code>inputRef.current</code> refers to the input DOM
+                element.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is the difference between useState() and useRef()?",
+
+        answer: `
+            <p>
+                Both <code>useState()</code> and <code>useRef()</code> can
+                store values between renders, but they behave differently
+                when those values change.
+            </p>
+
+            <h4>useState()</h4>
+
+            <ul>
+                <li>Stores state that affects the UI.</li>
+                <li>Updating state causes a re-render.</li>
+                <li>State updates should be done using the setter function.</li>
+            </ul>
+
+            <h4>useRef()</h4>
+
+            <ul>
+                <li>Stores a mutable value between renders.</li>
+                <li>Changing <code>ref.current</code> does not cause a re-render.</li>
+                <li>Commonly used for DOM references and values that do not directly affect the UI.</li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const [count, setCount] = useState(0);
+const renderCount = useRef(0);
+
+renderCount.current++;
+            </code></pre>
+
+            <p>
+                Use <code>useState()</code> when changing the value should
+                update the UI. Use <code>useRef()</code> when you need to
+                persist a value without triggering a re-render.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is useContext()?",
+
+        answer: `
+            <p>
+                <code>useContext()</code> is a React Hook used to consume
+                values from a React Context without manually passing those
+                values through props at every level.
+            </p>
+
+            <p>
+                It is commonly used for values such as authentication
+                information, themes, language settings, or other shared
+                application data.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const UserContext = createContext();
+
+function App() {
+    const user = { name: "John" };
+
+    return (
+        &lt;UserContext.Provider value={user}&gt;
+            &lt;Profile /&gt;
+        &lt;/UserContext.Provider&gt;
+    );
+}
+
+function Profile() {
+    const user = useContext(UserContext);
+
+    return &lt;h2&gt;{user.name}&lt;/h2&gt;;
+}
+            </code></pre>
+
+            <p>
+                Here, <code>Profile</code> can directly access the value from
+                the context without receiving it through intermediate
+                components as props.
+            </p>
+        `
+    },
+
+
+    {
+        question: "When should you use Context API?",
+
+        answer: `
+            <p>
+                Context API should be used when multiple components at
+                different levels of the component tree need access to the
+                same data and passing that data through props would become
+                inconvenient.
+            </p>
+
+            <h4>Common use cases:</h4>
+
+            <ul>
+                <li>Authentication information</li>
+                <li>Theme settings</li>
+                <li>Language or localization settings</li>
+                <li>Application-level preferences</li>
+                <li>Shared state that is relatively stable</li>
+            </ul>
+
+            <p>
+                Context is not automatically a replacement for every state
+                management solution. For complex or frequently changing
+                application state, a dedicated state management approach may
+                be more appropriate.
+            </p>
+
+            <h4>Interview point:</h4>
+
+            <p>
+                Use Context when the main problem is sharing data across
+                many levels of the component tree and avoiding unnecessary
+                prop drilling. Do not put every piece of application state
+                into Context by default.
+            </p>
+        `
+    },
+      {
+        question: "How do you pass data from parent to child in React?",
+
+        answer: `
+            <p>
+                Data is passed from a parent component to a child component
+                using <strong>props</strong>.
+            </p>
+
+            <p>
+                The parent passes the data as an attribute, and the child
+                receives it through its props.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+function Parent() {
+    const name = "Pratap";
+
+    return &lt;Child name={name} /&gt;;
+}
+
+function Child({ name }) {
+    return &lt;h2&gt;Hello, {name}&lt;/h2&gt;;
+}
+            </code></pre>
+
+            <p>
+                Here, the <code>name</code> value is passed from the
+                <code>Parent</code> component to the <code>Child</code>
+                component through props.
+            </p>
+
+            <p>
+                Props provide a one-way flow of data from parent to child.
+            </p>
+        `
+    },
+
+
+    {
+        question: "How does a child send data back to its parent?",
+
+        answer: `
+            <p>
+                A child component can send data back to its parent by calling
+                a callback function passed to it through props.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+function Parent() {
+    const handleData = (data) =&gt; {
+        console.log(data);
+    };
+
+    return &lt;Child onSendData={handleData} /&gt;;
+}
+
+function Child({ onSendData }) {
+    return (
+        &lt;button onClick={() =&gt; onSendData("Hello Parent")}&gt;
+            Send Data
+        &lt;/button&gt;
+    );
+}
+            </code></pre>
+
+            <p>
+                Here, the parent passes <code>handleData</code> to the child.
+                The child calls that function and sends data back to the
+                parent.
+            </p>
+
+            <p>
+                This is commonly described as passing a function from the
+                parent to the child and using it as a callback.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is prop drilling and how can you avoid it?",
+
+        answer: `
+            <p>
+                Prop drilling occurs when data is passed through multiple
+                intermediate components using props, even though those
+                intermediate components do not need the data.
+            </p>
+
+            <p>
+                For example, data may have to travel from a top-level
+                component through several components before reaching the
+                component that actually needs it.
+            </p>
+
+            <h4>Ways to avoid prop drilling:</h4>
+
+            <ul>
+                <li>Use Context API for shared data.</li>
+                <li>Use a state management library when application complexity requires it.</li>
+                <li>Restructure components so related state is closer to where it is used.</li>
+                <li>Use custom Hooks to encapsulate reusable stateful logic.</li>
+            </ul>
+
+            <p>
+                Context is often a good choice when many components need
+                access to the same value, such as the current authenticated
+                user or application theme.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is Context API?",
+
+        answer: `
+            <p>
+                Context API is a built-in React mechanism for sharing data
+                across components without manually passing props through
+                every intermediate component.
+            </p>
+
+            <p>
+                It uses a Context object and a Provider to make a value
+                available to components in a particular part of the
+                component tree.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const ThemeContext = createContext();
+
+function App() {
+    return (
+        &lt;ThemeContext.Provider value="dark"&gt;
+            &lt;Dashboard /&gt;
+        &lt;/ThemeContext.Provider&gt;
+    );
+}
+
+function Dashboard() {
+    const theme = useContext(ThemeContext);
+
+    return &lt;h1&gt;Theme: {theme}&lt;/h1&gt;;
+}
+            </code></pre>
+
+            <p>
+                Here, <code>Dashboard</code> can access the theme directly
+                without receiving it as a prop from every component between
+                <code>App</code> and <code>Dashboard</code>.
+            </p>
+        `
+    },
+
+
+    {
+        question: "Context API vs props — when should you use each?",
+
+        answer: `
+            <p>
+                Both props and Context can be used to share data between
+                components, but they are appropriate for different situations.
+            </p>
+
+            <h4>Use Props when:</h4>
+
+            <ul>
+                <li>A parent directly communicates with a child.</li>
+                <li>The data is specific to a particular component relationship.</li>
+                <li>You want explicit and predictable data flow.</li>
+            </ul>
+
+            <h4>Use Context when:</h4>
+
+            <ul>
+                <li>Many components need the same data.</li>
+                <li>The components are deeply nested.</li>
+                <li>Passing props through intermediate components would cause prop drilling.</li>
+                <li>The data is application-wide or shared across a subtree.</li>
+            </ul>
+
+            <p>
+                Props are usually the simpler choice for direct parent-child
+                communication. Context is useful when shared data needs to be
+                accessed by many components without passing it through every
+                level.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is local state vs global state?",
+
+        answer: `
+            <p>
+                <strong>Local state</strong> belongs to a specific component
+                or a small part of the component tree, while
+                <strong>global state</strong> is shared across multiple
+                unrelated or widely separated components.
+            </p>
+
+            <h4>Local state examples:</h4>
+
+            <ul>
+                <li>Form input values</li>
+                <li>Modal visibility</li>
+                <li>Selected tab</li>
+                <li>Dropdown state</li>
+            </ul>
+
+            <h4>Global state examples:</h4>
+
+            <ul>
+                <li>Authenticated user</li>
+                <li>Shopping cart</li>
+                <li>Application theme</li>
+                <li>Global application preferences</li>
+            </ul>
+
+            <p>
+                Local state can usually be managed with
+                <code>useState()</code> or <code>useReducer()</code>.
+                Shared state can be managed using Context or a state
+                management solution depending on the application's needs.
+            </p>
+
+            <p>
+                A good practice is to keep state as local as possible and
+                make it shared only when multiple parts of the application
+                actually need it.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is derived state?",
+
+        answer: `
+            <p>
+                Derived state is data that can be calculated from existing
+                props or state instead of being stored as a separate state
+                variable.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+function Cart({ items }) {
+    const total = items.reduce(
+        (sum, item) =&gt; sum + item.price,
+        0
+    );
+
+    return &lt;p&gt;Total: ₹{total}&lt;/p&gt;;
+}
+            </code></pre>
+
+            <p>
+                Here, <code>total</code> is derived from <code>items</code>.
+                There is no need to create separate state for
+                <code>total</code>.
+            </p>
+
+            <p>
+                Storing derived data separately can create unnecessary
+                synchronization problems because both the original data and
+                the derived value must stay in sync.
+            </p>
+
+            <p>
+                Whenever possible, calculate derived values during rendering
+                rather than storing them as independent state.
+            </p>
+        `
+    },
+
+
+    {
+        question: "How would you share state between sibling components?",
+
+        answer: `
+            <p>
+                To share state between sibling components, move the shared
+                state to their closest common parent. This is called
+                <strong>lifting state up</strong>.
+            </p>
+
+            <p>
+                The parent then passes the required state and callback
+                functions to each sibling through props.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+function Parent() {
+    const [value, setValue] = useState("");
+
+    return (
+        &lt;&gt;
+            &lt;Input value={value} setValue={setValue} /&gt;
+            &lt;Display value={value} /&gt;
+        &lt;/&gt;
+    );
+}
+
+function Input({ value, setValue }) {
+    return (
+        &lt;input
+            value={value}
+            onChange={e =&gt; setValue(e.target.value)}
+        /&gt;
+    );
+}
+
+function Display({ value }) {
+    return &lt;p&gt;{value}&lt;/p&gt;;
+}
+            </code></pre>
+
+            <p>
+                Both siblings now use the same state because the common
+                parent owns the source of truth.
+            </p>
+        `
+    },
+
+
+    {
+        question: "When should state be lifted up?",
+
+        answer: `
+            <p>
+                State should be lifted up when multiple components need to
+                access or modify the same piece of data.
+            </p>
+
+            <p>
+                The state should be moved to the closest common parent of
+                those components so that the parent becomes the single source
+                of truth.
+            </p>
+
+            <h4>Example situation:</h4>
+
+            <p>
+                Suppose a page has a search input and a product list. If the
+                search input changes the value that the product list uses,
+                the search state can be placed in their common parent.
+            </p>
+
+            <p>
+                The parent can then pass the current value to the product
+                list and a setter or callback to the search component.
+            </p>
+
+            <h4>Important interview point:</h4>
+
+            <p>
+                Do not lift state unnecessarily. If only one component needs
+                the state, keeping it local usually makes the component
+                simpler and avoids unnecessary re-renders.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What are controlled components?",
+
+        answer: `
+            <p>
+                A controlled component is a form element whose value is
+                controlled by React state.
+            </p>
+
+            <p>
+                React becomes the source of truth for the input value.
+                Whenever the user changes the input, an event handler updates
+                the state.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+function Form() {
+    const [name, setName] = useState("");
+
+    return (
+        &lt;input
+            value={name}
+            onChange={e =&gt; setName(e.target.value)}
+        /&gt;
+    );
+}
+            </code></pre>
+
+            <p>
+                Here, the input value comes from <code>name</code> state, and
+                <code>setName()</code> updates that state whenever the user
+                types.
+            </p>
+
+            <p>
+                Controlled components are useful when you need validation,
+                conditional UI, or direct access to the current form values.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What are uncontrolled components?",
+
+        answer: `
+            <p>
+                An uncontrolled component is a form element where the DOM
+                itself maintains the current value instead of React state.
+            </p>
+
+            <p>
+                React can access the value when needed using a ref.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+function Form() {
+    const inputRef = useRef(null);
+
+    function handleSubmit() {
+        console.log(inputRef.current.value);
+    }
+
+    return (
+        &lt;&gt;
+            &lt;input ref={inputRef} /&gt;
+
+            &lt;button onClick={handleSubmit}&gt;
+                Submit
+            &lt;/button&gt;
+        &lt;/&gt;
+    );
+}
+            </code></pre>
+
+            <p>
+                Here, React does not store the input value in state. The DOM
+                maintains the value, and the ref is used to read it when
+                required.
+            </p>
+
+            <p>
+                Uncontrolled components can be useful for simple forms or
+                when working with non-React code, while controlled components
+                provide more direct control over form state.
+            </p>
+        `
+    },
+    {
+        question: "Controlled vs uncontrolled components?",
+
+        answer: `
+            <p>
+                The main difference is where the form value is stored and
+                controlled.
+            </p>
+
+            <h4>Controlled component:</h4>
+
+            <ul>
+                <li>React state stores the input value.</li>
+                <li>React is the source of truth.</li>
+                <li>Changes are handled using event handlers.</li>
+                <li>Useful for validation and dynamic form behavior.</li>
+            </ul>
+
+            <pre><code>
+const [email, setEmail] = useState("");
+
+&lt;input
+    value={email}
+    onChange={e =&gt; setEmail(e.target.value)}
+/&gt;
+            </code></pre>
+
+            <h4>Uncontrolled component:</h4>
+
+            <ul>
+                <li>The DOM stores the input value.</li>
+                <li>A ref can be used to access the value.</li>
+                <li>Less React state management is required.</li>
+                <li>Useful for simple forms and some integrations.</li>
+            </ul>
+
+            <pre><code>
+const inputRef = useRef(null);
+
+&lt;input ref={inputRef} /&gt;
+            </code></pre>
+
+            <p>
+                In most complex React forms, controlled components are often
+                preferred because React has direct control over the form data.
+            </p>
+        `
+    },
+
+
+    {
+        question: "How do you handle multiple form fields using one state object?",
+
+        answer: `
+            <p>
+                Multiple form fields can be managed using a single state
+                object. The input's <code>name</code> attribute can be used
+                to determine which property should be updated.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: ""
+});
+
+function handleChange(e) {
+    const { name, value } = e.target;
+
+    setFormData(prev =&gt; ({
+        ...prev,
+        [name]: value
+    }));
+}
+            </code></pre>
+
+            <p>
+                The spread operator preserves the existing fields while the
+                computed property name updates only the field that changed.
+            </p>
+
+            <h4>Inputs:</h4>
+
+            <pre><code>
+&lt;input
+    name="name"
+    value={formData.name}
+    onChange={handleChange}
+/&gt;
+
+&lt;input
+    name="email"
+    value={formData.email}
+    onChange={handleChange}
+/&gt;
+            </code></pre>
+
+            <p>
+                This approach avoids creating a separate state variable and
+                change handler for every form field.
+            </p>
+        `
+    },
+
+
+    {
+        question: "How do you validate forms in React?",
+
+        answer: `
+            <p>
+                Form validation means checking user input before submitting
+                or processing the form data.
+            </p>
+
+            <p>
+                Validation can be implemented manually using JavaScript or
+                with form libraries such as React Hook Form combined with
+                validation libraries such as Zod or Yup.
+            </p>
+
+            <h4>Basic example:</h4>
+
+            <pre><code>
+const [email, setEmail] = useState("");
+const [error, setError] = useState("");
+
+function handleSubmit(e) {
+    e.preventDefault();
+
+    if (!email.includes("@")) {
+        setError("Please enter a valid email");
+        return;
+    }
+
+    setError("");
+    // Submit form
+}
+            </code></pre>
+
+            <p>
+                Common validation checks include required fields, email
+                format, password length, number ranges, and matching fields
+                such as password confirmation.
+            </p>
+
+            <p>
+                Validation should also be performed on the server because
+                client-side validation can be bypassed.
+            </p>
+        `
+    },
+
+
+    {
+        question: "How do you make an API request in React?",
+
+        answer: `
+            <p>
+                API requests in React are commonly made using
+                <code>fetch()</code> or libraries such as Axios. When the
+                request is a side effect of rendering or a change in
+                dependencies, it is commonly handled inside
+                <code>useEffect()</code>.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+useEffect(() =&gt; {
+    async function fetchUsers() {
+        const response = await fetch("/api/users");
+        const data = await response.json();
+
+        setUsers(data);
+    }
+
+    fetchUsers();
+}, []);
+            </code></pre>
+
+            <p>
+                The API response can then be stored in state and used to
+                render the UI.
+            </p>
+
+            <p>
+                In production applications, API logic is often separated
+                into service functions or custom Hooks rather than placing
+                all request logic directly inside components.
+            </p>
+        `
+    },
+
+
+    {
+        question: "Where should API calls be made in a React application?",
+
+        answer: `
+            <p>
+                API calls should generally be made in response to an event
+                or as an effect that synchronizes the component with an
+                external system.
+            </p>
+
+            <p>
+                For example, data needed when a component loads can be
+                fetched from an effect, while a login API request can be
+                triggered by a form submission.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+useEffect(() =&gt; {
+    fetchUsers();
+}, []);
+            </code></pre>
+
+            <p>
+                For larger applications, it is better to keep API logic
+                outside the UI component by using service functions, custom
+                Hooks, or a data-fetching library.
+            </p>
+
+            <p>
+                This keeps components focused on rendering and user
+                interaction and makes API logic easier to reuse and test.
+            </p>
+        `
+    },
+
+
+    {
+        question: "How do you handle loading, success, and error states?",
+
+        answer: `
+            <p>
+                A common approach is to maintain separate state values for
+                the data, loading status, and error.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const [data, setData] = useState(null);
+const [loading, setLoading] = useState(false);
+const [error, setError] = useState(null);
+
+async function fetchData() {
+    try {
+        setLoading(true);
+        setError(null);
+
+        const response = await fetch("/api/users");
+
+        if (!response.ok) {
+            throw new Error("Failed to fetch users");
+        }
+
+        const result = await response.json();
+        setData(result);
+    } catch (error) {
+        setError(error.message);
+    } finally {
+        setLoading(false);
+    }
+}
+            </code></pre>
+
+            <p>
+                The UI can then render different states depending on these
+                values.
+            </p>
+
+            <pre><code>
+{loading &amp;&amp; &lt;p&gt;Loading...&lt;/p&gt;}
+
+{error &amp;&amp; &lt;p&gt;{error}&lt;/p&gt;}
+
+{data &amp;&amp; &lt;UserList users={data} /&gt;}
+            </code></pre>
+
+            <p>
+                The <code>finally</code> block ensures that loading is reset
+                whether the request succeeds or fails.
+            </p>
+        `
+    },
+
+
+    {
+        question: "How do you handle API errors properly?",
+
+        answer: `
+            <p>
+                API errors should be handled by checking the response,
+                catching network or runtime errors, showing an appropriate
+                message to the user, and logging useful information for
+                debugging.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+try {
+    const response = await fetch("/api/users");
+
+    if (!response.ok) {
+        throw new Error("Unable to fetch users");
+    }
+
+    const data = await response.json();
+    setUsers(data);
+
+} catch (error) {
+    setError(error.message);
+}
+            </code></pre>
+
+            <p>
+                With Axios, HTTP errors are typically rejected automatically,
+                so they can be handled using <code>try/catch</code>.
+            </p>
+
+            <p>
+                A good implementation should distinguish between useful
+                user-facing messages and technical error details. Sensitive
+                backend information should not be exposed to users.
+            </p>
+
+            <p>
+                Authentication errors such as <code>401</code> may also
+                require a specific flow, such as refreshing an access token
+                or redirecting the user to login.
+            </p>
+        `
+    },
+
+
+    {
+        question: "How do you cancel an API request in React?",
+
+        answer: `
+            <p>
+                API requests made with <code>fetch()</code> can be cancelled
+                using <code>AbortController</code>.
+            </p>
+
+            <p>
+                This is useful when a component unmounts before the request
+                finishes or when a newer request makes an older request
+                unnecessary.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+useEffect(() =&gt; {
+    const controller = new AbortController();
+
+    async function fetchUsers() {
+        try {
+            const response = await fetch("/api/users", {
+                signal: controller.signal
+            });
+
+            const data = await response.json();
+            setUsers(data);
+
+        } catch (error) {
+            if (error.name !== "AbortError") {
+                setError(error.message);
+            }
+        }
+    }
+
+    fetchUsers();
+
+    return () =&gt; {
+        controller.abort();
+    };
+}, []);
+            </code></pre>
+
+            <p>
+                The cleanup function calls <code>abort()</code>, which
+                cancels the request when the effect is cleaned up.
+            </p>
+
+            <p>
+                This helps prevent unnecessary work and avoids handling a
+                request that is no longer relevant to the component.
+            </p>
+        `
+    },
+
+
+    {
+        question: "How do you prevent stale API responses from updating state?",
+
+        answer: `
+            <p>
+                A stale API response occurs when an older request finishes
+                after a newer request and incorrectly updates the UI with
+                outdated data.
+            </p>
+
+            <p>
+                A common solution is to cancel the previous request when the
+                relevant dependency changes by using <code>AbortController</code>.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+useEffect(() =&gt; {
+    const controller = new AbortController();
+
+    async function searchUsers() {
+        try {
+            const response = await fetch(
+                '/api/users?search=\${query}',
+                {
+                    signal: controller.signal
+                }
+            );
+
+            const data = await response.json();
+            setUsers(data);
+
+        } catch (error) {
+            if (error.name !== "AbortError") {
+                setError(error.message);
+            }
+        }
+    }
+
+    searchUsers();
+
+    return () =&gt; {
+        controller.abort();
+    };
+}, [query]);
+            </code></pre>
+
+            <p>
+                When <code>query</code> changes, React cleans up the previous
+                effect and aborts the previous request before starting the
+                new one.
+            </p>
+
+            <p>
+                Another approach is to track whether a request is still
+                relevant before updating state, but request cancellation is
+                often preferable when the underlying API supports it.
+            </p>
+        `
+    },
+    {
+        question: "How would you implement pagination in React?",
+
+        answer: `
+            <p>
+                Pagination means dividing a large dataset into smaller
+                pages and loading or displaying one page at a time.
+            </p>
+
+            <p>
+                With an API, the frontend usually sends the current page and
+                page size to the backend.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const [page, setPage] = useState(1);
+const [products, setProducts] = useState([]);
+
+useEffect(() =&gt; {
+    async function fetchProducts() {
+        const response = await fetch(
+            '/api/products?page=\${page}&amp;limit=10'
+        );
+
+        const data = await response.json();
+        setProducts(data.products);
+    }
+
+    fetchProducts();
+}, [page]);
+            </code></pre>
+
+            <p>
+                When <code>page</code> changes, the effect runs again and
+                requests the corresponding page from the API.
+            </p>
+
+            <p>
+                The UI can provide Previous and Next buttons or page numbers
+                to update the <code>page</code> state.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is client-side vs server-side pagination?",
+
+        answer: `
+            <p>
+                The difference is where the pagination happens.
+            </p>
+
+            <h4>Client-side pagination:</h4>
+
+            <p>
+                The application downloads the complete dataset first and
+                then divides it into pages in the browser.
+            </p>
+
+            <ul>
+                <li>Simple to implement.</li>
+                <li>Works well with small datasets.</li>
+                <li>Can require downloading a large amount of data.</li>
+            </ul>
+
+            <h4>Server-side pagination:</h4>
+
+            <p>
+                The frontend requests only the required page from the
+                backend.
+            </p>
+
+            <ul>
+                <li>Better for large datasets.</li>
+                <li>Reduces data transferred to the browser.</li>
+                <li>Reduces the amount of data the browser needs to process.</li>
+            </ul>
+
+            <p>
+                For large production datasets, server-side pagination is
+                commonly preferred because the client does not need to load
+                every record at once.
+            </p>
+        `
+    },
+
+
+    {
+        question: "How would you implement Previous / Next pagination?",
+
+        answer: `
+            <p>
+                Previous and Next pagination can be implemented by keeping
+                the current page in React state and changing that state when
+                the user clicks a button.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const [page, setPage] = useState(1);
+
+function handlePrevious() {
+    setPage(prev =&gt; Math.max(prev - 1, 1));
+}
+
+function handleNext() {
+    setPage(prev =&gt; prev + 1);
+}
+
+return (
+    &lt;div&gt;
+        &lt;button
+            onClick={handlePrevious}
+            disabled={page === 1}
+        &gt;
+            Previous
+        &lt;/button&gt;
+
+        &lt;span&gt;Page {page}&lt;/span&gt;
+
+        &lt;button onClick={handleNext}&gt;
+            Next
+        &lt;/button&gt;
+    &lt;/div&gt;
+);
+            </code></pre>
+
+            <p>
+                The API request can depend on <code>page</code>, so changing
+                the page automatically triggers a new request.
+            </p>
+
+            <p>
+                In a real application, the Next button should also be
+                disabled when the API indicates that there is no next page.
+            </p>
+        `
+    },
+
+
+    {
+        question: "How would you implement page numbers with an API?",
+
+        answer: `
+            <p>
+                Page-number pagination can be implemented by storing the
+                current page in state and sending that page number to the
+                backend API.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const [page, setPage] = useState(1);
+
+useEffect(() =&gt; {
+    async function fetchProducts() {
+        const response = await fetch(
+            '/api/products?page=\${page}&amp;limit=10'
+        );
+
+        const data = await response.json();
+        setProducts(data.products);
+        setTotalPages(data.totalPages);
+    }
+
+    fetchProducts();
+}, [page]);
+            </code></pre>
+
+            <p>
+                The backend can return information such as
+                <code>totalPages</code>, which the frontend can use to
+                generate the page buttons.
+            </p>
+
+            <pre><code>
+{Array.from({ length: totalPages }, (_, index) =&gt; (
+    &lt;button
+        key={index + 1}
+        onClick={() =&gt; setPage(index + 1)}
+    &gt;
+        {index + 1}
+    &lt;/button&gt;
+))}
+            </code></pre>
+
+            <p>
+                The selected page is then sent to the API whenever the user
+                chooses another page.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is infinite scrolling and how is it different from pagination?",
+
+        answer: `
+            <p>
+                Infinite scrolling automatically loads more data as the user
+                approaches the bottom of a page instead of requiring the user
+                to select another page.
+            </p>
+
+            <h4>Pagination:</h4>
+
+            <ul>
+                <li>Data is divided into explicit pages.</li>
+                <li>User navigates using page numbers or Previous/Next buttons.</li>
+                <li>Useful for tables, admin dashboards, and search results.</li>
+            </ul>
+
+            <h4>Infinite scrolling:</h4>
+
+            <ul>
+                <li>More data loads automatically as the user scrolls.</li>
+                <li>Provides a continuous browsing experience.</li>
+                <li>Common in social feeds, product feeds, and content platforms.</li>
+            </ul>
+
+            <p>
+                Infinite scrolling can be implemented using the
+                <code>IntersectionObserver</code> API to detect when a
+                sentinel element near the bottom of the list becomes visible.
+            </p>
+        `
+    },
+
+
+    {
+        question: "How would you implement search with an API?",
+
+        answer: `
+            <p>
+                API-based search usually involves storing the search term in
+                state and sending it to the backend as a query parameter.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const [query, setQuery] = useState("");
+const [users, setUsers] = useState([]);
+
+useEffect(() =&gt; {
+    async function searchUsers() {
+        const response = await fetch(
+            '/api/users?search=\${encodeURIComponent(query)}'
+        );
+
+        const data = await response.json();
+        setUsers(data);
+    }
+
+    searchUsers();
+}, [query]);
+            </code></pre>
+
+            <p>
+                Whenever <code>query</code> changes, the API request runs with
+                the new search term.
+            </p>
+
+            <p>
+                However, sending a request for every keystroke can create
+                unnecessary API calls. Debouncing is commonly used to solve
+                this problem.
+            </p>
+        `
+    },
+
+
+    {
+        question: "How would you prevent an API request on every keystroke?",
+
+        answer: `
+            <p>
+                Debouncing can be used to wait until the user stops typing
+                for a specified amount of time before making the API request.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const [query, setQuery] = useState("");
+const [searchTerm, setSearchTerm] = useState("");
+
+useEffect(() =&gt; {
+    const timer = setTimeout(() =&gt; {
+        setSearchTerm(query);
+    }, 500);
+
+    return () =&gt; clearTimeout(timer);
+}, [query]);
+
+useEffect(() =&gt; {
+    if (!searchTerm) return;
+
+    fetch('/api/products?search=\${searchTerm}');
+}, [searchTerm]);
+            </code></pre>
+
+            <p>
+                If the user types continuously, the previous timer is cleared
+                each time. The API request happens only after the user stops
+                typing for 500 milliseconds.
+            </p>
+
+            <p>
+                This reduces unnecessary API requests and improves the
+                search experience.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is debouncing and how would you implement it in React?",
+
+        answer: `
+            <p>
+                Debouncing delays the execution of a function until a
+                specified amount of time has passed without another call to
+                that function.
+            </p>
+
+            <p>
+                If the function is called again before the delay finishes,
+                the previous timer is cancelled and the timer starts again.
+            </p>
+
+            <p>
+                Debouncing is commonly used for search inputs, autocomplete,
+                and validation.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+useEffect(() =&gt; {
+    const timer = setTimeout(() =&gt; {
+        console.log("Search API called:", query);
+    }, 500);
+
+    return () =&gt; {
+        clearTimeout(timer);
+    };
+}, [query]);
+            </code></pre>
+
+            <p>
+                Here, the API logic runs only after the user has stopped
+                changing <code>query</code> for 500 milliseconds.
+            </p>
+
+            <p>
+                The cleanup function clears the previous timer whenever
+                <code>query</code> changes.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is throttling and how would you implement it in React?",
+
+        answer: `
+            <p>
+                Throttling limits how frequently a function can execute.
+                Unlike debouncing, the function can execute at regular
+                intervals while events continue to occur.
+            </p>
+
+            <p>
+                Throttling is commonly useful for high-frequency events such
+                as scrolling, mouse movement, and window resizing.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+function throttle(fn, delay) {
+    let lastCall = 0;
+
+    return (...args) =&gt; {
+        const now = Date.now();
+
+        if (now - lastCall &gt;= delay) {
+            lastCall = now;
+            fn(...args);
+        }
+    };
+}
+            </code></pre>
+
+            <p>
+                The function above ensures that <code>fn</code> is not
+                executed more frequently than the specified delay.
+            </p>
+
+            <p>
+                In React applications, throttling can be used to limit
+                expensive operations triggered by high-frequency browser
+                events.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is the difference between debouncing and throttling?",
+
+        answer: `
+            <p>
+                Both techniques control how frequently a function executes,
+                but they work differently.
+            </p>
+
+            <h4>Debouncing:</h4>
+
+            <p>
+                Waits until the events stop occurring for a specified period
+                before executing the function.
+            </p>
+
+            <p>
+                Example: Search API request after the user stops typing.
+            </p>
+
+            <h4>Throttling:</h4>
+
+            <p>
+                Allows the function to execute at most once during a
+                specified time interval while events continue occurring.
+            </p>
+
+            <p>
+                Example: Handling a scroll event at controlled intervals.
+            </p>
+
+            <h4>Simple comparison:</h4>
+
+            <ul>
+                <li>
+                    Debounce → "Wait until the user stops."
+                </li>
+                <li>
+                    Throttle → "Run at controlled intervals."
+                </li>
+            </ul>
+
+            <p>
+                Use debouncing when only the final action matters, such as
+                search input. Use throttling when you want periodic updates
+                while the event is continuously happening, such as scrolling.
+            </p>
+        `
+    },
+    {
+        question: "When should you use debouncing vs throttling?",
+        answer: `
+            <p><strong>Debouncing</strong> is useful when you want a function to execute only after the user has stopped performing an action for a certain amount of time.</p>
+
+            <p><strong>Throttling</strong> is useful when you want a function to execute at most once within a specific time interval, even if the event happens repeatedly.</p>
+
+            <h4>Use Debouncing For:</h4>
+            <ul>
+                <li>Search inputs</li>
+                <li>Form validation</li>
+                <li>Autocomplete</li>
+                <li>API requests triggered by typing</li>
+            </ul>
+
+            <h4>Use Throttling For:</h4>
+            <ul>
+                <li>Scroll events</li>
+                <li>Mouse movement</li>
+                <li>Window resize</li>
+                <li>Continuous user interactions</li>
+            </ul>
+
+            <p><strong>Simple rule:</strong> Debounce when you care about the <strong>final action</strong>. Throttle when you need <strong>regular updates while the action continues</strong>.</p>
+        `
+    },
+    {
+        question: "How would you implement a debounced search input in React?",
+        answer: `
+            <p>You can use <code>useEffect</code> with <code>setTimeout</code> and clean up the previous timer whenever the search value changes.</p>
+
+            <h4>Example:</h4>
+            <pre><code>
+const [search, setSearch] = useState("");
+const [debouncedSearch, setDebouncedSearch] = useState("");
+
+useEffect(() =&gt; {
+    const timer = setTimeout(() =&gt; {
+        setDebouncedSearch(search);
+    }, 500);
+
+    return () =&gt; clearTimeout(timer);
+}, [search]);
+
+useEffect(() =&gt; {
+    if (!debouncedSearch) return;
+
+    fetch('/api/products?search=\${encodeURIComponent(debouncedSearch)}');
+}, [debouncedSearch]);
+            </code></pre>
+
+            <p>Here, the API request is triggered only after the user stops typing for <strong>500ms</strong>.</p>
+
+            <p>The cleanup function clears the previous timer, preventing unnecessary API calls.</p>
+        `
+    },
+
+    {
+        question: "How do you implement search with pagination in React?",
+        answer: `
+            <p>Search and pagination can be handled by keeping both the <code>search</code> value and the current <code>page</code> in state.</p>
+
+            <p>Whenever the search term changes, the page should usually be reset to <strong>1</strong>.</p>
+
+            <h4>Example:</h4>
+            <pre><code>
+const [search, setSearch] = useState("");
+const [page, setPage] = useState(1);
+
+useEffect(() =&gt; {
+    const fetchProducts = async () =&gt; {
+        const response = await fetch(
+            '/api/products?search=\${encodeURIComponent(search)}&amp;page=\${page}'
+        );
+
+        const data = await response.json();
+        setProducts(data.products);
+    };
+
+    fetchProducts();
+}, [search, page]);
+
+const handleSearch = (value) =&gt; {
+    setSearch(value);
+    setPage(1);
+};
+            </code></pre>
+
+            <p>This ensures that changing the search term starts the results from the first page.</p>
+
+            <p>For large datasets, the pagination should generally be handled on the <strong>server</strong> rather than loading all records into the browser.</p>
+        `
+    },
+
+    {
+        question: "What is React.memo and why is it used?",
+        answer: `
+            <p><code>React.memo</code> is a higher-order component used to prevent a functional component from re-rendering when its props have not changed.</p>
+
+            <h4>Example:</h4>
+            <pre><code>
+const UserCard = React.memo(({ name }) =&gt; {
+    console.log("UserCard rendered");
+
+    return &lt;h2&gt;{name}&lt;/h2&gt;;
+});
+            </code></pre>
+
+            <p>If the parent component re-renders but the <code>name</code> prop remains the same, React can skip rendering <code>UserCard</code>.</p>
+
+            <p>By default, React compares the component's props using a shallow comparison based on <code>Object.is</code>.</p>
+
+            <p><strong>Important:</strong> <code>React.memo</code> is a performance optimization, not something that should automatically be added to every component.</p>
+        `
+    },
+
+    {
+        question: "What is useMemo in React?",
+        answer: `
+            <p><code>useMemo</code> is a React Hook that caches the result of an expensive calculation and recalculates it only when its dependencies change.</p>
+
+            <h4>Example:</h4>
+            <pre><code>
+const filteredProducts = useMemo(() =&gt; {
+    return products.filter(product =&gt;
+        product.name
+            .toLowerCase()
+            .includes(search.toLowerCase())
+    );
+}, [products, search]);
+            </code></pre>
+
+            <p>Here, the filtering calculation runs again only when <code>products</code> or <code>search</code> changes.</p>
+
+            <p><strong>Important:</strong> <code>useMemo</code> should mainly be used when the calculation is expensive or when preserving a stable value is important. It should not be used everywhere by default.</p>
+        `
+    },
+
+    {
+        question: "What is useCallback in React?",
+        answer: `
+            <p><code>useCallback</code> is a React Hook that caches a function reference between renders until its dependencies change.</p>
+
+            <h4>Example:</h4>
+            <pre><code>
+const handleDelete = useCallback((id) =&gt; {
+    deleteProduct(id);
+}, [deleteProduct]);
+            </code></pre>
+
+            <p>Without <code>useCallback</code>, a new function object would normally be created whenever the component renders.</p>
+
+            <p>This can be useful when passing callbacks to memoized child components because a stable function reference can prevent unnecessary child re-renders.</p>
+
+            <p><strong>Important:</strong> <code>useCallback</code> does not make the function itself faster. It mainly preserves its reference.</p>
+        `
+    },
+
+    {
+        question: "What is the difference between React.memo, useMemo, and useCallback?",
+        answer: `
+            <p>All three are related to performance optimization, but they optimize different things.</p>
+
+            <ul>
+                <li><strong>React.memo</strong> → memoizes a component.</li>
+                <li><strong>useMemo</strong> → memoizes the result of a calculation.</li>
+                <li><strong>useCallback</strong> → memoizes a function reference.</li>
+            </ul>
+
+            <h4>Example:</h4>
+            <pre><code>
+const UserCard = React.memo(UserCardComponent);
+
+const filteredUsers = useMemo(() =&gt; {
+    return users.filter(user =&gt; user.active);
+}, [users]);
+
+const handleClick = useCallback(() =&gt; {
+    console.log("Clicked");
+}, []);
+            </code></pre>
+
+            <p><strong>Easy interview explanation:</strong></p>
+            <ul>
+                <li><code>React.memo</code> → "Don't re-render this component unnecessarily."</li>
+                <li><code>useMemo</code> → "Don't recalculate this value unnecessarily."</li>
+                <li><code>useCallback</code> → "Don't create a new function reference unnecessarily."</li>
+            </ul>
+        `
+    },
+
+    {
+        question: "When should you use memoization in React?",
+        answer: `
+            <p>Memoization should be used when there is a measurable or likely performance benefit, not simply because it is available.</p>
+
+            <p>You might use memoization when:</p>
+
+            <ul>
+                <li>A calculation is computationally expensive.</li>
+                <li>A component renders frequently with the same props.</li>
+                <li>A function is passed to a memoized child component.</li>
+                <li>A stable object, value, or function reference is required.</li>
+            </ul>
+
+            <h4>Example:</h4>
+            <pre><code>
+const expensiveResult = useMemo(() =&gt; {
+    return performExpensiveCalculation(data);
+}, [data]);
+            </code></pre>
+
+            <p>Before adding memoization, it's better to identify the actual performance problem. For small calculations or simple components, memoization may provide little or no benefit.</p>
+        `
+    },
+
+    {
+        question: "Can excessive use of memoization hurt React performance?",
+        answer: `
+            <p>Yes. Excessive memoization can make an application more complicated and can sometimes hurt performance.</p>
+
+            <p>Hooks such as <code>useMemo</code> and <code>useCallback</code> also have their own bookkeeping and dependency tracking costs.</p>
+
+            <p>For example, using <code>useMemo</code> for a very simple calculation may cost more than simply performing the calculation again.</p>
+
+            <h4>Bad Example:</h4>
+            <pre><code>
+const fullName = useMemo(() =&gt; {
+    return firstName + " " + lastName;
+}, [firstName, lastName]);
+            </code></pre>
+
+            <p>For such a simple calculation, <code>useMemo</code> is usually unnecessary.</p>
+
+            <p><strong>Interview answer:</strong> Memoization is a performance optimization. I would use it when profiling or the component's behavior shows that it provides a meaningful benefit, rather than using it everywhere.</p>
+        `
+    },
+    {
+        question: "How would you optimize a slow React application or component?",
+        answer: `
+            <p>To optimize a slow React application, I would first identify the actual performance bottleneck and then apply the appropriate optimization.</p>
+
+            <h4>Common Optimization Techniques:</h4>
+            <ul>
+                <li>Use <code>React.memo</code> to avoid unnecessary component re-renders.</li>
+                <li>Use <code>useMemo</code> for expensive calculations.</li>
+                <li>Use <code>useCallback</code> when stable function references are useful.</li>
+                <li>Lazy-load components that are not immediately required.</li>
+                <li>Use pagination or virtualization for large lists.</li>
+                <li>Avoid unnecessary state updates.</li>
+                <li>Keep state as local as possible.</li>
+                <li>Optimize API requests and avoid unnecessary requests.</li>
+                <li>Use the React DevTools Profiler to identify expensive renders.</li>
+            </ul>
+
+            <h4>Example:</h4>
+            <pre><code>
+const ProductList = React.memo(({ products }) =&gt; {
+    return (
+        &lt;div&gt;
+            {products.map(product =&gt; (
+                &lt;ProductCard key={product.id} product={product} /&gt;
+            ))}
+        &lt;/div&gt;
+    );
+});
+            </code></pre>
+
+            <p><strong>Interview answer:</strong> I would first profile the application to find the bottleneck instead of blindly adding memoization. Then I would optimize unnecessary renders, expensive calculations, large lists, API calls, and bundle size based on the actual issue.</p>
+        `
+    },
+
+    {
+        question: "What is lazy loading in React?",
+        answer: `
+            <p><strong>Lazy loading</strong> means loading a component or resource only when it is actually needed instead of loading everything when the application initially starts.</p>
+
+            <p>In React, lazy loading is commonly used for components and routes to reduce the initial JavaScript bundle size.</p>
+
+            <h4>Example:</h4>
+            <pre><code>
+const Dashboard = lazy(() =&gt; import("./Dashboard"));
+            </code></pre>
+
+            <p>Instead of downloading the Dashboard component immediately, its JavaScript can be loaded when the component is required.</p>
+
+            <p>This can improve the application's initial loading performance, especially for large applications.</p>
+        `
+    },
+
+    {
+        question: "What is React.lazy?",
+        answer: `
+            <p><code>React.lazy</code> allows you to dynamically import a React component so that its code can be loaded only when the component is rendered.</p>
+
+            <h4>Example:</h4>
+            <pre><code>
+import { lazy } from "react";
+
+const Profile = lazy(() =&gt; import("./Profile"));
+            </code></pre>
+
+            <p>The imported component is loaded asynchronously.</p>
+
+            <p>Because the component may not be available immediately, it is normally rendered inside a <code>Suspense</code> boundary.</p>
+
+            <h4>Example:</h4>
+            <pre><code>
+&lt;Suspense fallback={&lt;p&gt;Loading...&lt;/p&gt;}&gt;
+    &lt;Profile /&gt;
+&lt;/Suspense&gt;
+            </code></pre>
+
+            <p><strong>Interview answer:</strong> React.lazy is used for component-level code splitting. It dynamically imports a component and allows its code to be loaded only when needed.</p>
+        `
+    },
+
+    {
+        question: "What is Suspense in React?",
+        answer: `
+            <p><code>Suspense</code> allows React to display a fallback UI while something inside the Suspense boundary is not ready to be rendered.</p>
+
+            <p>A common use case is showing a loading state while a lazily loaded component is being downloaded.</p>
+
+            <h4>Example:</h4>
+            <pre><code>
+import { Suspense, lazy } from "react";
+
+const Dashboard = lazy(() =&gt; import("./Dashboard"));
+
+function App() {
+    return (
+        &lt;Suspense fallback={&lt;div&gt;Loading...&lt;/div&gt;}&gt;
+            &lt;Dashboard /&gt;
+        &lt;/Suspense&gt;
+    );
+}
+            </code></pre>
+
+            <p>While <code>Dashboard</code> is loading, React displays the fallback UI.</p>
+
+            <p><strong>Important:</strong> Suspense is not simply a generic loading component. It coordinates React's rendering with things that can suspend, such as lazy-loaded components.</p>
+        `
+    },
+
+    {
+        question: "What is code splitting in React?",
+        answer: `
+            <p><strong>Code splitting</strong> is the process of splitting an application's JavaScript bundle into smaller chunks that can be loaded when required instead of downloading the entire application at once.</p>
+
+            <p>This can improve the initial loading performance of large applications.</p>
+
+            <h4>Example:</h4>
+            <pre><code>
+const AdminPanel = lazy(() =&gt; import("./AdminPanel"));
+            </code></pre>
+
+            <p>Here, the AdminPanel code can be placed in a separate JavaScript chunk and loaded when the component is needed.</p>
+
+            <p>React's <code>lazy</code> and JavaScript dynamic <code>import()</code> are commonly used to implement code splitting.</p>
+
+            <p><strong>Simple explanation:</strong> Instead of sending the whole application at once, send only the code needed for the current part of the application.</p>
+        `
+    },
+
+    {
+        question: "How do you optimize rendering of a large list in React?",
+        answer: `
+            <p>Rendering thousands of elements at once can make a React application slow. I would use techniques such as pagination, virtualization, memoization, and efficient data handling.</p>
+
+            <h4>Common Techniques:</h4>
+            <ul>
+                <li><strong>Pagination:</strong> Render only a limited number of items at a time.</li>
+                <li><strong>Virtualization:</strong> Render only the items currently visible on screen.</li>
+                <li><strong>Memoization:</strong> Prevent unchanged list items from re-rendering unnecessarily.</li>
+                <li><strong>Stable keys:</strong> Use unique and stable keys for list items.</li>
+                <li><strong>Efficient calculations:</strong> Avoid expensive calculations during every render.</li>
+            </ul>
+
+            <h4>Example:</h4>
+            <pre><code>
+{users.map(user =&gt; (
+    &lt;UserCard
+        key={user.id}
+        user={user}
+    /&gt;
+))}
+            </code></pre>
+
+            <p>For extremely large lists, virtualization libraries such as <code>react-window</code> can render only the visible portion of the list.</p>
+
+            <p><strong>Interview answer:</strong> For large datasets, I would first consider server-side pagination or infinite scrolling. If a very large number of items must be displayed, I would use virtualization to avoid rendering all items simultaneously.</p>
+        `
+    },
+
+    {
+        question: "What is React Router?",
+        answer: `
+            <p><strong>React Router</strong> is a routing library used to handle navigation and different URLs in a React application without requiring a full page reload.</p>
+
+            <p>It allows a single-page application to display different components based on the current URL.</p>
+
+            <h4>Example:</h4>
+            <pre><code>
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+function App() {
+    return (
+        &lt;BrowserRouter&gt;
+            &lt;Routes&gt;
+                &lt;Route path="/" element={&lt;Home /&gt;} /&gt;
+                &lt;Route path="/about" element={&lt;About /&gt;} /&gt;
+                &lt;Route path="/profile" element={&lt;Profile /&gt;} /&gt;
+            &lt;/Routes&gt;
+        &lt;/BrowserRouter&gt;
+    );
+}
+            </code></pre>
+
+            <p>When the URL changes, React Router determines which route component should be rendered.</p>
+
+            <p><strong>Interview answer:</strong> React Router provides client-side routing for React applications, allowing navigation between views without performing a complete browser page reload.</p>
+        `
+    },
+
+    {
+        question: "What is the difference between Link and the HTML anchor tag in React?",
+        answer: `
+            <p>Both <code>Link</code> and <code>&lt;a&gt;</code> can be used for navigation, but they behave differently in a React single-page application.</p>
+
+            <h4>Link:</h4>
+            <pre><code>
+&lt;Link to="/profile"&gt;Profile&lt;/Link&gt;
+            </code></pre>
+
+            <p><code>Link</code> is provided by React Router and performs client-side navigation without completely reloading the page.</p>
+
+            <h4>Anchor Tag:</h4>
+            <pre><code>
+&lt;a href="/profile"&gt;Profile&lt;/a&gt;
+            </code></pre>
+
+            <p>The normal anchor tag causes the browser to navigate to the URL normally, which can result in a full page reload.</p>
+
+            <p><strong>Interview answer:</strong> In a React Router application, I generally use <code>Link</code> for internal navigation because it enables client-side routing. I use an anchor tag when normal browser navigation is required, such as linking to an external website.</p>
+        `
+    },
+
+    {
+        question: "What is useNavigate in React Router?",
+        answer: `
+            <p><code>useNavigate</code> is a React Router Hook that allows you to navigate programmatically from JavaScript code.</p>
+
+            <h4>Example:</h4>
+            <pre><code>
+import { useNavigate } from "react-router-dom";
+
+function Login() {
+    const navigate = useNavigate();
+
+    const handleLogin = () =&gt; {
+        // Login logic
+        navigate("/profile");
+    };
+
+    return (
+        &lt;button onClick={handleLogin}&gt;
+            Login
+        &lt;/button&gt;
+    );
+}
+            </code></pre>
+
+            <p>You can also navigate backward or forward through the browser history.</p>
+
+            <pre><code>
+navigate(-1);
+            </code></pre>
+
+            <p><strong>Common use cases:</strong></p>
+            <ul>
+                <li>Redirecting after login</li>
+                <li>Redirecting after form submission</li>
+                <li>Programmatic navigation after an API request</li>
+                <li>Going back to the previous page</li>
+            </ul>
+        `
+    },
+
+    {
+        question: "What is useParams in React Router?",
+        answer: `
+            <p><code>useParams</code> is a React Router Hook used to access dynamic parameters from the current URL.</p>
+
+            <h4>Route:</h4>
+            <pre><code>
+&lt;Route path="/users/:id" element={&lt;UserProfile /&gt;} /&gt;
+            </code></pre>
+
+            <p>If the URL is:</p>
+
+            <pre><code>
+/users/123
+            </code></pre>
+
+            <p>You can access the <code>id</code> using <code>useParams</code>.</p>
+
+            <h4>Example:</h4>
+            <pre><code>
+import { useParams } from "react-router-dom";
+
+function UserProfile() {
+    const { id } = useParams();
+
+    return &lt;h2&gt;User ID: {id}&lt;/h2&gt;;
+}
+            </code></pre>
+
+            <p>Here, <code>id</code> will contain <code>"123"</code>.</p>
+
+            <p><strong>Common use case:</strong> Fetching data for a specific resource based on its ID in the URL.</p>
+        `
+    },
+
+    {
+        question: "What are protected routes or private routes in React?",
+        answer: `
+            <p>A <strong>protected route</strong> is a route that should only be accessible to authenticated or authorized users.</p>
+
+            <p>For example, a profile page may only be accessible when the user is logged in.</p>
+
+            <h4>Example:</h4>
+            <pre><code>
+function ProtectedRoute({ children }) {
+    const { accessToken } = useContext(authContext);
+
+    if (!accessToken) {
+        return &lt;Navigate to="/login" replace /&gt;;
+    }
+
+    return children;
+}
+            </code></pre>
+
+            <p>Then it can be used with a route:</p>
+
+            <pre><code>
+&lt;Route
+    path="/profile"
+    element={
+        &lt;ProtectedRoute&gt;
+            &lt;Profile /&gt;
+        &lt;/ProtectedRoute&gt;
+    }
+/&gt;
+            </code></pre>
+
+            <p>If the user is not authenticated, they are redirected to the login page.</p>
+
+            <p><strong>Important:</strong> Protected routes improve the client-side user experience, but they are <strong>not a replacement for backend authorization</strong>. The server must also verify authentication and permissions before returning protected data.</p>
+        `
+    },
+    {
+        question: "How do you implement authentication with protected routes in React?",
+        answer: `
+            <p>Authentication with protected routes usually involves storing the user's authentication state and checking it before allowing access to protected pages.</p>
+
+            <h4>Basic Flow:</h4>
+            <ol>
+                <li>User logs in.</li>
+                <li>Backend verifies the credentials.</li>
+                <li>Backend provides authentication tokens or a session.</li>
+                <li>React stores the authentication state.</li>
+                <li>Protected routes check whether the user is authenticated.</li>
+                <li>If authenticated, the user can access the route; otherwise, they are redirected to login.</li>
+            </ol>
+
+            <h4>Example:</h4>
+            <pre><code>
+function ProtectedRoute({ children }) {
+    const { accessToken } = useContext(authContext);
+
+    if (!accessToken) {
+        return &lt;Navigate to="/login" replace /&gt;;
+    }
+
+    return children;
+}
+            </code></pre>
+
+            <p>The backend must also protect its APIs. Client-side route protection alone cannot secure private data because users can directly call backend APIs.</p>
+        `
+    },
+
+    {
+        question: "How do you maintain authentication after refreshing the page in React?",
+        answer: `
+            <p>React state is stored in memory, so it is reset when the page is refreshed. Therefore, authentication needs a mechanism to restore the user's session.</p>
+
+            <p>A common approach is:</p>
+
+            <ol>
+                <li>Keep the short-lived access token in memory.</li>
+                <li>Store a long-lived refresh token securely, commonly in an <code>HttpOnly</code>, <code>Secure</code> cookie.</li>
+                <li>When the application starts, call a refresh endpoint.</li>
+                <li>The backend validates the refresh token and returns a new access token.</li>
+                <li>React stores the new access token in memory.</li>
+            </ol>
+
+            <h4>Example:</h4>
+            <pre><code>
+useEffect(() =&gt; {
+    const restoreSession = async () =&gt; {
+        try {
+            const response = await api.post("/auth/refresh");
+
+            setAccessToken(response.data.accessToken);
+        } catch (error) {
+            setAccessToken(null);
+        }
+    };
+
+    restoreSession();
+}, []);
+            </code></pre>
+
+            <p>This allows the application to restore authentication after a browser refresh without keeping the access token permanently in React state.</p>
+        `
+    },
+
+    {
+        question: "Where should you store authentication tokens in a React application?",
+        answer: `
+            <p>The answer depends on the authentication architecture and security requirements.</p>
+
+            <p>A common approach for web applications is:</p>
+
+            <ul>
+                <li><strong>Access token:</strong> Keep it in memory when practical, such as React state or another in-memory store.</li>
+                <li><strong>Refresh token:</strong> Store it in a secure <code>HttpOnly</code> cookie so JavaScript cannot directly access it.</li>
+            </ul>
+
+            <h4>Why HttpOnly Cookie?</h4>
+            <p>An <code>HttpOnly</code> cookie cannot be read using JavaScript, which reduces the risk of JavaScript-based token theft through certain XSS attacks.</p>
+
+            <p>The cookie should also generally use security attributes such as <code>Secure</code> and an appropriate <code>SameSite</code> policy.</p>
+
+            <p><strong>Important:</strong> Storing sensitive long-lived tokens in <code>localStorage</code> makes them directly accessible to JavaScript, so it requires careful consideration of XSS risks.</p>
+
+            <p><strong>Interview answer:</strong> For a common access/refresh-token architecture, I would keep the short-lived access token in memory and use a secure HttpOnly cookie for the refresh token.</p>
+        `
+    },
+
+    {
+        question: "How do you redirect an unauthenticated user in React?",
+        answer: `
+            <p>You can use React Router's <code>Navigate</code> component to redirect a user when they are not authenticated.</p>
+
+            <h4>Example:</h4>
+            <pre><code>
+function ProtectedRoute({ children }) {
+    const { accessToken } = useContext(authContext);
+
+    if (!accessToken) {
+        return &lt;Navigate to="/login" replace /&gt;;
+    }
+
+    return children;
+}
+            </code></pre>
+
+            <p>The <code>replace</code> prop prevents the protected page from remaining in the browser history in the same way as a normal pushed navigation.</p>
+
+            <p>After successful login, the user can then be redirected back to the protected page.</p>
+        `
+    },
+
+    {
+        question: "How do you implement logout in React?",
+        answer: `
+            <p>Logout should remove the user's authentication state and invalidate the server-side session or refresh token when applicable.</p>
+
+            <h4>Example:</h4>
+            <pre><code>
+const handleLogout = async () =&gt; {
+    try {
+        await api.post("/auth/logout");
+    } finally {
+        setAccessToken(null);
+        navigate("/login");
+    }
+};
+            </code></pre>
+
+            <p>The backend logout endpoint should invalidate the refresh token or session and clear the authentication cookie if one is being used.</p>
+
+            <p>On the frontend, the authentication state should be cleared and the user should be redirected to the login page.</p>
+
+            <p><strong>Important:</strong> Simply deleting a frontend token is not always enough. If the application uses refresh tokens or server-side sessions, those should also be invalidated appropriately.</p>
+        `
+    },
+
+    {
+        question: "What are custom Hooks in React?",
+        answer: `
+            <p>A <strong>custom Hook</strong> is a reusable JavaScript function whose name starts with <code>use</code> and that can use React Hooks internally.</p>
+
+            <p>Custom Hooks allow you to extract reusable stateful logic from components.</p>
+
+            <h4>Example:</h4>
+            <pre><code>
+function useCounter() {
+    const [count, setCount] = useState(0);
+
+    const increment = () =&gt; {
+        setCount(prev =&gt; prev + 1);
+    };
+
+    return {
+        count,
+        increment
+    };
+}
+            </code></pre>
+
+            <p>A component can then use it:</p>
+
+            <pre><code>
+function Counter() {
+    const { count, increment } = useCounter();
+
+    return (
+        &lt;&gt;
+            &lt;p&gt;{count}&lt;/p&gt;
+            &lt;button onClick={increment}&gt;
+                Increment
+            &lt;/button&gt;
+        &lt;/&gt;
+    );
+}
+            </code></pre>
+
+            <p><strong>Benefit:</strong> Custom Hooks allow you to reuse logic without duplicating it across multiple components.</p>
+        `
+    },
+
+    {
+        question: "How would you create a custom Hook for API calls?",
+        answer: `
+            <p>A custom API Hook can encapsulate common API state such as loading, data, and errors.</p>
+
+            <h4>Example:</h4>
+            <pre><code>
+function useApi(url) {
+    const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() =&gt; {
+        const fetchData = async () =&gt; {
+            try {
+                setLoading(true);
+
+                const response = await fetch(url);
+
+                if (!response.ok) {
+                    throw new Error("Request failed");
+                }
+
+                const result = await response.json();
+
+                setData(result);
+            } catch (error) {
+                setError(error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, [url]);
+
+    return {
+        data,
+        loading,
+        error
+    };
+}
+            </code></pre>
+
+            <p>Now multiple components can reuse the same API-fetching logic:</p>
+
+            <pre><code>
+const { data, loading, error } = useApi("/api/products");
+            </code></pre>
+
+            <p>In a production application, the Hook may also handle cancellation, authentication, caching, retries, and refetching depending on the requirements.</p>
+        `
+    },
+
+    {
+        question: "What are the Rules of Hooks in React?",
+        answer: `
+            <p>React Hooks follow specific rules so that React can correctly preserve Hook state between renders.</p>
+
+            <h4>Rule 1: Only call Hooks at the top level</h4>
+
+            <p>Do not call Hooks inside loops, conditions, nested functions, or <code>try/catch</code> blocks.</p>
+
+            <pre><code>
+// Incorrect
+if (isLoggedIn) {
+    const [user, setUser] = useState(null);
+}
+            </code></pre>
+
+            <h4>Rule 2: Only call Hooks from React functions</h4>
+
+            <p>Hooks should be called from:</p>
+
+            <ul>
+                <li>React function components</li>
+                <li>Custom Hooks</li>
+            </ul>
+
+            <h4>Example:</h4>
+            <pre><code>
+function Profile() {
+    const [name, setName] = useState("");
+
+    return &lt;h2&gt;{name}&lt;/h2&gt;;
+}
+            </code></pre>
+
+            <p>Following these rules allows React to maintain the correct order of Hook calls between renders.</p>
+        `
+    },
+
+    {
+        question: "Why can't Hooks be called inside loops or conditions?",
+        answer: `
+            <p>Hooks must be called in the same order on every render. React relies on the order of Hook calls to associate each Hook with its stored state and other internal information.</p>
+
+            <h4>Incorrect:</h4>
+            <pre><code>
+function Component({ isLoggedIn }) {
+    if (isLoggedIn) {
+        const [user, setUser] = useState(null);
+    }
+
+    const [count, setCount] = useState(0);
+}
+            </code></pre>
+
+            <p>If <code>isLoggedIn</code> changes between renders, the number and order of Hook calls can change.</p>
+
+            <h4>Correct:</h4>
+            <pre><code>
+function Component({ isLoggedIn }) {
+    const [user, setUser] = useState(null);
+    const [count, setCount] = useState(0);
+
+    if (isLoggedIn) {
+        // Use the state here
+    }
+}
+            </code></pre>
+
+            <p>The Hook calls remain at the top level and always execute in the same order.</p>
+
+            <p><strong>Interview answer:</strong> Hooks cannot be called conditionally because React relies on a consistent Hook call order between renders to correctly preserve Hook state.</p>
+        `
+    },
+
+    {
+        question: "What is React Strict Mode?",
+        answer: `
+            <p><code>StrictMode</code> is a development-only feature in React that helps identify potential problems in an application.</p>
+
+            <h4>Example:</h4>
+            <pre><code>
+import { StrictMode } from "react";
+
+createRoot(document.getElementById("root")).render(
+    &lt;StrictMode&gt;
+        &lt;App /&gt;
+    &lt;/StrictMode&gt;
+);
+            </code></pre>
+
+            <p>Strict Mode can help detect issues such as:</p>
+
+            <ul>
+                <li>Unexpected side effects</li>
+                <li>Impure rendering logic</li>
+                <li>Deprecated APIs</li>
+                <li>Missing effect cleanup</li>
+                <li>Other development-time problems</li>
+            </ul>
+
+            <p>Some React behavior may intentionally happen more than once in development under Strict Mode so that unsafe side effects become easier to detect.</p>
+
+            <p><strong>Important:</strong> These development-only checks do not mean that the application performs the same extra work in production.</p>
+        `
+    },
+
+    {
+        question: "Why does useEffect run twice in React Strict Mode?",
+        answer: `
+            <p>In development, React Strict Mode may intentionally run an Effect's setup and cleanup sequence an extra time to help detect side-effect bugs.</p>
+
+            <h4>Example:</h4>
+            <pre><code>
+useEffect(() =&gt; {
+    console.log("Effect started");
+
+    return () =&gt; {
+        console.log("Effect cleaned up");
+    };
+}, []);
+            </code></pre>
+
+            <p>In development with Strict Mode, React may perform a sequence similar to:</p>
+
+            <ol>
+                <li>Run the Effect setup.</li>
+                <li>Run the cleanup.</li>
+                <li>Run the Effect setup again.</li>
+            </ol>
+
+            <p>This helps reveal Effects that are not properly cleaned up.</p>
+
+            <p><strong>Important:</strong> This behavior is development-only. It does not mean React normally runs the Effect twice in production.</p>
+        `
+    },
+
+    {
+        question: "What are Error Boundaries in React?",
+        answer: `
+            <p><strong>Error Boundaries</strong> are React components that catch JavaScript errors occurring during rendering or in certain lifecycle operations in their child component tree and display a fallback UI instead of crashing the entire UI tree.</p>
+
+            <p>Traditionally, Error Boundaries are implemented using class components with <code>getDerivedStateFromError</code> and/or <code>componentDidCatch</code>.</p>
+
+            <h4>Example:</h4>
+            <pre><code>
+class ErrorBoundary extends React.Component {
+    state = {
+        hasError: false
+    };
+
+    static getDerivedStateFromError() {
+        return {
+            hasError: true
+        };
+    }
+
+    componentDidCatch(error, info) {
+        console.error(error, info);
+    }
+
+    render() {
+        if (this.state.hasError) {
+            return &lt;h2&gt;Something went wrong.&lt;/h2&gt;;
+        }
+
+        return this.props.children;
+    }
+}
+            </code></pre>
+
+            <p>You can then wrap part of the application:</p>
+
+            <pre><code>
+&lt;ErrorBoundary&gt;
+    &lt;Dashboard /&gt;
+&lt;/ErrorBoundary&gt;
+            </code></pre>
+
+            <p><strong>Important:</strong> Error Boundaries do not automatically catch errors from event handlers or every kind of asynchronous code. Those errors should be handled separately.</p>
+        `
+    },
+
+    {
+        question: "What is hydration in React?",
+        answer: `
+            <p><strong>Hydration</strong> is the process where React attaches its behavior and event handlers to HTML that was already generated on the server.</p>
+
+            <p>It is commonly used with server-side rendering frameworks such as Next.js.</p>
+
+            <h4>Basic Flow:</h4>
+            <ol>
+                <li>The server generates HTML for the page.</li>
+                <li>The browser receives and displays that HTML.</li>
+                <li>JavaScript loads in the browser.</li>
+                <li>React hydrates the existing HTML and attaches the necessary behavior.</li>
+            </ol>
+
+            <p>For example, a server may send:</p>
+
+            <pre><code>
+&lt;button&gt;Click me&lt;/button&gt;
+            </code></pre>
+
+            <p>After hydration, React can attach the event handling required for that button to become interactive.</p>
+
+            <p><strong>Important:</strong> The server-rendered HTML and the initial client render need to match appropriately. Otherwise, React can report hydration mismatch warnings or errors.</p>
+        `
+    },
+
+    {
+        question: "What is SSR in React?",
+        answer: `
+            <p><strong>SSR (Server-Side Rendering)</strong> means rendering the initial HTML of a React application on the server before sending it to the browser.</p>
+
+            <h4>Basic Flow:</h4>
+            <ol>
+                <li>Browser requests a page.</li>
+                <li>Server renders the React UI into HTML.</li>
+                <li>Server sends the HTML to the browser.</li>
+                <li>Browser can display the initial content.</li>
+                <li>React JavaScript loads and hydrates the page.</li>
+            </ol>
+
+            <p>SSR can provide benefits such as faster initial content display and better handling of pages where search-engine-visible HTML is important.</p>
+
+            <p>Frameworks such as Next.js provide server-rendering capabilities for React applications.</p>
+
+            <p><strong>Important:</strong> SSR does not mean that all React code runs only on the server. Client-side JavaScript can still be required to make interactive UI elements work.</p>
+        `
+    },
+
+    {
+        question: "What is the difference between CSR and SSR in React?",
+        answer: `
+            <p><strong>CSR (Client-Side Rendering)</strong> and <strong>SSR (Server-Side Rendering)</strong> differ mainly in where the initial UI rendering happens.</p>
+
+            <h4>CSR:</h4>
+            <ul>
+                <li>The browser downloads JavaScript.</li>
+                <li>React runs in the browser.</li>
+                <li>The application renders the UI on the client.</li>
+            </ul>
+
+            <h4>SSR:</h4>
+            <ul>
+                <li>The server generates the initial HTML.</li>
+                <li>The browser receives already-rendered HTML.</li>
+                <li>React hydrates the HTML to make it interactive.</li>
+            </ul>
+
+            <h4>Simple Comparison:</h4>
+
+            <pre><code>
+CSR:
+Browser
+   ↓
+JavaScript
+   ↓
+React renders UI
+
+
+SSR:
+Browser
+   ↓
+Server
+   ↓
+HTML
+   ↓
+Browser
+   ↓
+React hydration
+            </code></pre>
+
+            <p><strong>CSR advantages:</strong></p>
+            <ul>
+                <li>Simple architecture for many applications</li>
+                <li>Rich client-side interactions</li>
+                <li>After initial load, navigation can feel very fast</li>
+            </ul>
+
+            <p><strong>SSR advantages:</strong></p>
+            <ul>
+                <li>HTML can be available before client JavaScript fully loads</li>
+                <li>Can improve initial content display</li>
+                <li>Useful for pages where server-rendered content is beneficial for search engines</li>
+            </ul>
+
+            <p><strong>Interview answer:</strong> CSR renders the initial UI primarily in the browser using JavaScript, while SSR generates the initial HTML on the server and then React hydrates it on the client.</p>
+        `
+    }
+
+
+];
+
+
+        /* =========================
+           RENDER QUESTIONS
+        ========================= */
+
+        const container =
+            document.getElementById("questions");
+
+
+        questions.forEach((item, index) => {
+
+            const card =
+                document.createElement("div");
+
+
+            card.className =
+                "question-card";
+
+
+            card.innerHTML = `
+
+                <button
+                    class="question-btn"
+                    type="button"
+                >
+
+                    <span>
+                        ${index + 1}. ${item.question}
+                    </span>
+
+                    <span class="arrow">
+                        ⌄
+                    </span>
+
+                </button>
+
+
+                <div class="answer">
+
+                    ${item.answer}
+
+                </div>
+
+            `;
+
+
+            const button =
+                card.querySelector(".question-btn");
+
+
+            button.addEventListener("click", () => {
+
+                card.classList.toggle("open");
+
+            });
+
+
+            container.appendChild(card);
+
+        });
+
+
+        /* =========================
+           MOBILE MENU
+        ========================= */
+
+        const menuBtn =
+            document.getElementById("menuBtn");
+
+
+        const mobileMenu =
+            document.getElementById("mobileMenu");
+
+
+        menuBtn.addEventListener("click", () => {
+
+            mobileMenu.classList.toggle("open");
+
+
+            if (mobileMenu.classList.contains("open")) {
+
+                menuBtn.textContent = "✕";
+
+            } else {
+
+                menuBtn.textContent = "☰";
+
+            }
+
+        });
+
+
+        /* CLOSE MENU AFTER CLICKING LINK */
+
+        const mobileLinks =
+            mobileMenu.querySelectorAll("a");
+
+
+        mobileLinks.forEach(link => {
+
+            link.addEventListener("click", () => {
+
+                mobileMenu.classList.remove("open");
+
+                menuBtn.textContent = "☰";
+
+            });
+
+        });
+
+
+        /* =========================
+           THEME
+        ========================= */
+
+        const themeBtn =
+            document.getElementById("themeBtn");
+
+
+        const savedTheme =
+            localStorage.getItem("theme");
+
+
+        if (savedTheme === "dark") {
+
+            document.body.classList.add("dark");
+
+            themeBtn.textContent = "☀";
+
+        }
+
+
+        themeBtn.addEventListener("click", () => {
+
+            document.body.classList.toggle("dark");
+
+
+            const isDark =
+                document.body.classList.contains("dark");
+
+
+            localStorage.setItem(
+                "theme",
+                isDark ? "dark" : "light"
+            );
+
+
+            themeBtn.textContent =
+                isDark ? "☀" : "☾";
+
+        });
+
+    </script>
+
+
+</body>
+
+</html>

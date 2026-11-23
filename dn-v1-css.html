@@ -1,0 +1,2612 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="dev-prep-favicon.png">
+    <title>Css Interview Questions</title>
+
+    <style>
+        /* =========================
+           RESET
+        ========================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        /* =========================
+           THEME VARIABLES
+        ========================= */
+
+        :root {
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --surface-hover: #f1f5f9;
+
+            --text: #0f172a;
+            --muted: #64748b;
+
+            --border: #e2e8f0;
+
+            --accent: #2563eb;
+            --accent-soft: #eff6ff;
+        }
+
+
+        body.dark {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --surface-hover: #263449;
+
+            --text: #f8fafc;
+            --muted: #94a3b8;
+
+            --border: #334155;
+
+            --accent: #60a5fa;
+            --accent-soft: #172554;
+        }
+
+
+        /* =========================
+           BODY
+        ========================= */
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+
+            background: var(--bg);
+            color: var(--text);
+
+            min-height: 100vh;
+
+            transition:
+                background 0.25s ease,
+                color 0.25s ease;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            background: var(--surface);
+
+            border-bottom: 1px solid var(--border);
+        }
+
+
+        .nav-container {
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding: 14px 20px;
+
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+
+        /* LOGO */
+
+        .logo {
+            color: var(--text);
+
+            text-decoration: none;
+
+            font-size: 18px;
+            font-weight: 700;
+
+            white-space: nowrap;
+        }
+
+
+        .logo span {
+            color: var(--accent);
+        }
+
+
+        /* DESKTOP NAVIGATION */
+
+        .nav-links {
+            flex: 1;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 4px;
+        }
+
+
+        .nav-links a {
+            color: var(--muted);
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            padding: 8px 10px;
+
+            border-radius: 7px;
+
+            transition: 0.2s;
+        }
+
+
+        .nav-links a:hover {
+            background: var(--surface-hover);
+            color: var(--text);
+        }
+
+
+        .nav-links a.active {
+            background: var(--accent-soft);
+            color: var(--accent);
+        }
+
+
+        /* =========================
+           NAV ACTIONS
+        ========================= */
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+
+        /* THEME BUTTON */
+
+        .theme-btn {
+            width: 36px;
+            height: 36px;
+
+            border: 1px solid var(--border);
+            border-radius: 8px;
+
+            background: var(--surface);
+            color: var(--text);
+
+            cursor: pointer;
+
+            font-size: 16px;
+
+            transition: 0.2s;
+        }
+
+
+        .theme-btn:hover {
+            background: var(--surface-hover);
+        }
+
+
+        /* MOBILE MENU BUTTON */
+
+        .menu-btn {
+            display: none;
+
+            width: 36px;
+            height: 36px;
+
+            border: 1px solid var(--border);
+            border-radius: 8px;
+
+            background: var(--surface);
+            color: var(--text);
+
+            cursor: pointer;
+
+            font-size: 20px;
+        }
+
+
+        /* =========================
+           MOBILE DROPDOWN
+        ========================= */
+
+        .mobile-menu {
+            display: none;
+
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding: 0 15px 15px;
+        }
+
+
+        .mobile-menu.open {
+            display: block;
+        }
+
+
+        .mobile-menu a {
+            display: block;
+
+            color: var(--muted);
+
+            text-decoration: none;
+
+            padding: 12px 14px;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+
+            transition: 0.2s;
+        }
+
+
+        .mobile-menu a:hover,
+        .mobile-menu a.active {
+            background: var(--surface-hover);
+            color: var(--text);
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        main {
+            width: 100%;
+            max-width: 850px;
+
+            margin: auto;
+
+            padding: 70px 20px 100px;
+        }
+
+
+        /* =========================
+           PAGE HEADER
+        ========================= */
+
+        .page-header {
+            margin-bottom: 40px;
+        }
+
+
+        .page-header span {
+            color: var(--accent);
+
+            font-size: 13px;
+            font-weight: 600;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        .page-header h1 {
+            font-size: clamp(32px, 5vw, 48px);
+
+            line-height: 1.1;
+
+            margin: 10px 0;
+
+            letter-spacing: -1px;
+        }
+
+
+        .page-header p {
+            color: var(--muted);
+
+            line-height: 1.7;
+
+            max-width: 650px;
+
+            font-size: 15px;
+        }
+
+
+        /* =========================
+           QUESTION CARD
+        ========================= */
+
+        .question-card {
+            width: 100%;
+
+            background: var(--surface);
+
+            border: 1px solid var(--border);
+
+            border-radius: 12px;
+
+            margin-bottom: 14px;
+
+            overflow: hidden;
+
+            transition:
+                border-color 0.2s,
+                transform 0.2s;
+        }
+
+
+        .question-card:hover {
+            border-color: color-mix(in srgb,
+                    var(--accent) 40%,
+                    var(--border));
+        }
+
+
+        /* QUESTION BUTTON */
+
+        .question-btn {
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            padding: 20px;
+
+            border: none;
+
+            background: transparent;
+
+            color: var(--text);
+
+            text-align: left;
+
+            font-family: inherit;
+
+            font-size: 16px;
+            font-weight: 600;
+
+            line-height: 1.5;
+
+            cursor: pointer;
+        }
+
+
+        .question-btn:hover {
+            background: var(--surface-hover);
+        }
+
+
+        /* ARROW */
+
+        .arrow {
+            flex-shrink: 0;
+
+            color: var(--muted);
+
+            font-size: 18px;
+
+            transition: transform 0.2s;
+        }
+
+
+        /* ANSWER */
+
+        .answer {
+            display: none;
+
+            padding: 0 20px 20px;
+
+            color: var(--muted);
+
+            font-size: 15px;
+
+            line-height: 1.8;
+        }
+
+
+        .question-card.open .answer {
+            display: block;
+        }
+
+
+        .question-card.open .arrow {
+            transform: rotate(180deg);
+        }
+
+
+        /* =========================
+           TABLET
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            .nav-container {
+                padding: 13px 16px;
+            }
+
+
+            .nav-links {
+                display: none;
+            }
+
+
+            .menu-btn {
+                display: block;
+            }
+
+
+            .nav-actions {
+                margin-left: auto;
+            }
+
+
+            main {
+                padding-top: 55px;
+            }
+
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .nav-container {
+                padding: 11px 14px;
+            }
+
+
+            .logo {
+                font-size: 17px;
+            }
+
+
+            .menu-btn,
+            .theme-btn {
+                width: 34px;
+                height: 34px;
+            }
+
+
+            main {
+                padding: 45px 15px 70px;
+            }
+
+
+            .page-header {
+                margin-bottom: 30px;
+            }
+
+
+            .page-header span {
+                font-size: 11px;
+            }
+
+
+            .page-header h1 {
+                font-size: 34px;
+
+                margin-top: 8px;
+            }
+
+
+            .page-header p {
+                font-size: 14px;
+
+                line-height: 1.7;
+            }
+
+
+            .question-card {
+                border-radius: 10px;
+
+                margin-bottom: 10px;
+            }
+
+
+            .question-btn {
+                padding: 16px;
+
+                font-size: 14px;
+
+                gap: 12px;
+            }
+
+
+            .answer {
+                padding: 0 16px 17px;
+
+                font-size: 14px;
+
+                line-height: 1.7;
+            }
+
+
+            .arrow {
+                font-size: 16px;
+            }
+
+        }
+
+
+        /* =========================
+           VERY SMALL DEVICES
+        ========================= */
+
+        @media (max-width: 380px) {
+
+            .logo {
+                font-size: 16px;
+            }
+
+
+            main {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+
+
+            .page-header h1 {
+                font-size: 30px;
+            }
+
+
+            .question-btn {
+                padding: 14px;
+
+                font-size: 13px;
+            }
+
+
+            .answer {
+                padding-left: 14px;
+                padding-right: 14px;
+
+                font-size: 13px;
+            }
+
+        }
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <nav>
+
+        <div class="nav-container">
+
+
+            <!-- LOGO -->
+
+            <a href="index.html" class="logo">
+                Dev.<span>Prep</span>
+            </a>
+
+
+            <!-- DESKTOP LINKS -->
+
+            <div class="nav-links">
+
+                <a href="dn-v1-html.html">
+                    HTML
+                </a>
+
+                <a href="dn-v1-css.html" class="active">
+                    CSS
+                </a>
+
+                <a href="dn-v1-js.html" >
+                    JavaScript
+                </a>
+
+                <a href="dn-v1-react.html">
+                    React
+                </a>
+
+                <a href="dn-v1-node.html">
+                    Node.js
+                </a>
+
+                <a href="dn-v1-sql.html">
+                    SQL
+                </a>
+
+                <a href="dn-v1-dsa.html">
+                    DSA
+                </a>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="nav-actions">
+
+                <button class="menu-btn" id="menuBtn" aria-label="Open navigation menu">
+                    ☰
+                </button>
+
+
+                <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
+                    ☾
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- MOBILE MENU -->
+
+        <div class="mobile-menu" id="mobileMenu">
+
+            <a href="dn-v1-html.html">
+                HTML
+            </a>
+
+            <a href="dn-v1-css.html" class="active">
+                CSS
+            </a>
+
+            <a href="dn-v1-js.html" >
+                JavaScript
+            </a>
+
+            <a href="dn-v1-react.html">
+                React
+            </a>
+
+            <a href="dn-v1-node.html">
+                Node.js
+            </a>
+
+            <a href="dn-v1-sql.html">
+                SQL
+            </a>
+
+            <a href="dn-v1-dsa.html">
+                DSA
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================= -->
+
+    <main>
+
+
+        <header class="page-header">
+
+            <span>
+                INTERVIEW PREPARATION
+            </span>
+
+            <h1>
+                Css
+            </h1>
+
+            <p>
+                Important Css concepts and interview
+                questions, from fundamentals to advanced topics.
+            </p>
+
+        </header>
+
+
+        <!-- QUESTIONS -->
+
+        <section id="questions"></section>
+
+
+    </main>
+
+
+    <script>
+
+
+        /* =========================
+           QUESTIONS
+        ========================= */
+
+        const questions = [
+
+    {
+        question: "What is CSS and what are the different ways to apply CSS?",
+        answer: `
+            <p>
+                CSS stands for <strong>Cascading Style Sheets</strong>.
+                It is used to control the presentation and layout of HTML
+                elements, such as colors, fonts, spacing, positioning,
+                responsiveness, and animations.
+            </p>
+
+            <p>
+                There are three main ways to apply CSS:
+            </p>
+
+            <ol>
+                <li>
+                    <strong>Inline CSS:</strong> CSS is written directly
+                    inside the <code>style</code> attribute of an element.
+                </li>
+
+                <li>
+                    <strong>Internal CSS:</strong> CSS is written inside a
+                    <code>&lt;style&gt;</code> element in the HTML document.
+                </li>
+
+                <li>
+                    <strong>External CSS:</strong> CSS is written in a
+                    separate <code>.css</code> file and linked using
+                    <code>&lt;link&gt;</code>.
+                </li>
+            </ol>
+
+            <h4>Examples:</h4>
+
+            <pre><code>&lt;!-- Inline --&gt;
+&lt;p style="color: red;"&gt;
+    Hello
+&lt;/p&gt;
+
+&lt;!-- Internal --&gt;
+&lt;style&gt;
+    p {
+        color: blue;
+    }
+&lt;/style&gt;
+
+&lt;!-- External --&gt;
+&lt;link rel="stylesheet" href="style.css"&gt;</code></pre>
+
+            <p>
+                In real-world projects, external CSS is generally preferred
+                because it separates styling from HTML and makes styles easier
+                to maintain and reuse.
+            </p>
+        `
+    },
+
+    {
+        question: "What is the CSS Box Model?",
+        answer: `
+            <p>
+                The CSS Box Model describes how the browser calculates the
+                size and spacing of every element.
+            </p>
+
+            <p>
+                Every element is treated as a rectangular box consisting of
+                four parts:
+            </p>
+
+            <ol>
+                <li><strong>Content:</strong> The actual text, image, or other content.</li>
+                <li><strong>Padding:</strong> Space between the content and the border.</li>
+                <li><strong>Border:</strong> The boundary around the padding and content.</li>
+                <li><strong>Margin:</strong> Space outside the border that separates the element from other elements.</li>
+            </ol>
+
+            <h4>Example:</h4>
+
+            <pre><code>.box {
+    width: 200px;
+    padding: 20px;
+    border: 5px solid black;
+    margin: 10px;
+}</code></pre>
+
+            <p>
+                With the default <code>box-sizing: content-box</code>, the
+                declared width represents only the content width.
+            </p>
+
+            <p>
+                So the total width in this example is:
+            </p>
+
+            <pre><code>Content = 200px
+Padding = 20px + 20px
+Border  = 5px + 5px
+
+Total width = 250px</code></pre>
+
+            <p>
+                Margin is outside the element's box and is not included in
+                the element's calculated width.
+            </p>
+        `
+    },
+
+    {
+        question: "What is the difference between box-sizing: content-box and box-sizing: border-box?",
+        answer: `
+            <p>
+                The <code>box-sizing</code> property determines how the
+                browser calculates an element's width and height.
+            </p>
+
+            <p>
+                With <strong>content-box</strong>, the declared
+                <code>width</code> and <code>height</code> apply only to the
+                content. Padding and border are added to the declared size.
+            </p>
+
+            <p>
+                With <strong>border-box</strong>, the declared
+                <code>width</code> and <code>height</code> include the
+                content, padding, and border.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>.box {
+    width: 200px;
+    padding: 20px;
+    border: 5px solid black;
+}</code></pre>
+
+            <p>
+                With <code>content-box</code>:
+            </p>
+
+            <pre><code>Total width =
+200px + 40px padding + 10px border
+= 250px</code></pre>
+
+            <p>
+                With <code>border-box</code>:
+            </p>
+
+            <pre><code>Total width = 200px</code></pre>
+
+            <p>
+                A common practice is to use:
+            </p>
+
+            <pre><code>* {
+    box-sizing: border-box;
+}</code></pre>
+
+            <p>
+                This makes sizing more predictable because the declared width
+                includes padding and borders.
+            </p>
+        `
+    },
+
+    {
+        question: "What is the difference between Flexbox and CSS Grid?",
+        answer: `
+            <p>
+                Flexbox and CSS Grid are both CSS layout systems, but they
+                are designed for different types of layouts.
+            </p>
+
+            <p>
+                <strong>Flexbox</strong> is primarily a one-dimensional layout
+                system. It is useful for arranging elements along a row or
+                a column.
+            </p>
+
+            <p>
+                <strong>CSS Grid</strong> is a two-dimensional layout system.
+                It allows you to control both rows and columns at the same time.
+            </p>
+
+            <h4>Flexbox example:</h4>
+
+            <pre><code>.container {
+    display: flex;
+    gap: 20px;
+}</code></pre>
+
+            <p>
+                This is useful for layouts such as navigation bars, button
+                groups, or horizontally aligned cards.
+            </p>
+
+            <h4>Grid example:</h4>
+
+            <pre><code>.container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}</code></pre>
+
+            <p>
+                This is useful for layouts such as dashboards, product grids,
+                and complex page structures.
+            </p>
+
+            <p>
+                In short:
+                <strong>Flexbox is mainly one-dimensional, while Grid is
+                two-dimensional.</strong>
+            </p>
+        `
+    },
+
+    {
+        question: "Explain the main concepts of Flexbox.",
+        answer: `
+            <p>
+                Flexbox is a CSS layout system used to arrange elements
+                efficiently in a row or column.
+            </p>
+
+            <p>
+                First, we make an element a flex container using:
+            </p>
+
+            <pre><code>.container {
+    display: flex;
+}</code></pre>
+
+            <h4>Main Flexbox properties:</h4>
+
+            <ul>
+                <li>
+                    <strong>flex-direction:</strong> Determines whether items
+                    are arranged in a row or column.
+                </li>
+
+                <li>
+                    <strong>justify-content:</strong> Controls the alignment
+                    of items along the main axis.
+                </li>
+
+                <li>
+                    <strong>align-items:</strong> Controls alignment along
+                    the cross axis.
+                </li>
+
+                <li>
+                    <strong>flex-wrap:</strong> Determines whether items can
+                    move onto multiple lines.
+                </li>
+
+                <li>
+                    <strong>gap:</strong> Creates consistent spacing between
+                    flex items.
+                </li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}</code></pre>
+
+            <p>
+                Flexbox is especially useful for navigation bars, card layouts,
+                buttons, and aligning elements horizontally or vertically.
+            </p>
+        `
+    },
+
+    {
+        question: "What is the difference between justify-content and align-items?",
+        answer: `
+            <p>
+                Both properties are used to align items inside a flex
+                container, but they work on different axes.
+            </p>
+
+            <p>
+                <code>justify-content</code> controls alignment along the
+                <strong>main axis</strong>.
+            </p>
+
+            <p>
+                <code>align-items</code> controls alignment along the
+                <strong>cross axis</strong>.
+            </p>
+
+            <p>
+                For the default
+                <code>flex-direction: row</code>:
+            </p>
+
+            <ul>
+                <li>
+                    Main axis = horizontal
+                </li>
+                <li>
+                    Cross axis = vertical
+                </li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}</code></pre>
+
+            <p>
+                Here, <code>justify-content: center</code> centers the items
+                horizontally, while <code>align-items: center</code> centers
+                them vertically.
+            </p>
+
+            <p>
+                If <code>flex-direction</code> changes to
+                <code>column</code>, the axes also change. Therefore,
+                <code>justify-content</code> and <code>align-items</code>
+                should be understood in terms of the main and cross axes,
+                rather than simply horizontal and vertical alignment.
+            </p>
+        `
+    },
+
+    {
+        question: "How do you center an element horizontally and vertically using Flexbox?",
+        answer: `
+            <p>
+                We can center an element both horizontally and vertically by
+                making its parent a flex container and using
+                <code>justify-content: center</code> and
+                <code>align-items: center</code>.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}</code></pre>
+
+            <p>
+                Here, <code>justify-content: center</code> centers the child
+                along the main axis, while
+                <code>align-items: center</code> centers it along the cross
+                axis.
+            </p>
+
+            <p>
+                With the default <code>flex-direction: row</code>, this means
+                horizontal and vertical centering respectively.
+            </p>
+
+            <h4>Example HTML:</h4>
+
+            <pre><code>&lt;div class="container"&gt;
+    &lt;div class="box"&gt;
+        Centered Content
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        `
+    },
+
+    {
+        question: "What is CSS Grid and how does grid-template-columns work?",
+        answer: `
+            <p>
+                CSS Grid is a two-dimensional layout system that allows us to
+                arrange elements into rows and columns.
+            </p>
+
+            <p>
+                We create a grid container using:
+            </p>
+
+            <pre><code>.container {
+    display: grid;
+}</code></pre>
+
+            <p>
+                The <code>grid-template-columns</code> property defines the
+                number and size of the columns in the grid.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>.container {
+    display: grid;
+    grid-template-columns: 200px 200px 200px;
+}</code></pre>
+
+            <p>
+                This creates three columns, each 200px wide.
+            </p>
+
+            <p>
+                We can also use the <code>fr</code> unit to divide the
+                available space proportionally:
+            </p>
+
+            <pre><code>.container {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+}</code></pre>
+
+            <p>
+                Here, the available space is divided into four equal parts:
+                the first column gets one part, the second gets two parts,
+                and the third gets one part.
+            </p>
+
+            <p>
+                A common approach for responsive grids is:
+            </p>
+
+            <pre><code>.container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}</code></pre>
+
+            <p>
+                This creates three equal-width columns with a 20px gap.
+            </p>
+        `
+    },
+
+    {
+        question: "What is CSS specificity? How is specificity calculated?",
+        answer: `
+            <p>
+                CSS specificity is the system browsers use to determine which
+                CSS rule should be applied when multiple rules target the same
+                element.
+            </p>
+
+            <p>
+                Specificity is generally compared in this order:
+            </p>
+
+            <ol>
+                <li><strong>Inline styles</strong> have very high specificity.</li>
+                <li><strong>ID selectors</strong> are more specific than classes.</li>
+                <li><strong>Class, attribute, and pseudo-class selectors</strong> are less specific than IDs.</li>
+                <li><strong>Element and pseudo-element selectors</strong> have lower specificity.</li>
+            </ol>
+
+            <h4>Example:</h4>
+
+            <pre><code>p {
+    color: blue;
+}
+
+.text {
+    color: green;
+}
+
+#title {
+    color: red;
+}</code></pre>
+
+            <pre><code>&lt;p id="title" class="text"&gt;
+    Hello
+&lt;/p&gt;</code></pre>
+
+            <p>
+                All three selectors target the paragraph, but the ID selector
+                is more specific than the class and element selectors, so the
+                text will be red.
+            </p>
+
+            <h4>Specificity is commonly represented as:</h4>
+
+            <pre><code>Inline styles → IDs → Classes/Attributes/Pseudo-classes → Elements</code></pre>
+
+            <p>
+                If two rules have the same specificity, the rule that appears
+                later in the stylesheet generally wins, assuming they are in
+                the same cascade context.
+            </p>
+
+            <p>
+                The <code>!important</code> flag changes the normal cascade
+                and should generally be avoided unless there is a specific
+                reason to use it.
+            </p>
+        `
+    },
+
+    {
+        question: "What is the difference between position: relative, absolute, fixed, and sticky?",
+        answer: `
+            <p>
+                The CSS <code>position</code> property controls how an element
+                is positioned in the document.
+            </p>
+
+            <h4>1. relative</h4>
+
+            <p>
+                <code>position: relative</code> keeps the element in the normal
+                document flow but allows it to be visually moved using
+                <code>top</code>, <code>right</code>, <code>bottom</code>,
+                or <code>left</code>.
+            </p>
+
+            <p>
+                It also commonly acts as the positioning reference for an
+                absolutely positioned child.
+            </p>
+
+            <pre><code>.parent {
+    position: relative;
+}
+
+.child {
+    position: absolute;
+    top: 0;
+    right: 0;
+}</code></pre>
+
+            <h4>2. absolute</h4>
+
+            <p>
+                <code>position: absolute</code> removes the element from the
+                normal document flow. It is positioned relative to its
+                nearest positioned ancestor, such as one with
+                <code>position: relative</code>.
+            </p>
+
+            <h4>3. fixed</h4>
+
+            <p>
+                <code>position: fixed</code> removes the element from normal
+                document flow and positions it relative to the viewport in
+                typical cases. It stays in place while the page scrolls.
+            </p>
+
+            <p>
+                It is commonly used for fixed navigation bars, floating
+                buttons, or other elements that should remain visible.
+            </p>
+
+            <h4>4. sticky</h4>
+
+            <p>
+                <code>position: sticky</code> behaves like a relatively
+                positioned element until a specified scroll threshold is
+                reached. It can then stick to a specified position while
+                scrolling within its containing scroll context.
+            </p>
+
+            <pre><code>.navbar {
+    position: sticky;
+    top: 0;
+}</code></pre>
+
+            <h4>Simple comparison:</h4>
+
+            <ul>
+                <li><strong>relative:</strong> stays in normal flow and can be offset.</li>
+                <li><strong>absolute:</strong> removed from normal flow and positioned relative to a containing block.</li>
+                <li><strong>fixed:</strong> positioned relative to the viewport in typical cases and stays during scrolling.</li>
+                <li><strong>sticky:</strong> behaves normally until a scroll threshold is reached, then sticks within its scroll context.</li>
+            </ul>
+        `
+    },
+    
+
+    {
+        question: "What is the difference between display: none, visibility: hidden, and opacity: 0?",
+        answer: `
+            <p>
+                All three properties can make an element invisible, but they
+                behave differently in terms of layout, interaction, and space.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>display: none:</strong> Removes the element from
+                    the layout completely. It takes up no space.
+                </li>
+
+                <li>
+                    <strong>visibility: hidden:</strong> Hides the element,
+                    but it still occupies its original space in the layout.
+                </li>
+
+                <li>
+                    <strong>opacity: 0:</strong> Makes the element completely
+                    transparent, but the element still exists in the layout
+                    and can generally still receive pointer events unless
+                    those are disabled separately.
+                </li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>.box1 {
+    display: none;
+}
+
+.box2 {
+    visibility: hidden;
+}
+
+.box3 {
+    opacity: 0;
+}</code></pre>
+
+            <p>
+                A simple way to remember it is:
+                <strong>display removes it, visibility hides it while keeping
+                its space, and opacity makes it transparent.</strong>
+            </p>
+        `
+    },
+
+    {
+        question: "What is the difference between px, %, em, rem, vh, and vw?",
+        answer: `
+            <p>
+                These are CSS units used to define sizes such as width,
+                height, font size, padding, and margins.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>px:</strong> A CSS pixel unit. It provides a
+                    fixed size relative to the CSS pixel rather than being
+                    directly tied to the physical size of a screen.
+                </li>
+
+                <li>
+                    <strong>%:</strong> Usually represents a percentage
+                    relative to a relevant parent or containing value.
+                </li>
+
+                <li>
+                    <strong>em:</strong> Relative to the computed font size
+                    of the relevant element or its parent, depending on the
+                    property.
+                </li>
+
+                <li>
+                    <strong>rem:</strong> Relative to the root element's
+                    font size, normally the <code>&lt;html&gt;</code> element.
+                </li>
+
+                <li>
+                    <strong>vh:</strong> Relative to the viewport height.
+                </li>
+
+                <li>
+                    <strong>vw:</strong> Relative to the viewport width.
+                </li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>.box {
+    width: 50%;
+    padding: 2rem;
+    font-size: 1.5rem;
+    height: 50vh;
+}</code></pre>
+
+            <p>
+                In responsive designs, <code>%</code>, <code>rem</code>,
+                <code>vh</code>, and <code>vw</code> can be useful because
+                they allow dimensions to adapt based on their context or
+                viewport.
+            </p>
+
+            <p>
+                A key interview point is that <code>rem</code> is based on
+                the root font size, while <code>em</code> can depend on the
+                font size of the current element or its parent.
+            </p>
+        `
+    },
+
+    {
+        question: "What is the CSS cascade?",
+        answer: `
+            <p>
+                The CSS cascade is the process the browser uses to determine
+                which CSS declarations should be applied when multiple rules
+                target the same element.
+            </p>
+
+            <p>
+                The browser considers factors such as:
+            </p>
+
+            <ol>
+                <li>Origin and importance of the declarations.</li>
+                <li>Specificity of the selectors.</li>
+                <li>Source order when applicable.</li>
+            </ol>
+
+            <h4>Example:</h4>
+
+            <pre><code>p {
+    color: blue;
+}
+
+.text {
+    color: green;
+}
+
+#message {
+    color: red;
+}</code></pre>
+
+            <pre><code>&lt;p id="message" class="text"&gt;
+    Hello
+&lt;/p&gt;</code></pre>
+
+            <p>
+                All three rules match the element, but the ID selector has
+                greater specificity than the class and element selectors,
+                so the text will be red.
+            </p>
+
+            <p>
+                If competing declarations have the same relevant priority
+                and specificity, the declaration that comes later in the
+                applicable cascade generally wins.
+            </p>
+
+            <p>
+                Understanding the cascade helps explain why a CSS rule may
+                not be overriding another rule even though both selectors
+                appear to match the same element.
+            </p>
+        `
+    },
+
+    {
+        question: "What is the difference between a class selector, ID selector, element selector, and attribute selector?",
+        answer: `
+            <p>
+                These are different types of CSS selectors used to target
+                HTML elements.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>Element selector:</strong> Targets elements by
+                    their HTML tag name.
+                </li>
+
+                <li>
+                    <strong>Class selector:</strong> Targets elements that
+                    have a particular class.
+                </li>
+
+                <li>
+                    <strong>ID selector:</strong> Targets an element with
+                    a specific ID.
+                </li>
+
+                <li>
+                    <strong>Attribute selector:</strong> Targets elements
+                    based on the presence or value of an HTML attribute.
+                </li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>p {
+    color: blue;
+}
+
+.card {
+    padding: 20px;
+}
+
+#header {
+    background: black;
+}
+
+input[type="email"] {
+    border: 1px solid gray;
+}</code></pre>
+
+            <p>
+                Here, <code>p</code> is an element selector,
+                <code>.card</code> is a class selector,
+                <code>#header</code> is an ID selector, and
+                <code>input[type="email"]</code> is an attribute selector.
+            </p>
+
+            <p>
+                In terms of specificity, IDs are generally more specific
+                than classes and attribute selectors, while element selectors
+                have lower specificity.
+            </p>
+        `
+    },
+
+    {
+        question: "What is the difference between pseudo-classes and pseudo-elements?",
+        answer: `
+            <p>
+                A <strong>pseudo-class</strong> targets an element based on
+                a particular state or condition, while a
+                <strong>pseudo-element</strong> targets a specific part of
+                an element or creates generated content.
+            </p>
+
+            <h4>Pseudo-class:</h4>
+
+            <p>
+                Pseudo-classes use a single colon, such as
+                <code>:hover</code> and <code>:focus</code>.
+            </p>
+
+            <pre><code>button:hover {
+    background: blue;
+}
+
+input:focus {
+    border-color: green;
+}</code></pre>
+
+            <h4>Pseudo-element:</h4>
+
+            <p>
+                Pseudo-elements generally use two colons, such as
+                <code>::before</code> and <code>::after</code>.
+            </p>
+
+            <pre><code>.title::before {
+    content: "★ ";
+}
+
+.title::after {
+    content: " →";
+}</code></pre>
+
+            <p>
+                So the simple distinction is:
+                <strong>pseudo-class = state or condition,
+                pseudo-element = part of an element or generated content.</strong>
+            </p>
+        `
+    },
+
+    {
+        question: "What is the difference between margin and padding?",
+        answer: `
+            <p>
+                Both margin and padding create space around an element, but
+                they are located in different parts of the CSS box model.
+            </p>
+
+            <p>
+                <strong>Padding</strong> is the space between the element's
+                content and its border.
+            </p>
+
+            <p>
+                <strong>Margin</strong> is the space outside the element's
+                border and separates the element from surrounding elements.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>.card {
+    padding: 20px;
+    margin: 30px;
+    border: 1px solid black;
+}</code></pre>
+
+            <p>
+                Here, the <code>padding</code> creates space inside the card,
+                around its content. The <code>margin</code> creates space
+                outside the card.
+            </p>
+
+            <p>
+                A useful way to remember it is:
+                <strong>padding = inside the border, margin = outside the border.</strong>
+            </p>
+        `
+    },
+
+    {
+        question: "What is the difference between width, min-width, and max-width?",
+        answer: `
+            <p>
+                These properties control the width of an element, but they
+                behave differently.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>width:</strong> Specifies the preferred or
+                    specified width of an element.
+                </li>
+
+                <li>
+                    <strong>min-width:</strong> Defines the minimum width
+                    the element is allowed to have.
+                </li>
+
+                <li>
+                    <strong>max-width:</strong> Defines the maximum width
+                    the element is allowed to have.
+                </li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>.container {
+    width: 80%;
+    min-width: 300px;
+    max-width: 1200px;
+}</code></pre>
+
+            <p>
+                In this example, the element tries to use 80% of its
+                containing block, but it will not become narrower than
+                300px or wider than 1200px.
+            </p>
+
+            <p>
+                A common responsive pattern is:
+            </p>
+
+            <pre><code>.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}</code></pre>
+
+            <p>
+                This allows the container to shrink on smaller screens while
+                preventing it from becoming excessively wide on larger screens.
+            </p>
+        `
+    },
+
+    {
+        question: "What is responsive web design? How do you make a website responsive?",
+        answer: `
+            <p>
+                Responsive web design is an approach where a website's layout
+                and content adapt to different screen sizes and devices, such
+                as mobile phones, tablets, and desktops.
+            </p>
+
+            <p>
+                To make a website responsive, I would commonly use:
+            </p>
+
+            <ul>
+                <li>Flexible layouts using Flexbox or CSS Grid.</li>
+                <li>Relative units such as %, rem, and fr.</li>
+                <li>CSS media queries for different screen sizes.</li>
+                <li>Responsive images and appropriate sizing.</li>
+                <li>Mobile-friendly typography and spacing.</li>
+                <li>The viewport meta tag.</li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>.container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+}</code></pre>
+
+            <p>
+                On larger screens, this creates three columns. Below 768px,
+                the layout changes to one column.
+            </p>
+
+            <p>
+                The goal is not simply to make everything smaller, but to
+                make the layout usable and readable across different screen
+                sizes.
+            </p>
+        `
+    },
+
+    {
+        question: "What are CSS media queries?",
+        answer: `
+            <p>
+                CSS media queries allow us to apply different CSS rules based
+                on characteristics of the user's device or viewport, such as
+                screen width, height, orientation, or other media features.
+            </p>
+
+            <p>
+                They are commonly used to implement responsive web designs.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>.container {
+    display: flex;
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+}</code></pre>
+
+            <p>
+                Here, the default layout uses a row. When the viewport width
+                is 768px or smaller, the layout changes to a column.
+            </p>
+
+            <p>
+                Media queries can also be used for other conditions, for
+                example:
+            </p>
+
+            <pre><code>@media (min-width: 1024px) {
+    .container {
+        max-width: 1200px;
+    }
+}</code></pre>
+
+            <p>
+                This makes media queries one of the main tools for building
+                responsive websites.
+            </p>
+        `
+    },
+
+    {
+        question: "What is the difference between relative, absolute, and fixed positioning in a real-world layout?",
+        answer: `
+            <p>
+                The three positioning methods are useful for different layout
+                situations.
+            </p>
+
+            <h4>relative</h4>
+
+            <p>
+                <code>position: relative</code> keeps the element in the
+                normal document flow but allows it to be offset. It is also
+                commonly used to establish a positioning context for an
+                absolutely positioned child.
+            </p>
+
+            <pre><code>.card {
+    position: relative;
+}</code></pre>
+
+            <p>
+                For example, a product card can use relative positioning so
+                a badge can be positioned inside the card.
+            </p>
+
+            <h4>absolute</h4>
+
+            <p>
+                <code>position: absolute</code> removes the element from the
+                normal document flow and positions it relative to its nearest
+                positioned containing block.
+            </p>
+
+            <pre><code>.card {
+    position: relative;
+}
+
+.badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}</code></pre>
+
+            <p>
+                This is commonly used for badges, icons, overlays, and
+                dropdowns.
+            </p>
+
+            <h4>fixed</h4>
+
+            <p>
+                <code>position: fixed</code> positions an element relative
+                to the viewport in typical cases and keeps it in place while
+                the page scrolls.
+            </p>
+
+            <pre><code>.chat-button {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+}</code></pre>
+
+            <p>
+                This is commonly used for floating action buttons, support
+                buttons, or persistent UI controls.
+            </p>
+
+            <p>
+                In short:
+                <strong>relative is useful for positioning within normal
+                layout, absolute is useful for positioning elements inside
+                a container, and fixed is useful for elements that should
+                stay attached to the viewport.</strong>
+            </p>
+        `
+    },
+
+    {
+        question: "What is z-index and why sometimes does it not work?",
+        answer: `
+            <p>
+                <code>z-index</code> controls the stacking order of elements
+                when they overlap. An element with a higher applicable
+                stacking level can appear in front of another element.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>.modal {
+    position: fixed;
+    z-index: 1000;
+}
+
+.header {
+    position: relative;
+    z-index: 10;
+}</code></pre>
+
+            <p>
+                Here, the modal is intended to appear above the header.
+            </p>
+
+            <p>
+                However, simply increasing the <code>z-index</code> does not
+                always solve stacking problems. This is because
+                <code>z-index</code> works within stacking contexts.
+            </p>
+
+            <h4>Common reasons z-index appears not to work:</h4>
+
+            <ul>
+                <li>
+                    The element is participating in a different stacking
+                    context.
+                </li>
+                <li>
+                    A parent creates a stacking context that limits the
+                    element's stacking order.
+                </li>
+                <li>
+                    The positioning and stacking context of surrounding
+                    elements are not what you expect.
+                </li>
+                <li>
+                    Properties such as certain transforms, opacity values,
+                    or containment-related properties can create stacking
+                    contexts.
+                </li>
+            </ul>
+
+            <p>
+                So when <code>z-index</code> does not work, I would inspect
+                the element's positioning and its surrounding stacking
+                contexts rather than simply increasing the z-index number.
+            </p>
+        `
+    },
+
+    {
+        question: "What is the difference between overflow: hidden, scroll, and auto?",
+        answer: `
+            <p>
+                The <code>overflow</code> property controls what happens when
+                content is larger than the element's available dimensions.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>hidden:</strong> Hides content that overflows
+                    the element's box.
+                </li>
+
+                <li>
+                    <strong>scroll:</strong> Provides scrolling mechanisms
+                    for overflowing content, generally showing scrollbars
+                    even when there is not currently enough content to require
+                    scrolling.
+                </li>
+
+                <li>
+                    <strong>auto:</strong> Allows the browser to provide
+                    scrolling when the content actually overflows.
+                </li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>.box {
+    width: 300px;
+    height: 200px;
+    overflow: hidden;
+}
+
+.scroll-box {
+    width: 300px;
+    height: 200px;
+    overflow: scroll;
+}
+
+.auto-box {
+    width: 300px;
+    height: 200px;
+    overflow: auto;
+}</code></pre>
+
+            <p>
+                For most UI components where scrolling should appear only
+                when necessary, <code>overflow: auto</code> is commonly useful.
+            </p>
+
+            <p>
+                <code>overflow-x</code> and <code>overflow-y</code> can also
+                be used when you want to control horizontal and vertical
+                overflow separately.
+            </p>
+        `
+    },
+        {
+        question: "What is z-index in CSS, and why does it sometimes not work?",
+        answer: `
+            <p>
+                <code>z-index</code> controls the stacking order of overlapping elements.
+                An element with a higher <code>z-index</code> generally appears above an element
+                with a lower <code>z-index</code>.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+.box1 {
+    position: relative;
+    z-index: 1;
+}
+
+.box2 {
+    position: relative;
+    z-index: 2;
+}
+            </code></pre>
+
+            <p>
+                Here, <code>.box2</code> appears above <code>.box1</code>.
+            </p>
+
+            <h4>Why z-index may not work:</h4>
+
+            <ul>
+                <li>The element may not participate in the expected stacking context.</li>
+                <li>A parent element may create a separate stacking context.</li>
+                <li>Another element may belong to a higher stacking context.</li>
+                <li>The positioning and stacking context of parent/child elements may affect the result.</li>
+            </ul>
+
+            <p>
+                <strong>In short:</strong> <code>z-index</code> controls which overlapping element
+                appears on top, but stacking contexts can affect its behavior.
+            </p>
+        `
+    },
+
+    {
+        question: "What is the difference between overflow: hidden, scroll, and auto?",
+        answer: `
+            <p>
+                The <code>overflow</code> property controls what happens when content
+                exceeds the size of an element.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>hidden:</strong> Extra content is clipped and no scrollbar is shown.
+                </li>
+                <li>
+                    <strong>scroll:</strong> Scrollbars are provided even if the content does not overflow.
+                </li>
+                <li>
+                    <strong>auto:</strong> Scrollbars appear only when the content actually overflows.
+                </li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+.container {
+    width: 300px;
+    height: 200px;
+    overflow: auto;
+}
+            </code></pre>
+
+            <p>
+                <strong>In short:</strong> Use <code>hidden</code> to clip content,
+                <code>scroll</code> to always provide scrolling, and <code>auto</code>
+                to scroll only when necessary.
+            </p>
+        `
+    },
+
+    {
+        question: "What is the difference between inline, block, and inline-block elements?",
+        answer: `
+            <p>
+                These values control how an element participates in the layout.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>block:</strong> Starts on a new line and normally takes the full available width.
+                    Width and height can be applied.
+                </li>
+                <li>
+                    <strong>inline:</strong> Stays within the same line. Width and height generally
+                    cannot be applied normally.
+                </li>
+                <li>
+                    <strong>inline-block:</strong> Stays on the same line like inline elements,
+                    but allows width and height like block elements.
+                </li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+.block {
+    display: block;
+}
+
+.inline {
+    display: inline;
+}
+
+.inline-block {
+    display: inline-block;
+    width: 150px;
+    height: 50px;
+}
+            </code></pre>
+
+            <p>
+                <strong>In short:</strong>
+                <code>block</code> → new line,
+                <code>inline</code> → same line,
+                <code>inline-block</code> → same line + supports width/height.
+            </p>
+        `
+    },
+
+    {
+        question: "What is the difference between CSS transitions and animations?",
+        answer: `
+            <p>
+                Both are used to create visual changes, but they work differently.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>Transition:</strong> Smoothly changes a property from one state to another,
+                    usually when a state changes such as <code>:hover</code>.
+                </li>
+                <li>
+                    <strong>Animation:</strong> Can run automatically and define multiple stages
+                    using <code>@keyframes</code>.
+                </li>
+            </ul>
+
+            <h4>Transition example:</h4>
+
+            <pre><code>
+button {
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: blue;
+}
+            </code></pre>
+
+            <h4>Animation example:</h4>
+
+            <pre><code>
+.box {
+    animation: move 2s infinite;
+}
+
+@keyframes move {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(100px);
+    }
+}
+            </code></pre>
+
+            <p>
+                <strong>In short:</strong>
+                Transition is mainly for changing between states, while animation
+                is used for more complex or repeated sequences.
+            </p>
+        `
+    },
+
+    {
+        question: "What are CSS animations and how does @keyframes work?",
+        answer: `
+            <p>
+                CSS animations allow us to change CSS properties over time without
+                JavaScript.
+            </p>
+
+            <p>
+                <code>@keyframes</code> defines the different stages of the animation.
+                The animation is then applied to an element using the <code>animation</code>
+                property.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+@keyframes slide {
+    0% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(100px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.box {
+    animation: slide 2s ease-in-out infinite;
+}
+            </code></pre>
+
+            <p>
+                Here, the element moves to the right and then returns to its original position.
+            </p>
+
+            <h4>Common animation properties:</h4>
+
+            <ul>
+                <li><code>animation-name</code></li>
+                <li><code>animation-duration</code></li>
+                <li><code>animation-delay</code></li>
+                <li><code>animation-iteration-count</code></li>
+                <li><code>animation-timing-function</code></li>
+                <li><code>animation-direction</code></li>
+            </ul>
+        `
+    },
+
+    {
+        question: "What is the difference between transform, transition, and animation?",
+        answer: `
+            <p>
+                These three properties solve different problems in CSS.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>transform:</strong> Changes the visual position, size, rotation,
+                    or shape of an element.
+                </li>
+                <li>
+                    <strong>transition:</strong> Makes a property change happen smoothly between states.
+                </li>
+                <li>
+                    <strong>animation:</strong> Creates a sequence of changes using
+                    <code>@keyframes</code>.
+                </li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+.box {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+
+.box:hover {
+    transform: scale(1.2);
+}
+            </code></pre>
+
+            <p>
+                Here, <code>transform</code> changes the size, while
+                <code>transition</code> makes that change smooth.
+            </p>
+
+            <p>
+                <strong>In short:</strong>
+                <code>transform</code> = what changes,
+                <code>transition</code> = how smoothly it changes,
+                <code>animation</code> = how a sequence of changes runs over time.
+            </p>
+        `
+    },
+
+    {
+        question: "What are CSS variables or custom properties?",
+        answer: `
+            <p>
+                CSS variables, officially called <strong>custom properties</strong>,
+                allow us to store reusable values and use them throughout a stylesheet.
+            </p>
+
+            <p>
+                They are declared using <code>--variable-name</code> and accessed using
+                <code>var()</code>.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+:root {
+    --primary-color: #2563eb;
+    --spacing: 16px;
+}
+
+button {
+    background-color: var(--primary-color);
+    padding: var(--spacing);
+}
+            </code></pre>
+
+            <p>
+                One major advantage is that changing the variable updates every place
+                where it is used.
+            </p>
+
+            <p>
+                <strong>In short:</strong> CSS variables improve reusability,
+                maintainability, and are especially useful for themes and design systems.
+            </p>
+        `
+    },
+
+    {
+        question: "What is CSS inheritance?",
+        answer: `
+            <p>
+                CSS inheritance is the mechanism where some CSS properties are automatically
+                inherited by child elements from their parent elements.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+body {
+    color: #333;
+    font-family: Arial, sans-serif;
+}
+            </code></pre>
+
+            <p>
+                Child elements normally inherit properties such as
+                <code>color</code> and <code>font-family</code> from their parent.
+            </p>
+
+            <p>
+                However, not every CSS property is inherited.
+                For example, <code>margin</code>, <code>padding</code>, and
+                <code>border</code> are not normally inherited.
+            </p>
+
+            <h4>Important values:</h4>
+
+            <ul>
+                <li><code>inherit</code> → explicitly inherits the parent's value.</li>
+                <li><code>initial</code> → resets to the property's initial value.</li>
+                <li><code>unset</code> → behaves like inherit for inherited properties and initial for others.</li>
+            </ul>
+
+            <p>
+                <strong>In short:</strong> Inheritance allows certain styles from a parent
+                element to automatically pass to its children.
+            </p>
+        `
+    },
+
+    {
+        question: "What is the difference between :nth-child() and :nth-of-type()?",
+        answer: `
+            <p>
+                Both pseudo-classes are used to select elements based on their position,
+                but they count elements differently.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>:nth-child()</strong> counts all sibling elements.
+                </li>
+                <li>
+                    <strong>:nth-of-type()</strong> counts only siblings of the same element type.
+                </li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+&lt;div&gt;
+    &lt;p&gt;First&lt;/p&gt;
+    &lt;span&gt;Span&lt;/span&gt;
+    &lt;p&gt;Second&lt;/p&gt;
+&lt;/div&gt;
+            </code></pre>
+
+            <pre><code>
+p:nth-child(2) {
+    color: red;
+}
+
+p:nth-of-type(2) {
+    color: blue;
+}
+            </code></pre>
+
+            <p>
+                <code>p:nth-child(2)</code> checks whether the <code>&lt;p&gt;</code>
+                is the second child overall.
+            </p>
+
+            <p>
+                <code>p:nth-of-type(2)</code> selects the second <code>&lt;p&gt;</code>
+                among other <code>&lt;p&gt;</code> elements.
+            </p>
+
+            <p>
+                <strong>In short:</strong>
+                <code>:nth-child()</code> counts all siblings,
+                while <code>:nth-of-type()</code> counts only the same element type.
+            </p>
+        `
+    },
+
+    {
+        question: "What are ::before and ::after pseudo-elements in CSS?",
+        answer: `
+            <p>
+                <code>::before</code> and <code>::after</code> are pseudo-elements used
+                to insert generated content before or after an element's actual content.
+            </p>
+
+            <p>
+                They commonly require the <code>content</code> property.
+                They are useful for decorative elements, icons, overlays, and visual effects.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+.title::before {
+    content: "★";
+    margin-right: 8px;
+}
+
+.title::after {
+    content: "";
+    display: block;
+    width: 50px;
+    height: 2px;
+    background: black;
+}
+            </code></pre>
+
+            <p>
+                Here, <code>::before</code> adds a star before the title,
+                while <code>::after</code> creates a decorative line after it.
+            </p>
+
+            <p>
+                <strong>In short:</strong> <code>::before</code> and <code>::after</code>
+                create generated pseudo-elements that are commonly used for decoration
+                without adding extra HTML elements.
+            </p>
+        `
+    }
+
+
+];
+
+
+        /* =========================
+           RENDER QUESTIONS
+        ========================= */
+
+        const container =
+            document.getElementById("questions");
+
+
+        questions.forEach((item, index) => {
+
+            const card =
+                document.createElement("div");
+
+
+            card.className =
+                "question-card";
+
+
+            card.innerHTML = `
+
+                <button
+                    class="question-btn"
+                    type="button"
+                >
+
+                    <span>
+                        ${index + 1}. ${item.question}
+                    </span>
+
+                    <span class="arrow">
+                        ⌄
+                    </span>
+
+                </button>
+
+
+                <div class="answer">
+
+                    ${item.answer}
+
+                </div>
+
+            `;
+
+
+            const button =
+                card.querySelector(".question-btn");
+
+
+            button.addEventListener("click", () => {
+
+                card.classList.toggle("open");
+
+            });
+
+
+            container.appendChild(card);
+
+        });
+
+
+        /* =========================
+           MOBILE MENU
+        ========================= */
+
+        const menuBtn =
+            document.getElementById("menuBtn");
+
+
+        const mobileMenu =
+            document.getElementById("mobileMenu");
+
+
+        menuBtn.addEventListener("click", () => {
+
+            mobileMenu.classList.toggle("open");
+
+
+            if (mobileMenu.classList.contains("open")) {
+
+                menuBtn.textContent = "✕";
+
+            } else {
+
+                menuBtn.textContent = "☰";
+
+            }
+
+        });
+
+
+        /* CLOSE MENU AFTER CLICKING LINK */
+
+        const mobileLinks =
+            mobileMenu.querySelectorAll("a");
+
+
+        mobileLinks.forEach(link => {
+
+            link.addEventListener("click", () => {
+
+                mobileMenu.classList.remove("open");
+
+                menuBtn.textContent = "☰";
+
+            });
+
+        });
+
+
+        /* =========================
+           THEME
+        ========================= */
+
+        const themeBtn =
+            document.getElementById("themeBtn");
+
+
+        const savedTheme =
+            localStorage.getItem("theme");
+
+
+        if (savedTheme === "dark") {
+
+            document.body.classList.add("dark");
+
+            themeBtn.textContent = "☀";
+
+        }
+
+
+        themeBtn.addEventListener("click", () => {
+
+            document.body.classList.toggle("dark");
+
+
+            const isDark =
+                document.body.classList.contains("dark");
+
+
+            localStorage.setItem(
+                "theme",
+                isDark ? "dark" : "light"
+            );
+
+
+            themeBtn.textContent =
+                isDark ? "☀" : "☾";
+
+        });
+
+    </script>
+
+
+</body>
+
+</html>

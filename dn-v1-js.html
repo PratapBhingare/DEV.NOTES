@@ -1,0 +1,3331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="dev-prep-favicon.png">
+    <title>JavaScript Interview Questions</title>
+
+    <style>
+        /* =========================
+           RESET
+        ========================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        /* =========================
+           THEME VARIABLES
+        ========================= */
+
+        :root {
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --surface-hover: #f1f5f9;
+
+            --text: #0f172a;
+            --muted: #64748b;
+
+            --border: #e2e8f0;
+
+            --accent: #2563eb;
+            --accent-soft: #eff6ff;
+        }
+
+
+        body.dark {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --surface-hover: #263449;
+
+            --text: #f8fafc;
+            --muted: #94a3b8;
+
+            --border: #334155;
+
+            --accent: #60a5fa;
+            --accent-soft: #172554;
+        }
+
+
+        /* =========================
+           BODY
+        ========================= */
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+
+            background: var(--bg);
+            color: var(--text);
+
+            min-height: 100vh;
+
+            transition:
+                background 0.25s ease,
+                color 0.25s ease;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            background: var(--surface);
+
+            border-bottom: 1px solid var(--border);
+        }
+
+
+        .nav-container {
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding: 14px 20px;
+
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+
+        /* LOGO */
+
+        .logo {
+            color: var(--text);
+
+            text-decoration: none;
+
+            font-size: 18px;
+            font-weight: 700;
+
+            white-space: nowrap;
+        }
+
+
+        .logo span {
+            color: var(--accent);
+        }
+
+
+        /* DESKTOP NAVIGATION */
+
+        .nav-links {
+            flex: 1;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 4px;
+        }
+
+
+        .nav-links a {
+            color: var(--muted);
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            padding: 8px 10px;
+
+            border-radius: 7px;
+
+            transition: 0.2s;
+        }
+
+
+        .nav-links a:hover {
+            background: var(--surface-hover);
+            color: var(--text);
+        }
+
+
+        .nav-links a.active {
+            background: var(--accent-soft);
+            color: var(--accent);
+        }
+
+
+        /* =========================
+           NAV ACTIONS
+        ========================= */
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+
+        /* THEME BUTTON */
+
+        .theme-btn {
+            width: 36px;
+            height: 36px;
+
+            border: 1px solid var(--border);
+            border-radius: 8px;
+
+            background: var(--surface);
+            color: var(--text);
+
+            cursor: pointer;
+
+            font-size: 16px;
+
+            transition: 0.2s;
+        }
+
+
+        .theme-btn:hover {
+            background: var(--surface-hover);
+        }
+
+
+        /* MOBILE MENU BUTTON */
+
+        .menu-btn {
+            display: none;
+
+            width: 36px;
+            height: 36px;
+
+            border: 1px solid var(--border);
+            border-radius: 8px;
+
+            background: var(--surface);
+            color: var(--text);
+
+            cursor: pointer;
+
+            font-size: 20px;
+        }
+
+
+        /* =========================
+           MOBILE DROPDOWN
+        ========================= */
+
+        .mobile-menu {
+            display: none;
+
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding: 0 15px 15px;
+        }
+
+
+        .mobile-menu.open {
+            display: block;
+        }
+
+
+        .mobile-menu a {
+            display: block;
+
+            color: var(--muted);
+
+            text-decoration: none;
+
+            padding: 12px 14px;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+
+            transition: 0.2s;
+        }
+
+
+        .mobile-menu a:hover,
+        .mobile-menu a.active {
+            background: var(--surface-hover);
+            color: var(--text);
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        main {
+            width: 100%;
+            max-width: 850px;
+
+            margin: auto;
+
+            padding: 70px 20px 100px;
+        }
+
+
+        /* =========================
+           PAGE HEADER
+        ========================= */
+
+        .page-header {
+            margin-bottom: 40px;
+        }
+
+
+        .page-header span {
+            color: var(--accent);
+
+            font-size: 13px;
+            font-weight: 600;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        .page-header h1 {
+            font-size: clamp(32px, 5vw, 48px);
+
+            line-height: 1.1;
+
+            margin: 10px 0;
+
+            letter-spacing: -1px;
+        }
+
+
+        .page-header p {
+            color: var(--muted);
+
+            line-height: 1.7;
+
+            max-width: 650px;
+
+            font-size: 15px;
+        }
+
+
+        /* =========================
+           QUESTION CARD
+        ========================= */
+
+        .question-card {
+            width: 100%;
+
+            background: var(--surface);
+
+            border: 1px solid var(--border);
+
+            border-radius: 12px;
+
+            margin-bottom: 14px;
+
+            overflow: hidden;
+
+            transition:
+                border-color 0.2s,
+                transform 0.2s;
+        }
+
+
+        .question-card:hover {
+            border-color: color-mix(in srgb,
+                    var(--accent) 40%,
+                    var(--border));
+        }
+
+
+        /* QUESTION BUTTON */
+
+        .question-btn {
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            padding: 20px;
+
+            border: none;
+
+            background: transparent;
+
+            color: var(--text);
+
+            text-align: left;
+
+            font-family: inherit;
+
+            font-size: 16px;
+            font-weight: 600;
+
+            line-height: 1.5;
+
+            cursor: pointer;
+        }
+
+
+        .question-btn:hover {
+            background: var(--surface-hover);
+        }
+
+
+        /* ARROW */
+
+        .arrow {
+            flex-shrink: 0;
+
+            color: var(--muted);
+
+            font-size: 18px;
+
+            transition: transform 0.2s;
+        }
+
+
+        /* ANSWER */
+
+        .answer {
+            display: none;
+
+            padding: 0 20px 20px;
+
+            color: var(--muted);
+
+            font-size: 15px;
+
+            line-height: 1.8;
+        }
+
+
+        .question-card.open .answer {
+            display: block;
+        }
+
+
+        .question-card.open .arrow {
+            transform: rotate(180deg);
+        }
+
+
+        /* =========================
+           TABLET
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            .nav-container {
+                padding: 13px 16px;
+            }
+
+
+            .nav-links {
+                display: none;
+            }
+
+
+            .menu-btn {
+                display: block;
+            }
+
+
+            .nav-actions {
+                margin-left: auto;
+            }
+
+
+            main {
+                padding-top: 55px;
+            }
+
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .nav-container {
+                padding: 11px 14px;
+            }
+
+
+            .logo {
+                font-size: 17px;
+            }
+
+
+            .menu-btn,
+            .theme-btn {
+                width: 34px;
+                height: 34px;
+            }
+
+
+            main {
+                padding: 45px 15px 70px;
+            }
+
+
+            .page-header {
+                margin-bottom: 30px;
+            }
+
+
+            .page-header span {
+                font-size: 11px;
+            }
+
+
+            .page-header h1 {
+                font-size: 34px;
+
+                margin-top: 8px;
+            }
+
+
+            .page-header p {
+                font-size: 14px;
+
+                line-height: 1.7;
+            }
+
+
+            .question-card {
+                border-radius: 10px;
+
+                margin-bottom: 10px;
+            }
+
+
+            .question-btn {
+                padding: 16px;
+
+                font-size: 14px;
+
+                gap: 12px;
+            }
+
+
+            .answer {
+                padding: 0 16px 17px;
+
+                font-size: 14px;
+
+                line-height: 1.7;
+            }
+
+
+            .arrow {
+                font-size: 16px;
+            }
+
+        }
+
+
+        /* =========================
+           VERY SMALL DEVICES
+        ========================= */
+
+        @media (max-width: 380px) {
+
+            .logo {
+                font-size: 16px;
+            }
+
+
+            main {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+
+
+            .page-header h1 {
+                font-size: 30px;
+            }
+
+
+            .question-btn {
+                padding: 14px;
+
+                font-size: 13px;
+            }
+
+
+            .answer {
+                padding-left: 14px;
+                padding-right: 14px;
+
+                font-size: 13px;
+            }
+
+        }
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <nav>
+
+        <div class="nav-container">
+
+
+            <!-- LOGO -->
+
+            <a href="index.html" class="logo">
+                Dev.<span>Prep</span>
+            </a>
+
+
+            <!-- DESKTOP LINKS -->
+
+            <div class="nav-links">
+
+                <a href="dn-v1-html.html">
+                    HTML
+                </a>
+
+                <a href="dn-v1-css.html">
+                    CSS
+                </a>
+
+                <a href="dn-v1-js.html" class="active">
+                    JavaScript
+                </a>
+
+                <a href="dn-v1-react.html">
+                    React
+                </a>
+
+                <a href="dn-v1-node.html">
+                    Node.js
+                </a>
+
+                <a href="dn-v1-sql.html">
+                    SQL
+                </a>
+
+                <a href="dn-v1-dsa.html">
+                    DSA
+                </a>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="nav-actions">
+
+                <button class="menu-btn" id="menuBtn" aria-label="Open navigation menu">
+                    ☰
+                </button>
+
+
+                <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
+                    ☾
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- MOBILE MENU -->
+
+        <div class="mobile-menu" id="mobileMenu">
+
+            <a href="dn-v1-html.html">
+                HTML
+            </a>
+
+            <a href="dn-v1-css.html">
+                CSS
+            </a>
+
+            <a href="dn-v1-js.html" class="active">
+                JavaScript
+            </a>
+
+            <a href="dn-v1-react.html">
+                React
+            </a>
+
+            <a href="dn-v1-node.html">
+                Node.js
+            </a>
+
+            <a href="dn-v1-sql.html">
+                SQL
+            </a>
+
+            <a href="dn-v1-dsa.html">
+                DSA
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================= -->
+
+    <main>
+
+
+        <header class="page-header">
+
+            <span>
+                INTERVIEW PREPARATION
+            </span>
+
+            <h1>
+                JavaScript
+            </h1>
+
+            <p>
+                Important JavaScript concepts and interview
+                questions, from fundamentals to advanced topics.
+            </p>
+
+        </header>
+
+
+        <!-- QUESTIONS -->
+
+        <section id="questions"></section>
+
+
+    </main>
+
+
+    <script>
+
+
+        /* =========================
+           QUESTIONS
+        ========================= */
+
+        const questions = [
+
+{
+        question: "What is the difference between var, let, and const?",
+
+        answer: `
+            <p>
+                <code>var</code>, <code>let</code>, and <code>const</code> are used
+                to declare variables in JavaScript, but they differ in scope,
+                redeclaration, reassignment, and hoisting behavior.
+            </p>
+
+            <h4>Key Differences:</h4>
+
+            <ul>
+                <li><code>var</code> is function-scoped and can be redeclared and reassigned.</li>
+                <li><code>let</code> is block-scoped and can be reassigned but cannot be redeclared in the same scope.</li>
+                <li><code>const</code> is block-scoped and cannot be reassigned or redeclared.</li>
+                <li><code>let</code> and <code>const</code> are in the Temporal Dead Zone until their declaration is reached.</li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+var a = 10;
+var a = 20; // Allowed
+
+let b = 10;
+b = 20;     // Allowed
+// let b = 30; // Error
+
+const c = 10;
+// c = 20;   // Error
+            </code></pre>
+
+            <p>
+                In modern JavaScript, <code>let</code> and <code>const</code> are
+                generally preferred over <code>var</code>.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is hoisting in JavaScript?",
+
+        answer: `
+            <p>
+                Hoisting is JavaScript's behavior where declarations of variables
+                and functions are processed before the code is executed.
+            </p>
+
+            <p>
+                Function declarations are fully hoisted, while <code>var</code>
+                declarations are hoisted and initialized with <code>undefined</code>.
+                <code>let</code> and <code>const</code> are also hoisted internally,
+                but they cannot be accessed before their declaration because they
+                are in the Temporal Dead Zone.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+console.log(a); // undefined
+var a = 10;
+
+sayHello(); // "Hello"
+
+function sayHello() {
+    console.log("Hello");
+}
+            </code></pre>
+
+            <p>
+                Here, the <code>var</code> declaration is available before its
+                assignment, while the function declaration can be called before
+                it appears in the code.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is the Temporal Dead Zone (TDZ)?",
+
+        answer: `
+            <p>
+                The Temporal Dead Zone (TDZ) is the period between entering a
+                block and reaching the declaration of a <code>let</code> or
+                <code>const</code> variable.
+            </p>
+
+            <p>
+                During this period, the variable exists but cannot be accessed.
+                Trying to access it results in a <code>ReferenceError</code>.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+console.log(name); // ReferenceError
+
+let name = "John";
+            </code></pre>
+
+            <p>
+                The TDZ ends when execution reaches the declaration
+                <code>let name = "John"</code>.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is the difference between == and ===?",
+
+        answer: `
+            <p>
+                <code>==</code> is the loose equality operator. It compares
+                values after performing type conversion when necessary.
+            </p>
+
+            <p>
+                <code>===</code> is the strict equality operator. It compares
+                both the value and the data type without performing implicit
+                type conversion.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+console.log(5 == "5");  // true
+console.log(5 === "5"); // false
+            </code></pre>
+
+            <p>
+                In most cases, <code>===</code> is preferred because it avoids
+                unexpected results caused by automatic type conversion.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What are primitive and non-primitive data types?",
+
+        answer: `
+            <p>
+                JavaScript data types can broadly be divided into primitive
+                and non-primitive types.
+            </p>
+
+            <h4>Primitive Data Types:</h4>
+
+            <p>
+                Primitive values are basic, immutable values. JavaScript has
+                seven primitive data types:
+            </p>
+
+            <ul>
+                <li><code>string</code></li>
+                <li><code>number</code></li>
+                <li><code>bigint</code></li>
+                <li><code>boolean</code></li>
+                <li><code>undefined</code></li>
+                <li><code>null</code></li>
+                <li><code>symbol</code></li>
+            </ul>
+
+            <h4>Non-Primitive Data Types:</h4>
+
+            <p>
+                Non-primitive values are objects and can contain multiple
+                values or properties.
+            </p>
+
+            <ul>
+                <li>Object</li>
+                <li>Array</li>
+                <li>Function</li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+let name = "John";           // Primitive
+
+let user = {                 // Non-primitive
+    name: "John",
+    age: 25
+};
+
+let numbers = [1, 2, 3];     // Non-primitive
+            </code></pre>
+
+            <p>
+                A key difference is that primitive values are copied by value,
+                while objects are handled through references.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is the difference between null and undefined?",
+
+        answer: `
+            <p>
+                <code>undefined</code> means a variable has been declared but
+                has not been assigned a value.
+            </p>
+
+            <p>
+                <code>null</code> represents an intentional absence of a value.
+                It is explicitly assigned when we want to indicate that there
+                is currently no value.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+let a;
+console.log(a); // undefined
+
+let user = null;
+console.log(user); // null
+            </code></pre>
+
+            <p>
+                In simple terms, <code>undefined</code> usually means
+                <strong>"no value has been assigned"</strong>, while
+                <code>null</code> means <strong>"intentionally no value"</strong>.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What are truthy and falsy values?",
+
+        answer: `
+            <p>
+                In JavaScript, every value can be evaluated as either
+                <strong>truthy</strong> or <strong>falsy</strong> in a boolean
+                context such as an <code>if</code> condition.
+            </p>
+
+            <h4>Falsy Values:</h4>
+
+            <p>
+                The main falsy values are:
+            </p>
+
+            <ul>
+                <li><code>false</code></li>
+                <li><code>0</code></li>
+                <li><code>-0</code></li>
+                <li><code>0n</code></li>
+                <li><code>""</code></li>
+                <li><code>null</code></li>
+                <li><code>undefined</code></li>
+                <li><code>NaN</code></li>
+            </ul>
+
+            <p>
+                Every other JavaScript value is truthy.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+if ("hello") {
+    console.log("Truthy");
+}
+
+if (0) {
+    console.log("This will not execute");
+}
+            </code></pre>
+
+            <p>
+                Truthy and falsy values are commonly used in conditions,
+                logical operators, and default-value checks.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is scope in JavaScript?",
+
+        answer: `
+            <p>
+                Scope determines where a variable can be accessed in JavaScript.
+                In other words, it defines the visibility and accessibility of
+                variables.
+            </p>
+
+            <h4>Main Types of Scope:</h4>
+
+            <ul>
+                <li><strong>Global Scope:</strong> A variable can be accessed from most parts of the program.</li>
+                <li><strong>Function Scope:</strong> A variable declared inside a function can only be accessed within that function.</li>
+                <li><strong>Block Scope:</strong> Variables declared with <code>let</code> and <code>const</code> are accessible only inside the block where they are declared.</li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+let global = "I am global";
+
+function test() {
+    let message = "I am inside function";
+
+    if (true) {
+        let blockValue = "I am inside block";
+        console.log(blockValue);
+    }
+
+    console.log(message);
+}
+
+test();
+
+console.log(global);
+            </code></pre>
+
+            <p>
+                Understanding scope is important because it controls where
+                variables can be accessed and prevents unwanted variable conflicts.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is lexical scope?",
+
+        answer: `
+            <p>
+                Lexical scope means that the accessibility of a variable is
+                determined by where the code is written in the source code,
+                not by where the function is called.
+            </p>
+
+            <p>
+                An inner function can access variables from its outer scope,
+                but the outer scope cannot directly access variables declared
+                inside the inner scope.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+function outer() {
+    let message = "Hello";
+
+    function inner() {
+        console.log(message);
+    }
+
+    inner();
+}
+
+outer();
+            </code></pre>
+
+            <p>
+                Here, <code>inner()</code> can access <code>message</code>
+                because it was defined inside the lexical scope of
+                <code>outer()</code>.
+            </p>
+
+            <p>
+                Lexical scope is also the foundation for understanding
+                <strong>closures</strong>.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is a closure in JavaScript?",
+
+        answer: `
+            <p>
+                A closure is created when a function remembers and can access
+                variables from its outer lexical scope even after the outer
+                function has finished executing.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+function counter() {
+    let count = 0;
+
+    return function () {
+        count++;
+        return count;
+    };
+}
+
+const increment = counter();
+
+console.log(increment()); // 1
+console.log(increment()); // 2
+            </code></pre>
+
+            <p>
+                Here, the returned function still has access to the
+                <code>count</code> variable even though <code>counter()</code>
+                has already finished executing.
+            </p>
+
+            <p>
+                Closures are commonly used for data privacy, state management,
+                callbacks, and functions that need to remember previous values.
+            </p>
+        `
+    },
+    {
+        question: "What is the difference between a function declaration and function expression?",
+
+        answer: `
+            <p>
+                A <strong>function declaration</strong> defines a function using
+                the <code>function</code> keyword with a function name.
+                A <strong>function expression</strong> stores a function inside
+                a variable.
+            </p>
+
+            <p>
+                The main difference is that function declarations are fully
+                hoisted, so they can be called before they are defined.
+                Function expressions cannot be used before the assignment.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+// Function Declaration
+sayHello();
+
+function sayHello() {
+    console.log("Hello");
+}
+
+// Function Expression
+const greet = function () {
+    console.log("Hi");
+};
+
+greet();
+            </code></pre>
+        `
+    },
+
+
+    {
+        question: "What is the difference between regular functions and arrow functions?",
+
+        answer: `
+            <p>
+                Regular functions and arrow functions are both used to create
+                functions, but they differ mainly in how they handle
+                <code>this</code>, <code>arguments</code>, and constructors.
+            </p>
+
+            <ul>
+                <li>Arrow functions do not have their own <code>this</code>; they inherit it from the surrounding scope.</li>
+                <li>Regular functions have their own <code>this</code>, determined by how the function is called.</li>
+                <li>Arrow functions do not have their own <code>arguments</code> object.</li>
+                <li>Arrow functions cannot be used as constructors with <code>new</code>.</li>
+                <li>Arrow functions have shorter syntax.</li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const user = {
+    name: "John",
+
+    regular: function () {
+        console.log(this.name);
+    },
+
+    arrow: () =&gt; {
+        console.log(this.name);
+    }
+};
+
+user.regular(); // John
+user.arrow();   // undefined
+            </code></pre>
+
+            <p>
+                Arrow functions are especially common in React callbacks and
+                array methods such as <code>map()</code> and
+                <code>filter()</code>.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is the this keyword and how does it work?",
+
+        answer: `
+            <p>
+                <code>this</code> is a special keyword that refers to the
+                object associated with the current function execution.
+                Its value depends on <strong>how the function is called</strong>.
+            </p>
+
+            <h4>Common Cases:</h4>
+
+            <ul>
+                <li>In an object method, <code>this</code> usually refers to the object.</li>
+                <li>In a regular function, <code>this</code> depends on the calling context.</li>
+                <li>In an arrow function, <code>this</code> is inherited from the surrounding lexical scope.</li>
+                <li>With <code>call()</code>, <code>apply()</code>, or <code>bind()</code>, the <code>this</code> value can be explicitly controlled for regular functions.</li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const user = {
+    name: "John",
+
+    greet: function () {
+        console.log(this.name);
+    }
+};
+
+user.greet(); // John
+            </code></pre>
+
+            <p>
+                Here, <code>this</code> refers to the <code>user</code> object
+                because <code>greet()</code> is called as a method of
+                <code>user</code>.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What are callback functions?",
+
+        answer: `
+            <p>
+                A callback function is a function that is passed as an argument
+                to another function and is executed later by that function.
+            </p>
+
+            <p>
+                Callbacks are commonly used for asynchronous operations,
+                event handling, and array methods.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+function greet(name, callback) {
+    console.log("Hello " + name);
+    callback();
+}
+
+function done() {
+    console.log("Done!");
+}
+
+greet("John", done);
+            </code></pre>
+
+            <p>
+                Here, <code>done</code> is passed as a callback and is executed
+                inside the <code>greet()</code> function.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What are higher-order functions?",
+
+        answer: `
+            <p>
+                A higher-order function is a function that either
+                <strong>takes another function as an argument</strong>,
+                <strong>returns a function</strong>, or does both.
+            </p>
+
+            <p>
+                Common examples include <code>map()</code>,
+                <code>filter()</code>, and <code>reduce()</code>.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+function calculate(a, b, operation) {
+    return operation(a, b);
+}
+
+const add = (a, b) =&gt; a + b;
+
+console.log(calculate(10, 5, add)); // 15
+            </code></pre>
+
+            <p>
+                Here, <code>calculate()</code> is a higher-order function because
+                it accepts another function as an argument.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is the difference between an array and an object?",
+
+        answer: `
+            <p>
+                Both arrays and objects are used to store collections of data,
+                but they are designed for different purposes.
+            </p>
+
+            <ul>
+                <li><strong>Array:</strong> Used to store an ordered collection of values and accessed mainly using numeric indexes.</li>
+                <li><strong>Object:</strong> Used to store data as key-value pairs and accessed using property names.</li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const fruits = ["Apple", "Banana", "Mango"];
+
+console.log(fruits[0]); // Apple
+
+
+const user = {
+    name: "John",
+    age: 25
+};
+
+console.log(user.name); // John
+            </code></pre>
+
+            <p>
+                Use an array when the order of items matters, and use an object
+                when you need to represent properties of an entity.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is destructuring?",
+
+        answer: `
+            <p>
+                Destructuring is a JavaScript feature that allows us to extract
+                values from arrays or properties from objects and store them
+                directly in variables.
+            </p>
+
+            <h4>Object Destructuring:</h4>
+
+            <pre><code>
+const user = {
+    name: "John",
+    age: 25
+};
+
+const { name, age } = user;
+
+console.log(name); // John
+console.log(age);  // 25
+            </code></pre>
+
+            <h4>Array Destructuring:</h4>
+
+            <pre><code>
+const numbers = [10, 20, 30];
+
+const [first, second] = numbers;
+
+console.log(first);  // 10
+console.log(second); // 20
+            </code></pre>
+
+            <p>
+                Destructuring is commonly used in React for props, state values,
+                and hook results.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is the spread operator and rest parameter?",
+
+        answer: `
+            <p>
+                Both spread and rest use the <code>...</code> syntax, but they
+                perform different operations.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>Spread operator:</strong> Expands the elements of
+                    an array or properties of an object.
+                </li>
+                <li>
+                    <strong>Rest parameter:</strong> Collects multiple values
+                    into a single array.
+                </li>
+            </ul>
+
+            <h4>Spread Example:</h4>
+
+            <pre><code>
+const numbers = [1, 2, 3];
+
+const newNumbers = [...numbers, 4, 5];
+
+console.log(newNumbers); // [1, 2, 3, 4, 5]
+            </code></pre>
+
+            <h4>Rest Example:</h4>
+
+            <pre><code>
+function add(...numbers) {
+    return numbers.reduce((sum, num) =&gt; sum + num, 0);
+}
+
+console.log(add(10, 20, 30)); // 60
+            </code></pre>
+
+            <p>
+                A simple way to remember it is:
+                <strong>spread expands</strong>, while <strong>rest collects</strong>.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is the difference between shallow copy and deep copy?",
+
+        answer: `
+            <p>
+                A <strong>shallow copy</strong> creates a new outer object or
+                array, but nested objects are still shared by reference.
+            </p>
+
+            <p>
+                A <strong>deep copy</strong> creates an independent copy,
+                including nested objects, so changes to the copy do not affect
+                the original.
+            </p>
+
+            <h4>Shallow Copy Example:</h4>
+
+            <pre><code>
+const original = {
+    name: "John",
+    address: {
+        city: "Pune"
+    }
+};
+
+const copy = { ...original };
+
+copy.address.city = "Mumbai";
+
+console.log(original.address.city); // Mumbai
+            </code></pre>
+
+            <p>
+                The nested <code>address</code> object is still shared between
+                <code>original</code> and <code>copy</code>.
+            </p>
+
+            <h4>Deep Copy Example:</h4>
+
+            <pre><code>
+const original = {
+    name: "John",
+    address: {
+        city: "Pune"
+    }
+};
+
+const copy = structuredClone(original);
+
+copy.address.city = "Mumbai";
+
+console.log(original.address.city); // Pune
+            </code></pre>
+
+            <p>
+                <code>structuredClone()</code> is a modern way to create a
+                deep clone for supported JavaScript values.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is the difference between map(), filter(), and reduce()?",
+
+        answer: `
+            <p>
+                <code>map()</code>, <code>filter()</code>, and
+                <code>reduce()</code> are higher-order array methods, but
+                they are used for different purposes.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>map():</strong> Creates a new array by transforming
+                    every element.
+                </li>
+                <li>
+                    <strong>filter():</strong> Creates a new array containing
+                    only elements that satisfy a condition.
+                </li>
+                <li>
+                    <strong>reduce():</strong> Processes all elements and
+                    produces a single accumulated result.
+                </li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const numbers = [1, 2, 3, 4];
+
+// map()
+const doubled = numbers.map(num =&gt; num * 2);
+
+console.log(doubled);
+// [2, 4, 6, 8]
+
+
+// filter()
+const even = numbers.filter(num =&gt; num % 2 === 0);
+
+console.log(even);
+// [2, 4]
+
+
+// reduce()
+const total = numbers.reduce((sum, num) =&gt; sum + num, 0);
+
+console.log(total);
+// 10
+            </code></pre>
+
+            <p>
+                In short:
+                <strong>map = transform</strong>,
+                <strong>filter = select</strong>,
+                <strong>reduce = accumulate</strong>.
+            </p>
+        `
+    },
+    {
+        question: "What is the difference between map() and forEach()?",
+
+        answer: `
+            <p>
+                Both <code>map()</code> and <code>forEach()</code> are used to
+                iterate over an array, but the main difference is their return value.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>map():</strong> Creates and returns a new array
+                    containing the results of the callback function.
+                </li>
+                <li>
+                    <strong>forEach():</strong> Executes a function for each
+                    element but does not return a new array.
+                </li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const numbers = [1, 2, 3];
+
+// map()
+const doubled = numbers.map(num =&gt; num * 2);
+
+console.log(doubled);
+// [2, 4, 6]
+
+
+// forEach()
+numbers.forEach(num =&gt; {
+    console.log(num * 2);
+});
+// 2
+// 4
+// 6
+            </code></pre>
+
+            <p>
+                Use <code>map()</code> when you need a new transformed array,
+                and <code>forEach()</code> when you simply want to perform
+                an action for each element.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is the difference between find() and filter()?",
+
+        answer: `
+            <p>
+                Both methods are used to search an array based on a condition,
+                but they differ in what they return.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>find():</strong> Returns the first element that
+                    satisfies the condition.
+                </li>
+                <li>
+                    <strong>filter():</strong> Returns a new array containing
+                    all elements that satisfy the condition.
+                </li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const numbers = [10, 20, 30, 20];
+
+// find()
+const result1 = numbers.find(num =&gt; num &gt; 15);
+
+console.log(result1);
+// 20
+
+
+// filter()
+const result2 = numbers.filter(num =&gt; num &gt; 15);
+
+console.log(result2);
+// [20, 30, 20]
+            </code></pre>
+
+            <p>
+                Use <code>find()</code> when you need one matching element,
+                and <code>filter()</code> when you need all matching elements.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is the difference between slice() and splice()?",
+
+        answer: `
+            <p>
+                <code>slice()</code> and <code>splice()</code> are both used
+                with arrays, but they behave differently.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>slice():</strong> Returns a portion of an array
+                    without modifying the original array.
+                </li>
+                <li>
+                    <strong>splice():</strong> Adds, removes, or replaces
+                    elements and modifies the original array.
+                </li>
+            </ul>
+
+            <h4>slice() Example:</h4>
+
+            <pre><code>
+const numbers = [1, 2, 3, 4, 5];
+
+const result = numbers.slice(1, 4);
+
+console.log(result);
+// [2, 3, 4]
+
+console.log(numbers);
+// [1, 2, 3, 4, 5]
+            </code></pre>
+
+            <h4>splice() Example:</h4>
+
+            <pre><code>
+const numbers = [1, 2, 3, 4, 5];
+
+numbers.splice(1, 2);
+
+console.log(numbers);
+// [1, 4, 5]
+            </code></pre>
+
+            <p>
+                The easiest way to remember it:
+                <strong>slice does not modify the original array</strong>,
+                while <strong>splice modifies the original array</strong>.
+            </p>
+        `
+    },
+
+
+    {
+        question: "How do you remove duplicates from an array?",
+
+        answer: `
+            <p>
+                A simple and common way to remove duplicate values from an
+                array is to use a <code>Set</code>, because a Set stores
+                only unique values.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const numbers = [1, 2, 2, 3, 3, 4];
+
+const uniqueNumbers = [...new Set(numbers)];
+
+console.log(uniqueNumbers);
+// [1, 2, 3, 4]
+            </code></pre>
+
+            <p>
+                The <code>Set</code> removes the duplicate values, and the
+                spread operator converts the Set back into an array.
+            </p>
+        `
+    },
+
+
+    {
+        question: "How do you clone an object or array?",
+
+        answer: `
+            <p>
+                For a shallow copy of an object or array, the spread operator
+                is commonly used. For a deep copy, <code>structuredClone()</code>
+                can be used for supported values.
+            </p>
+
+            <h4>Object Shallow Copy:</h4>
+
+            <pre><code>
+const user = {
+    name: "John",
+    age: 25
+};
+
+const copy = { ...user };
+            </code></pre>
+
+            <h4>Array Shallow Copy:</h4>
+
+            <pre><code>
+const numbers = [1, 2, 3];
+
+const copy = [...numbers];
+            </code></pre>
+
+            <h4>Deep Copy:</h4>
+
+            <pre><code>
+const user = {
+    name: "John",
+    address: {
+        city: "Pune"
+    }
+};
+
+const copy = structuredClone(user);
+            </code></pre>
+
+            <p>
+                The spread operator creates a <strong>shallow copy</strong>,
+                while <code>structuredClone()</code> can create a
+                <strong>deep copy</strong>.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is synchronous vs asynchronous JavaScript?",
+
+        answer: `
+            <p>
+                <strong>Synchronous JavaScript</strong> executes code one
+                statement at a time and waits for each operation to finish
+                before moving to the next one.
+            </p>
+
+            <p>
+                <strong>Asynchronous JavaScript</strong> allows certain
+                operations to be handled without blocking the execution of
+                other JavaScript code. The result can be handled later using
+                callbacks, promises, or <code>async/await</code>.
+            </p>
+
+            <h4>Synchronous Example:</h4>
+
+            <pre><code>
+console.log("First");
+console.log("Second");
+console.log("Third");
+
+// First
+// Second
+// Third
+            </code></pre>
+
+            <h4>Asynchronous Example:</h4>
+
+            <pre><code>
+console.log("First");
+
+setTimeout(() =&gt; {
+    console.log("Second");
+}, 1000);
+
+console.log("Third");
+
+// First
+// Third
+// Second
+            </code></pre>
+
+            <p>
+                Asynchronous behavior is important when working with operations
+                such as API requests, timers, file operations, and database
+                queries.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is the JavaScript Event Loop?",
+
+        answer: `
+            <p>
+                The Event Loop is the mechanism that allows JavaScript to
+                handle asynchronous operations even though JavaScript execution
+                is single-threaded.
+            </p>
+
+            <p>
+                It continuously checks whether the <strong>Call Stack</strong>
+                is empty. When it is empty, the Event Loop moves pending
+                asynchronous callbacks from the appropriate queue to the
+                Call Stack for execution.
+            </p>
+
+            <h4>Important Parts:</h4>
+
+            <ul>
+                <li><strong>Call Stack:</strong> Executes JavaScript code.</li>
+                <li><strong>Web APIs / Runtime APIs:</strong> Handle operations such as timers, DOM events, and network requests.</li>
+                <li><strong>Microtask Queue:</strong> Contains Promise callbacks and other microtasks.</li>
+                <li><strong>Task Queue:</strong> Contains tasks such as timer and DOM event callbacks.</li>
+                <li><strong>Event Loop:</strong> Coordinates when queued work can enter the Call Stack.</li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+console.log("Start");
+
+setTimeout(() =&gt; {
+    console.log("Timeout");
+}, 0);
+
+Promise.resolve().then(() =&gt; {
+    console.log("Promise");
+});
+
+console.log("End");
+
+// Start
+// End
+// Promise
+// Timeout
+            </code></pre>
+
+            <p>
+                After the synchronous code finishes, microtasks such as Promise
+                callbacks are processed before the next task from the task queue.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is the Call Stack?",
+
+        answer: `
+            <p>
+                The Call Stack is a data structure used by JavaScript to keep
+                track of function calls during program execution.
+            </p>
+
+            <p>
+                It follows the <strong>LIFO</strong> principle:
+                <strong>Last In, First Out</strong>.
+                The function that was called most recently is completed first.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+function first() {
+    second();
+}
+
+function second() {
+    console.log("Hello");
+}
+
+first();
+            </code></pre>
+
+            <p>
+                When <code>first()</code> is called, it is added to the Call Stack.
+                Then <code>second()</code> is added on top of it. After
+                <code>second()</code> finishes, it is removed, followed by
+                <code>first()</code>.
+            </p>
+
+            <p>
+                If functions keep calling themselves without a proper stopping
+                condition, the Call Stack can become full and cause a
+                <code>Maximum call stack size exceeded</code> error.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is the Callback Queue or Task Queue?",
+
+        answer: `
+            <p>
+                The Callback Queue, also called the <strong>Task Queue</strong>,
+                is a queue where callbacks from completed asynchronous tasks
+                wait until the JavaScript Call Stack is empty.
+            </p>
+
+            <p>
+                The Event Loop checks the Call Stack and, when appropriate,
+                moves a task from the queue to the Call Stack for execution.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+console.log("Start");
+
+setTimeout(() =&gt; {
+    console.log("Timer callback");
+}, 0);
+
+console.log("End");
+
+// Start
+// End
+// Timer callback
+            </code></pre>
+
+            <p>
+                The <code>setTimeout()</code> callback does not execute
+                immediately. After the timer completes, its callback waits in
+                the task queue until the Call Stack is available.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is the Microtask Queue?",
+
+        answer: `
+            <p>
+                The Microtask Queue is a queue that contains microtasks that
+                need to run after the current synchronous JavaScript execution
+                finishes.
+            </p>
+
+            <p>
+                Promise callbacks such as <code>.then()</code>,
+                <code>.catch()</code>, and <code>.finally()</code> are common
+                examples of microtasks.
+            </p>
+
+            <p>
+                Microtasks are processed before the Event Loop moves on to the
+                next task from the Task Queue.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+console.log("Start");
+
+setTimeout(() =&gt; {
+    console.log("Timeout");
+}, 0);
+
+Promise.resolve().then(() =&gt; {
+    console.log("Promise");
+});
+
+console.log("End");
+
+// Start
+// End
+// Promise
+// Timeout
+            </code></pre>
+
+            <p>
+                Here, the Promise callback runs before the timer callback because
+                the Microtask Queue is processed before the next Task Queue task.
+            </p>
+        `
+    },
+    {
+        question: "What is a Promise?",
+
+        answer: `
+            <p>
+                A Promise is an object that represents the eventual result of
+                an asynchronous operation. It can either be fulfilled with a
+                value or rejected with an error.
+            </p>
+
+            <p>
+                Promises help us handle asynchronous operations without deeply
+                nested callbacks and provide methods such as
+                <code>.then()</code>, <code>.catch()</code>, and
+                <code>.finally()</code>.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const promise = new Promise((resolve, reject) =&gt; {
+    const success = true;
+
+    if (success) {
+        resolve("Operation successful");
+    } else {
+        reject("Operation failed");
+    }
+});
+
+promise
+    .then(result =&gt; {
+        console.log(result);
+    })
+    .catch(error =&gt; {
+        console.log(error);
+    });
+            </code></pre>
+
+            <p>
+                Here, <code>resolve()</code> indicates success and
+                <code>reject()</code> indicates failure.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What are the different states of a Promise?",
+
+        answer: `
+            <p>
+                A Promise has three states:
+            </p>
+
+            <ul>
+                <li>
+                    <strong>Pending:</strong> The asynchronous operation is
+                    still in progress.
+                </li>
+                <li>
+                    <strong>Fulfilled:</strong> The operation completed
+                    successfully and produced a result.
+                </li>
+                <li>
+                    <strong>Rejected:</strong> The operation failed and
+                    produced an error or rejection reason.
+                </li>
+            </ul>
+
+            <p>
+                A Promise starts in the <strong>pending</strong> state and
+                eventually becomes either <strong>fulfilled</strong> or
+                <strong>rejected</strong>. Once settled, its state cannot
+                change again.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const promise = new Promise((resolve, reject) =&gt; {
+    resolve("Success");
+});
+            </code></pre>
+
+            <p>
+                In this example, the Promise changes from
+                <strong>pending</strong> to <strong>fulfilled</strong>.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is async/await?",
+
+        answer: `
+            <p>
+                <code>async/await</code> is syntax built on top of Promises
+                that makes asynchronous code easier to read and write.
+            </p>
+
+            <ul>
+                <li>
+                    An <code>async</code> function always returns a Promise.
+                </li>
+                <li>
+                    <code>await</code> pauses execution of that async function
+                    until the Promise settles.
+                </li>
+                <li>
+                    <code>await</code> can normally be used inside an
+                    <code>async</code> function.
+                </li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+async function getUser() {
+    const response = await fetch("/api/user");
+    const user = await response.json();
+
+    console.log(user);
+}
+
+getUser();
+            </code></pre>
+
+            <p>
+                <code>await</code> does not block the entire JavaScript
+                application. It pauses the execution of the current
+                <code>async</code> function while other JavaScript work can
+                continue.
+            </p>
+        `
+    },
+
+
+    {
+        question: "How do you handle errors with async/await?",
+
+        answer: `
+            <p>
+                Errors in <code>async/await</code> are commonly handled using
+                <code>try...catch</code>. The asynchronous operation is placed
+                inside the <code>try</code> block, and errors are handled in
+                the <code>catch</code> block.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+async function getUser() {
+    try {
+        const response = await fetch("/api/user");
+
+        if (!response.ok) {
+            throw new Error("Failed to fetch user");
+        }
+
+        const user = await response.json();
+
+        console.log(user);
+
+    } catch (error) {
+        console.log("Error:", error.message);
+    }
+}
+
+getUser();
+            </code></pre>
+
+            <p>
+                This keeps asynchronous error handling similar to normal
+                synchronous <code>try...catch</code> error handling.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is the difference between Promise.all(), Promise.allSettled(), Promise.race(), and Promise.any()?",
+
+        answer: `
+            <p>
+                These Promise methods are used to handle multiple Promises,
+                but they behave differently when the Promises fulfill or reject.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>Promise.all():</strong> Waits for all Promises to
+                    fulfill. If any Promise rejects, the returned Promise
+                    rejects immediately with that rejection reason.
+                </li>
+                <li>
+                    <strong>Promise.allSettled():</strong> Waits for all
+                    Promises to settle, whether fulfilled or rejected.
+                </li>
+                <li>
+                    <strong>Promise.race():</strong> Settles as soon as the
+                    first Promise settles, whether fulfilled or rejected.
+                </li>
+                <li>
+                    <strong>Promise.any():</strong> Fulfills as soon as the
+                    first Promise fulfills. It rejects only if all Promises
+                    reject.
+                </li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const p1 = Promise.resolve("A");
+const p2 = Promise.resolve("B");
+const p3 = Promise.resolve("C");
+
+const result = await Promise.all([p1, p2, p3]);
+
+console.log(result);
+// ["A", "B", "C"]
+            </code></pre>
+
+            <p>
+                A simple way to remember them:
+            </p>
+
+            <ul>
+                <li><code>all()</code> → all must succeed</li>
+                <li><code>allSettled()</code> → wait for everything</li>
+                <li><code>race()</code> → first settled wins</li>
+                <li><code>any()</code> → first successful one wins</li>
+            </ul>
+        `
+    },
+
+
+    {
+        question: "What happens when one Promise fails inside Promise.all()?",
+
+        answer: `
+            <p>
+                If any Promise passed to <code>Promise.all()</code> rejects,
+                the Promise returned by <code>Promise.all()</code> rejects with
+                that rejection reason.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const p1 = Promise.resolve("Success");
+
+const p2 = Promise.reject("Something went wrong");
+
+const p3 = Promise.resolve("Another success");
+
+Promise.all([p1, p2, p3])
+    .then(result =&gt; {
+        console.log(result);
+    })
+    .catch(error =&gt; {
+        console.log(error);
+    });
+
+// Something went wrong
+            </code></pre>
+
+            <p>
+                <code>Promise.all()</code> does not wait for every input to
+                fulfill before rejecting its returned Promise. However, the
+                other input Promises are not automatically cancelled; they may
+                continue running.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is the DOM?",
+
+        answer: `
+            <p>
+                DOM stands for <strong>Document Object Model</strong>.
+                It is a programming interface that represents an HTML document
+                as a tree of objects called nodes.
+            </p>
+
+            <p>
+                JavaScript can use the DOM to read, modify, add, or remove
+                HTML elements and their attributes, styles, and content.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+&lt;h1 id="title"&gt;Hello&lt;/h1&gt;
+            </code></pre>
+
+            <pre><code>
+const title = document.getElementById("title");
+
+title.textContent = "Hello JavaScript";
+            </code></pre>
+
+            <p>
+                Here, JavaScript accesses the <code>&lt;h1&gt;</code> element
+                through the DOM and changes its text.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is event bubbling?",
+
+        answer: `
+            <p>
+                Event bubbling is the process where an event starts from the
+                target element and then propagates upward through its parent
+                elements.
+            </p>
+
+            <p>
+                For example, if a button is inside a <code>div</code> and the
+                button is clicked, the event can first reach the button and
+                then bubble to the <code>div</code>, its parent, and so on.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+&lt;div id="parent"&gt;
+    &lt;button id="child"&gt;Click Me&lt;/button&gt;
+&lt;/div&gt;
+            </code></pre>
+
+            <pre><code>
+parent.addEventListener("click", () =&gt; {
+    console.log("Parent clicked");
+});
+
+child.addEventListener("click", () =&gt; {
+    console.log("Button clicked");
+});
+
+// Button clicked
+// Parent clicked
+            </code></pre>
+
+            <p>
+                The event first reaches the button and then bubbles upward
+                to the parent.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is event capturing?",
+
+        answer: `
+            <p>
+                Event capturing is the phase where an event travels from the
+                top of the DOM tree down toward the target element before the
+                target's event handler runs.
+            </p>
+
+            <p>
+                Event propagation has three main phases:
+            </p>
+
+            <ol>
+                <li><strong>Capturing phase:</strong> Event travels from the document toward the target.</li>
+                <li><strong>Target phase:</strong> Event reaches the target element.</li>
+                <li><strong>Bubbling phase:</strong> Event travels back up through the ancestors.</li>
+            </ol>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+parent.addEventListener("click", () =&gt; {
+    console.log("Parent");
+}, true);
+
+child.addEventListener("click", () =&gt; {
+    console.log("Child");
+});
+
+// Parent
+// Child
+            </code></pre>
+
+            <p>
+                Passing <code>true</code> as the third argument makes the
+                listener run during the capturing phase.
+                The same can be written more explicitly using
+                <code>{ capture: true }</code>.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is event delegation?",
+
+        answer: `
+            <p>
+                Event delegation is a technique where a single event listener
+                is attached to a parent element instead of attaching separate
+                listeners to each child element.
+            </p>
+
+            <p>
+                It works because of event bubbling. The parent receives the
+                event and can determine which child triggered it using
+                <code>event.target</code>.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const list = document.getElementById("list");
+
+list.addEventListener("click", (event) =&gt; {
+    if (event.target.matches("button")) {
+        console.log(event.target.textContent);
+    }
+});
+            </code></pre>
+
+            <p>
+                This is useful when there are many child elements or when
+                elements are dynamically added to the DOM.
+            </p>
+
+            <p>
+                The main benefits are fewer event listeners and better handling
+                of dynamically created elements.
+            </p>
+        `
+    },
+    {
+        question: "What is the difference between event.target and event.currentTarget?",
+
+        answer: `
+            <p>
+                <code>event.target</code> refers to the element that actually
+                triggered the event, while <code>event.currentTarget</code>
+                refers to the element on which the event listener is currently
+                running.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const parent = document.getElementById("parent");
+
+parent.addEventListener("click", (event) =&gt; {
+    console.log(event.target);
+    console.log(event.currentTarget);
+});
+            </code></pre>
+
+            <p>
+                If a button inside the parent is clicked:
+            </p>
+
+            <ul>
+                <li><code>event.target</code> → the clicked button</li>
+                <li><code>event.currentTarget</code> → the parent element where the listener is attached</li>
+            </ul>
+
+            <p>
+                This difference is especially important when using
+                <strong>event delegation</strong>.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is the difference between preventDefault() and stopPropagation()?",
+
+        answer: `
+            <p>
+                <code>preventDefault()</code> and <code>stopPropagation()</code>
+                control different aspects of event behavior.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>preventDefault():</strong> Prevents the browser's
+                    default action for an event.
+                </li>
+                <li>
+                    <strong>stopPropagation():</strong> Prevents the event from
+                    continuing to propagate through the DOM.
+                </li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+form.addEventListener("submit", (event) =&gt; {
+    event.preventDefault();
+
+    console.log("Form submission prevented");
+});
+            </code></pre>
+
+            <p>
+                Here, <code>preventDefault()</code> prevents the browser from
+                performing the normal form submission.
+            </p>
+
+            <p>
+                In contrast, <code>stopPropagation()</code> would stop the event
+                from continuing to parent elements during event propagation.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What are call(), apply(), and bind()?",
+
+        answer: `
+            <p>
+                <code>call()</code>, <code>apply()</code>, and
+                <code>bind()</code> are methods that allow us to explicitly
+                control the <code>this</code> value of a regular function.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>call():</strong> Calls the function immediately
+                    and passes arguments individually.
+                </li>
+                <li>
+                    <strong>apply():</strong> Calls the function immediately
+                    and passes arguments as an array-like value.
+                </li>
+                <li>
+                    <strong>bind():</strong> Returns a new function with
+                    <code>this</code> permanently bound to the provided object.
+                </li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const user = {
+    name: "John"
+};
+
+function greet(city) {
+    console.log(this.name + " from " + city);
+}
+
+greet.call(user, "Pune");
+
+greet.apply(user, ["Mumbai"]);
+
+const boundGreet = greet.bind(user);
+
+boundGreet("Delhi");
+            </code></pre>
+
+            <p>
+                The key difference is:
+                <strong>call and apply execute immediately</strong>,
+                while <strong>bind returns a new function</strong>.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is debouncing and throttling?",
+
+        answer: `
+            <p>
+                Debouncing and throttling are techniques used to control how
+                frequently a function is executed, especially for events that
+                fire repeatedly.
+            </p>
+
+            <p>
+                <strong>Debouncing</strong> delays execution until a specified
+                amount of time has passed without another event.
+            </p>
+
+            <p>
+                <strong>Throttling</strong> ensures that a function executes
+                at most once during a specified time interval.
+            </p>
+
+            <h4>Debouncing Example:</h4>
+
+            <pre><code>
+let timer;
+
+function search(value) {
+    clearTimeout(timer);
+
+    timer = setTimeout(() =&gt; {
+        console.log("Searching for:", value);
+    }, 500);
+}
+            </code></pre>
+
+            <p>
+                If the user keeps typing, the timer keeps resetting.
+                The search runs only after the user stops typing for 500ms.
+            </p>
+
+            <p>
+                Common use cases include search boxes, autocomplete, resize
+                events, scroll handling, and API calls.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is the difference between debouncing and throttling?",
+
+        answer: `
+            <p>
+                The main difference is when the function is allowed to execute.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>Debouncing:</strong> Executes the function after
+                    the events stop occurring for a specified period.
+                </li>
+                <li>
+                    <strong>Throttling:</strong> Executes the function at most
+                    once during a specified time interval while events continue.
+                </li>
+            </ul>
+
+            <h4>Example Use Cases:</h4>
+
+            <ul>
+                <li>
+                    <strong>Debouncing:</strong> Search input where an API
+                    request should happen after the user stops typing.
+                </li>
+                <li>
+                    <strong>Throttling:</strong> Scroll or mouse movement where
+                    the handler should run periodically while the event continues.
+                </li>
+            </ul>
+
+            <p>
+                Easy way to remember:
+                <strong>Debounce = wait until activity stops.</strong>
+                <br>
+                <strong>Throttle = limit how often it runs.</strong>
+            </p>
+        `
+    },
+
+
+    {
+        question: "What are JavaScript modules? What is the difference between import/export and require()?",
+
+        answer: `
+            <p>
+                JavaScript modules allow code to be divided into separate files
+                so that variables, functions, and classes can be organized and
+                reused.
+            </p>
+
+            <p>
+                <strong>ES Modules (ESM)</strong> use <code>import</code> and
+                <code>export</code>, while <strong>CommonJS</strong> commonly
+                uses <code>require()</code> and <code>module.exports</code>.
+            </p>
+
+            <h4>ES Module Example:</h4>
+
+            <pre><code>
+// math.js
+export const add = (a, b) =&gt; a + b;
+
+
+// app.js
+import { add } from "./math.js";
+
+console.log(add(2, 3));
+            </code></pre>
+
+            <h4>CommonJS Example:</h4>
+
+            <pre><code>
+// math.js
+const add = (a, b) =&gt; a + b;
+
+module.exports = { add };
+
+
+// app.js
+const { add } = require("./math");
+
+console.log(add(2, 3));
+            </code></pre>
+
+            <p>
+                ES Modules are the standard JavaScript module system, while
+                CommonJS is widely used in older Node.js codebases.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is optional chaining (?.)?",
+
+        answer: `
+            <p>
+                Optional chaining (<code>?.</code>) allows us to safely access
+                nested properties or call functions without throwing an error
+                when an intermediate value is <code>null</code> or
+                <code>undefined</code>.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const user = {
+    profile: {
+        name: "John"
+    }
+};
+
+console.log(user.profile?.name);
+// John
+
+console.log(user.address?.city);
+// undefined
+            </code></pre>
+
+            <p>
+                Without optional chaining, trying to access
+                <code>user.address.city</code> when <code>address</code> is
+                undefined would cause a <code>TypeError</code>.
+            </p>
+
+            <p>
+                Optional chaining is commonly used when working with API
+                responses where some properties may be missing.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is the difference between || and ???",
+
+        answer: `
+            <p>
+                Both operators can be used for default values, but they treat
+                falsy values differently.
+            </p>
+
+            <p>
+                <code>||</code> returns the right-hand value when the
+                left-hand value is <strong>falsy</strong>.
+            </p>
+
+            <p>
+                <code>??</code> returns the right-hand value only when the
+                left-hand value is <code>null</code> or <code>undefined</code>.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const count = 0;
+
+console.log(count || 10);
+// 10
+
+console.log(count ?? 10);
+// 0
+            </code></pre>
+
+            <p>
+                This happens because <code>0</code> is falsy, but it is not
+                <code>null</code> or <code>undefined</code>.
+            </p>
+
+            <p>
+                Use <code>??</code> when values such as <code>0</code>,
+                <code>false</code>, or an empty string should be treated as
+                valid values.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is prototypal inheritance?",
+
+        answer: `
+            <p>
+                Prototypal inheritance is JavaScript's mechanism for allowing
+                objects to inherit properties and methods from another object
+                through the prototype chain.
+            </p>
+
+            <p>
+                If a property or method is not found directly on an object,
+                JavaScript looks for it on the object's prototype and continues
+                through the prototype chain.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const userMethods = {
+    greet() {
+        console.log("Hello");
+    }
+};
+
+const user = Object.create(userMethods);
+
+user.greet();
+            </code></pre>
+
+            <p>
+                Here, <code>greet()</code> is not directly stored on
+                <code>user</code>. JavaScript finds it through the object's
+                prototype.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is the prototype chain?",
+
+        answer: `
+            <p>
+                The prototype chain is the sequence of objects JavaScript
+                searches when trying to find a property or method.
+            </p>
+
+            <p>
+                If JavaScript cannot find a property on the current object,
+                it looks at its prototype. It continues this process until it
+                finds the property or reaches <code>null</code>.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const user = {
+    name: "John"
+};
+
+console.log(user.toString());
+            </code></pre>
+
+            <p>
+                <code>toString()</code> is not directly defined on the
+                <code>user</code> object. JavaScript searches through its
+                prototype chain and finds it through
+                <code>Object.prototype</code>.
+            </p>
+
+            <p>
+                The chain eventually ends at <code>null</code>.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is garbage collection in JavaScript?",
+
+        answer: `
+            <p>
+                Garbage collection is the automatic process of identifying and
+                removing objects from memory that are no longer reachable or
+                needed by the program.
+            </p>
+
+            <p>
+                JavaScript engines automatically manage memory, so developers
+                normally do not manually free objects.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+let user = {
+    name: "John"
+};
+
+user = null;
+            </code></pre>
+
+            <p>
+                After <code>user</code> is set to <code>null</code>, the original
+                object may become unreachable. If no other references to that
+                object exist, the JavaScript engine can eventually reclaim its
+                memory.
+            </p>
+
+            <p>
+                Modern JavaScript engines commonly use reachability-based
+                garbage collection, such as mark-and-sweep techniques.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is an IIFE?",
+
+        answer: `
+            <p>
+                IIFE stands for <strong>Immediately Invoked Function Expression</strong>.
+                It is a function expression that is executed immediately after
+                it is created.
+            </p>
+
+            <p>
+                IIFEs were commonly used to create a private scope and prevent
+                variables from leaking into the global scope.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+(function () {
+    const message = "Hello";
+
+    console.log(message);
+})();
+            </code></pre>
+
+            <p>
+                The function is created and immediately executed.
+                The <code>message</code> variable remains inside the function's
+                scope.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is memoization?",
+
+        answer: `
+            <p>
+                Memoization is an optimization technique where the result of
+                an expensive function call is cached so that the same input
+                can return the stored result instead of calculating it again.
+            </p>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+function memoize(fn) {
+    const cache = {};
+
+    return function (num) {
+        if (num in cache) {
+            return cache[num];
+        }
+
+        const result = fn(num);
+        cache[num] = result;
+
+        return result;
+    };
+}
+
+const square = memoize(num =&gt; num * num);
+
+console.log(square(5)); // 25
+console.log(square(5)); // 25 from cache
+            </code></pre>
+
+            <p>
+                Memoization can improve performance when a function is called
+                repeatedly with the same inputs, although storing cached values
+                also consumes memory.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What are Sets and Maps?",
+
+        answer: `
+            <p>
+                <code>Set</code> and <code>Map</code> are built-in JavaScript
+                collection types.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>Set:</strong> Stores unique values. Duplicate
+                    values are automatically ignored.
+                </li>
+                <li>
+                    <strong>Map:</strong> Stores key-value pairs where keys
+                    can be of any value type.
+                </li>
+            </ul>
+
+            <h4>Set Example:</h4>
+
+            <pre><code>
+const numbers = new Set([1, 2, 2, 3]);
+
+console.log(numbers);
+// Set {1, 2, 3}
+
+numbers.add(4);
+            </code></pre>
+
+            <h4>Map Example:</h4>
+
+            <pre><code>
+const users = new Map();
+
+users.set("id", 101);
+users.set("name", "John");
+
+console.log(users.get("name"));
+// John
+            </code></pre>
+
+            <p>
+                A <code>Set</code> is useful when you need unique values,
+                while a <code>Map</code> is useful when you need key-value
+                relationships with flexible key types.
+            </p>
+        `
+    },
+
+
+    {
+        question: "What is the difference between Object.keys(), Object.values(), and Object.entries()?",
+
+        answer: `
+            <p>
+                These methods are used to retrieve information from an object
+                as arrays.
+            </p>
+
+            <ul>
+                <li>
+                    <code>Object.keys()</code> returns an array containing
+                    the object's own enumerable property names.
+                </li>
+                <li>
+                    <code>Object.values()</code> returns an array containing
+                    the object's own enumerable property values.
+                </li>
+                <li>
+                    <code>Object.entries()</code> returns an array containing
+                    key-value pairs.
+                </li>
+            </ul>
+
+            <h4>Example:</h4>
+
+            <pre><code>
+const user = {
+    name: "John",
+    age: 25
+};
+
+console.log(Object.keys(user));
+// ["name", "age"]
+
+console.log(Object.values(user));
+// ["John", 25]
+
+console.log(Object.entries(user));
+// [["name", "John"], ["age", 25]]
+            </code></pre>
+
+            <p>
+                These methods are commonly used when iterating over object data
+                or converting object information into an array that can be
+                processed with array methods.
+            </p>
+        `
+    }
+];
+
+
+
+        /* =========================
+           RENDER QUESTIONS
+        ========================= */
+
+        const container =
+            document.getElementById("questions");
+
+
+        questions.forEach((item, index) => {
+
+            const card =
+                document.createElement("div");
+
+
+            card.className =
+                "question-card";
+
+
+             card.innerHTML = `
+
+                <button
+                    class="question-btn"
+                    type="button"
+                >
+
+                    <span>
+                        ${index + 1}. ${item.question}
+                    </span>
+
+                    <span class="arrow">
+                        ⌄
+                    </span>
+
+                </button>
+
+
+                <div class="answer">
+
+                    ${item.answer}
+
+                </div>
+
+            `;
+
+            const button =
+                card.querySelector(".question-btn");
+
+
+            button.addEventListener("click", () => {
+
+                card.classList.toggle("open");
+
+            });
+
+
+            container.appendChild(card);
+
+        });
+
+
+        /* =========================
+           MOBILE MENU
+        ========================= */
+
+        const menuBtn =
+            document.getElementById("menuBtn");
+
+
+        const mobileMenu =
+            document.getElementById("mobileMenu");
+
+
+        menuBtn.addEventListener("click", () => {
+
+            mobileMenu.classList.toggle("open");
+
+
+            if (mobileMenu.classList.contains("open")) {
+
+                menuBtn.textContent = "✕";
+
+            } else {
+
+                menuBtn.textContent = "☰";
+
+            }
+
+        });
+
+
+        /* CLOSE MENU AFTER CLICKING LINK */
+
+        const mobileLinks =
+            mobileMenu.querySelectorAll("a");
+
+
+        mobileLinks.forEach(link => {
+
+            link.addEventListener("click", () => {
+
+                mobileMenu.classList.remove("open");
+
+                menuBtn.textContent = "☰";
+
+            });
+
+        });
+
+
+        /* =========================
+           THEME
+        ========================= */
+
+        const themeBtn =
+            document.getElementById("themeBtn");
+
+
+        const savedTheme =
+            localStorage.getItem("theme");
+
+
+        if (savedTheme === "dark") {
+
+            document.body.classList.add("dark");
+
+            themeBtn.textContent = "☀";
+
+        }
+
+
+        themeBtn.addEventListener("click", () => {
+
+            document.body.classList.toggle("dark");
+
+
+            const isDark =
+                document.body.classList.contains("dark");
+
+
+            localStorage.setItem(
+                "theme",
+                isDark ? "dark" : "light"
+            );
+
+
+            themeBtn.textContent =
+                isDark ? "☀" : "☾";
+
+        });
+
+    </script>
+
+
+</body>
+
+</html>
